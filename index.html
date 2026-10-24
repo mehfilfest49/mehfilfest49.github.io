@@ -680,6 +680,79 @@ body.screen-mode .aurora{display:none}
 .sl{padding:14px 0;border-bottom:1px dashed var(--line)}
 .sl:last-child{border-bottom:0;padding-bottom:0}
 .sl-t{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+
+/* free sign-up */
+.freebox{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:10px 14px;padding:14px 16px;border-radius:16px;background:var(--good-soft);border:1px solid color-mix(in srgb,var(--good) 25%,transparent)}
+.freebox small{color:var(--muted)}
+.freetag{flex:0 0 auto;padding:6px 12px;border-radius:999px;background:var(--good);color:#fff;font:800 13px var(--body);letter-spacing:.06em;text-transform:uppercase}
+.freebig{align-self:flex-start;padding:8px 16px;border-radius:999px;background:#fff;color:var(--good);font:800 15px var(--body);letter-spacing:.04em;margin:18px 0 -6px}
+.freebox .btn{grid-column:1/-1;justify-content:center}
+
+/* ===== floating rounded glass bars ===== */
+.top,.lnav{position:sticky;top:calc(env(safe-area-inset-top,0px) + 10px);margin:10px max(10px,env(safe-area-inset-right,0px)) 0 max(10px,env(safe-area-inset-left,0px));border:1px solid rgba(255,255,255,.55);border-radius:28px;background:color-mix(in srgb,var(--surface) 55%,transparent);backdrop-filter:blur(22px) saturate(1.8);-webkit-backdrop-filter:blur(22px) saturate(1.8);box-shadow:0 10px 30px rgba(15,35,64,.12),inset 0 1px 0 rgba(255,255,255,.45)}
+.top .in.gut,.lnav .in.gut{padding-left:10px;padding-right:10px}
+.top .in,.lnav .in{padding-block:8px}
+.top .hb,.lnav .hb{border-radius:50%;background:color-mix(in srgb,var(--surface) 70%,transparent);border-color:rgba(255,255,255,.5)}
+.lnav .cta .btn,.top .sync{border-radius:999px}
+.drop{border-radius:24px;background:color-mix(in srgb,var(--surface) 86%,transparent);backdrop-filter:blur(22px) saturate(1.6);-webkit-backdrop-filter:blur(22px) saturate(1.6);border-color:rgba(255,255,255,.5)}
+.demobar{margin:8px max(10px,env(safe-area-inset-right,0px)) 0 max(10px,env(safe-area-inset-left,0px));border-radius:22px;border:1px solid color-mix(in srgb,var(--pend) 25%,transparent)}
+.bellbox{border-radius:22px}
+.pub-tabs{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:5px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);width:max-content;max-width:100%}
+.pub-tabs button{border-radius:999px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .top,:root:not([data-theme="light"]) .lnav{border-color:rgba(255,255,255,.08);box-shadow:0 10px 30px rgba(0,0,0,.35)}}
+:root[data-theme="dark"] .top,:root[data-theme="dark"] .lnav{border-color:rgba(255,255,255,.08);box-shadow:0 10px 30px rgba(0,0,0,.35)}
+
+/* ===== spinning logo loader ===== */
+.logospin{display:grid;place-items:center;width:92px;height:92px;border-radius:50%;background:color-mix(in srgb,var(--surface) 60%,transparent);border:1px solid rgba(255,255,255,.5);box-shadow:var(--shadow);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.logospin .mark{background:var(--brand);animation:logospin 1.2s cubic-bezier(.65,0,.35,1) infinite}
+@keyframes logospin{0%{transform:rotate(0) scale(1)}50%{transform:rotate(180deg) scale(.84)}100%{transform:rotate(360deg) scale(1)}}
+@media (prefers-reduced-motion:reduce){.logospin .mark{animation:logopulse 1.6s ease-in-out infinite}}
+@keyframes logopulse{50%{opacity:.4}}
+
+/* ===== fest logo + colour ===== */
+.flogo{object-fit:contain;flex:0 0 auto;border-radius:10px;display:inline-block}
+.flogo.pubimg{background:#fff;border-radius:22px;padding:8px;box-sizing:border-box;box-shadow:0 8px 24px rgba(0,0,0,.18)}
+.lside .flogo.pubimg{margin-bottom:6px}
+.flogo.certlogo{display:block;margin:0 auto 10px;border-radius:0}
+.flogo.idlogo{border-radius:4px;background:#fff;padding:1px}
+.brandrow{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.logobox{width:96px;height:96px;border-radius:24px;border:1px dashed var(--line);background:var(--surface-2);display:grid;place-items:center;overflow:hidden;color:var(--muted);flex:0 0 auto}
+.logobox img{width:100%;height:100%;object-fit:contain;padding:8px;box-sizing:border-box}
+.swatch.custom{position:relative;overflow:hidden;background:conic-gradient(#e11d48,#f59e0b,#16a34a,#0ea5e9,#7c3aed,#e11d48);cursor:pointer}
+.swatch.custom input{position:absolute;inset:0;opacity:0;width:100%;height:100%;cursor:pointer;border:0;padding:0}
+.mini-f{flex:1 1 120px;max-width:180px}
+
+/* ===== FESTIQ assistant ===== */
+.fq-fab{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:60;width:62px;height:62px;border-radius:50%;border:1px solid rgba(255,255,255,.55);background:color-mix(in srgb,var(--surface) 55%,transparent);backdrop-filter:blur(16px) saturate(1.6);-webkit-backdrop-filter:blur(16px) saturate(1.6);box-shadow:0 10px 30px rgba(15,35,64,.22);display:grid;place-items:center;cursor:pointer;transition:transform .2s;padding:0}
+.fq-fab:hover{transform:scale(1.06)}.fq-fab:focus-visible{outline:3px solid var(--brand);outline-offset:3px}
+.fq-fab .mark{width:32px;height:32px;background:var(--brand)}
+.fq-fab .fq-dot{position:absolute;top:5px;right:5px;width:12px;height:12px;border-radius:50%;background:var(--good);border:2px solid var(--surface)}
+.fq-fab.open{transform:rotate(90deg) scale(.92)}
+.fq-panel{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(90px + env(safe-area-inset-bottom,0px));z-index:61;width:min(400px,calc(100vw - 32px));height:min(600px,calc(100dvh - 130px));display:flex;flex-direction:column;border-radius:28px;background:color-mix(in srgb,var(--surface) 84%,transparent);backdrop-filter:blur(22px) saturate(1.6);-webkit-backdrop-filter:blur(22px) saturate(1.6);border:1px solid rgba(255,255,255,.5);box-shadow:0 24px 70px rgba(15,35,64,.28);overflow:hidden;color:var(--ink)}
+.fq-head{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--line)}
+.fq-av{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:var(--brand-soft);flex:0 0 auto}
+.fq-av .mark{width:24px;height:24px;background:var(--brand)}
+.fq-head b{font-family:var(--display);letter-spacing:.1em;font-size:16px}
+.fq-head small{display:block;color:var(--muted);font-size:12px;letter-spacing:0}
+.fq-x{margin-left:auto;width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--ink);display:grid;place-items:center;cursor:pointer;flex:0 0 auto}
+.fq-msgs{flex:1;overflow:auto;padding:14px;display:flex;flex-direction:column;gap:10px;overscroll-behavior:contain}
+.fq-m{max-width:88%;padding:10px 14px;border-radius:18px;font-size:14.5px;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere}
+.fq-m.u{align-self:flex-end;background:var(--brand);color:var(--on-brand);border-bottom-right-radius:6px}
+.fq-m.a{align-self:flex-start;background:var(--surface);border:1px solid var(--line);border-bottom-left-radius:6px}
+.fq-m b{font-weight:700}
+.fq-typing{display:inline-flex;gap:4px;align-items:center;height:20px}
+.fq-typing i{width:7px;height:7px;border-radius:50%;background:var(--muted);animation:fqdot 1s infinite ease-in-out}
+.fq-typing i:nth-child(2){animation-delay:.15s}.fq-typing i:nth-child(3){animation-delay:.3s}
+@keyframes fqdot{0%,80%,100%{opacity:.3;transform:translateY(0)}40%{opacity:1;transform:translateY(-4px)}}
+.fq-chips{display:flex;gap:6px;overflow-x:auto;padding:0 14px 10px;scrollbar-width:none}
+.fq-chips::-webkit-scrollbar{display:none}
+.fq-chips button{flex:0 0 auto;border:1px solid var(--line);background:var(--surface);color:var(--brand);border-radius:999px;padding:7px 12px;font:600 13px var(--body);cursor:pointer}
+.fq-form{display:flex;gap:8px;padding:10px 12px 12px;border-top:1px solid var(--line)}
+.fq-form input{flex:1;min-width:0;border:1px solid var(--line);border-radius:999px;padding:11px 16px;background:var(--surface);color:var(--ink);font:500 15px var(--body)}
+.fq-form input:focus{outline:none;border-color:var(--brand)}
+.fq-form button{border:0;border-radius:999px;padding:0 18px;background:var(--brand);color:var(--on-brand);font:700 14px var(--body);cursor:pointer}
+body.noFQ .fq-fab,body.noFQ .fq-panel{display:none!important}
+@media print{.fq-fab,.fq-panel{display:none!important}}
 </style>
 </head>
 <body>
@@ -721,6 +794,7 @@ const IC={
  export:'<path d="M12 3v12M7 10l5 5 5-5M4 21h16"/>',
  tdash:'<path d="M3 11 12 3l9 8M5 9v12h14V9"/>',
  jdash:'<path d="M4 20h4L19 9l-4-4L4 16v4Z"/><path d="m13.5 6.5 4 4"/>',
+ mentry:'<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/>',
  bell:'<path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4l2-2ZM10 21h4"/>',
  out:'<path d="M15 4h4a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-4M10 17l5-5-5-5M15 12H3"/>',
  check:'<path d="m5 12 4.5 4.5L19 7"/>',
@@ -742,6 +816,7 @@ const IC={
 };
 const ic=(k,sz)=>`<svg class="i" viewBox="0 0 24 24" ${sz?`style="width:${sz}px;height:${sz}px"`:""} aria-hidden="true">${IC[k]||""}</svg>`;
 const mark=(sz,col)=>`<span class="mark" aria-hidden="true" style="${sz?`width:${sz}px;height:${sz}px;`:""}${col?`background:${col}`:""}"></span>`;
+const LOADER=()=>`<span class="logospin" role="img" aria-label="Loading">${mark(56)}</span>`;
 const BRAND=(sub,col)=>`<div style="display:flex;align-items:center;gap:10px;min-width:0">${mark(0,col)}<div class="brandname"${col?` style="color:${col}"`:""}>Mehfil${sub?`<small>${sub}</small>`:""}</div></div>`;
 
 /* ---------- small helpers ---------- */
@@ -765,8 +840,8 @@ const store={get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){retu
 function blankFest(id,name){return{id,name,
   cfg:{teams:[],cats:[{id:"k",name:"Kids",base:100},{id:"sj",name:"Sub Junior",base:200},{id:"j",name:"Junior",base:300},{id:"sr",name:"Senior",base:400}],
     stages:[{id:"s1",name:"Stage 1"},{id:"s2",name:"Stage 2"},{id:"hall",name:"Off-stage hall"}],
-    subs:[{id:"on",name:"Stage events"},{id:"off",name:"Off-stage events"}],limit:4,days:1,start:540,end:1020,slot:30},
-  cands:[],progs:[],sched:[],appeals:[],news:[],notifs:[],gallery:[],links:[],log:[],tpl:{cert:0,poster:0},
+    subs:[{id:"on",name:"Stage events"},{id:"off",name:"Off-stage events"}],limit:4,days:1,start:540,end:1020,slot:30,pts:{p:[5,3,1],g:{A:2,B:1,C:0},cut:{A:80,B:65,C:50}}},
+  cands:[],progs:[],sched:[],appeals:[],news:[],notifs:[],gallery:[],links:[],log:[],tpl:{cert:0,poster:0},brand:{color:"",logo:""},
   locks:{reg:false,regDate:"",results:true,pub:"open",fest:false,teams:false},
   site:{title:name,tag:"Results, schedule and news",color:0,sec:{results:1,board:1,sched:1,news:1,gallery:1,verify:1}}}}
 
@@ -809,7 +884,10 @@ function enrollError(S,c,pids){const editable=p=>p.cat===c.cat&&p.status==="pend
 /* results */
 function calcS(S,p){const js=p.judges.filter(j=>p.subm[j]);if(!js.length||!p.parts.length)return[];
   const rows=p.parts.map(cid=>{const ms=js.map(j=>+((p.marks[j]||{})[cid])||0);const avg=Math.round(ms.reduce((a,b)=>a+b,0)/ms.length*10)/10;return{cid,ms,avg,spread:Math.round((Math.max(...ms)-Math.min(...ms))*10)/10}}).sort((a,b)=>b.avg-a.avg);
-  let rank=0,prev=null;rows.forEach((r,i)=>{if(r.avg!==prev){rank=i+1;prev=r.avg}r.rank=rank;r.grade=r.avg>=80?"A":r.avg>=65?"B":r.avg>=50?"C":"—";r.pts=([5,3,1][r.rank-1]||0)+(r.grade==="A"?2:r.grade==="B"?1:0)});return rows}
+  let rank=0,prev=null;rows.forEach((r,i)=>{if(r.avg!==prev){rank=i+1;prev=r.avg}r.rank=rank;const pt=S.cfg.pts||DEFPTS;r.grade=r.avg>=pt.cut.A?"A":r.avg>=pt.cut.B?"B":r.avg>=pt.cut.C?"C":"—";r.pts=(pt.p[r.rank-1]||0)+(pt.g[r.grade]||0)});return rows}
+const DEFPTS={p:[5,3,1],g:{A:2,B:1,C:0},cut:{A:80,B:65,C:50}};
+const ptsText=S=>{const p=S.cfg.pts||DEFPTS;return `1st place ${p.p[0]} points, 2nd ${p.p[1]}, 3rd ${p.p[2]}. Grade A (${p.cut.A}+) adds ${p.g.A}, grade B (${p.cut.B}+) adds ${p.g.B}, grade C (${p.cut.C}+) adds ${p.g.C}. Equal averages share a place. Only published results count.`};
+const safeLogo=l=>/^data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+\/=]+$/.test(l||"")&&l.length<=46000?l:"";
 function teamPtsS(S){const t={};S.cfg.teams.forEach(x=>t[x.id]=0);S.progs.filter(p=>p.status==="published").forEach(p=>calcS(S,p).forEach(r=>{const c=cOf(S,r.cid);if(c&&t[c.team]!=null)t[c.team]+=r.pts}));return t}
 
 const R={
@@ -824,6 +902,8 @@ const R={
       S.cfg[k]=v.map(x=>{const o={id:sid(x.id).slice(0,12)||"x",name:String(x.name).trim().slice(0,40)};if(k==="teams")o.color=/^#[0-9a-fA-F]{6}$/.test(x.color)?x.color:TEAMCOL[0];if(k==="cats")o.base=Math.max(0,Math.min(99000,Math.round(+x.base||0)));return o});
       addLog(S,m,`Settings updated: ${({teams:"teams",cats:"categories",stages:"stages",subs:"sub-fests"})[k]}`)}
     else if(k==="sched"){const d=+v.days,st=+v.start,en=+v.end,sl=+v.slot;if(!(d>=1&&d<=7&&st>=0&&en>st&&en<=1440&&[10,15,20,30,45,60,90].includes(sl)))return;Object.assign(S.cfg,{days:d,start:st,end:en,slot:sl});S.sched.forEach(s=>{if(s.day>d)s.day=d});addLog(S,m,"Schedule settings updated")}
+    else if(k==="pts"){const n=x=>Math.round(+x);const p=Array.isArray(v.p)?v.p.slice(0,3).map(n):[];const g={A:n(v.g&&v.g.A),B:n(v.g&&v.g.B),C:n(v.g&&v.g.C)};const c={A:+(v.cut&&v.cut.A),B:+(v.cut&&v.cut.B),C:+(v.cut&&v.cut.C)};
+      if(p.length!==3||![...p,g.A,g.B,g.C].every(x=>x>=0&&x<=100)||!(c.A<=100&&c.A>c.B&&c.B>c.C&&c.C>=0))return;S.cfg.pts={p,g,cut:c};addLog(S,m,"Points and grades updated")}
     else if(k==="limit"){const n=Math.round(+v);if(n>=1&&n<=20){S.cfg.limit=n;addLog(S,m,`Programme limit set to ${n}`)}}},
   reg(S,a,m){a.id=sid(a.id);const name=String(a.name||"").trim().slice(0,60);if(!name||!a.id||cOf(S,a.id))return;
     const team=m.role==="team"?m.team:a.team;if(!S.cfg.teams.some(t=>t.id===team)||!S.cfg.cats.some(c=>c.id===a.cat)||!canReg(S,m,team))return;
@@ -853,15 +933,17 @@ const R={
     if(a.stage&&a.stage!==p.stage&&S.cfg.stages.some(s=>s.id===a.stage)){p.stage=a.stage;const sl=slotOfS(S,p.id);if(sl)sl.stage=a.stage}
     if(a.sf&&S.cfg.subs.some(s=>s.id===a.sf))p.sf=a.sf;
     if(typeof a.topic==="boolean")p.topic=a.topic;
-    if(Array.isArray(a.judges)&&p.status==="pending"){const js=a.judges.map(sid).filter(Boolean).slice(0,7);p.judges.filter(j=>!js.includes(j)).forEach(j=>{delete p.marks[j];delete p.subm[j]});p.judges=js;if(js.length&&js.every(j=>p.subm[j]))p.status="scored"}
+    if(Array.isArray(a.judges)&&p.status==="pending"){const js=a.judges.map(sid).filter(Boolean).filter(j=>j!=="adm").slice(0,7);if(p.judges.includes("adm"))js.push("adm");p.judges.filter(j=>!js.includes(j)).forEach(j=>{delete p.marks[j];delete p.subm[j]});p.judges=js;if(js.length&&js.every(j=>p.subm[j]))p.status="scored"}
     addLog(S,m,`Programme updated: ${p.n}`)},
   delProg(S,a,m){if(!ADM(m))return;const p=pOf(S,a.id);if(!p||marked(p)||p.status!=="pending")return;
     S.progs=S.progs.filter(x=>x.id!==p.id);S.sched=S.sched.filter(s=>s.pid!==p.id);S.appeals=S.appeals.filter(x=>x.pid!==p.id);addLog(S,m,`Programme removed: ${p.n}`)},
   autoSched(S,a,m){if(!ADM(m))return;autoPlace(S);addLog(S,m,"Schedule built automatically")},
   setTime(S,a,m){if(!ADM(m))return;const s=slotOfS(S,a.pid);if(!s)return;const t=Math.round(+a.t);if(!(t>=0&&t<1440))return;s.day=Math.min(S.cfg.days,Math.max(1,Math.round(+a.day)||1));s.t=t},
-  marks(S,a,m,op){const p=pOf(S,a.pid);if(!p||m.role!=="judge"||!p.judges.includes(m.u)||p.status!=="pending"||p.subm[m.u])return;
-    const mk={};for(const cid of p.parts){const v=Number((a.marks||{})[cid]);if(!(v>=0&&v<=100))return;mk[cid]=Math.round(v*10)/10}
-    p.marks[m.u]=mk;p.subm[m.u]=true;addLog(S,m,`${p.n}: ${m.name||m.u} submitted marks`);
+  marks(S,a,m,op){const p=pOf(S,a.pid);if(!p||p.status!=="pending"||!p.parts.length)return;let j="";
+    if(m.role==="judge"){j=m.u;if(!p.judges.includes(j))return}else if(ADM(m)){j=sid(a.j);if(!j||(j!=="adm"&&!p.judges.includes(j))||(j==="adm"&&!p.judges.includes("adm")&&p.judges.length))return}else return;
+    if(p.subm[j])return;const mk={};for(const cid of p.parts){const v=Number((a.marks||{})[cid]);if(!(v>=0&&v<=100))return;mk[cid]=Math.round(v*10)/10}
+    if(j==="adm"&&!p.judges.includes("adm"))p.judges.push("adm");
+    p.marks[j]=mk;p.subm[j]=true;addLog(S,m,m.role==="judge"?`${p.n}: ${m.name||m.u} submitted marks`:`${p.n}: marks entered by ${m.name||"admin"}${j==="adm"?"":" for a judge"}`);
     if(p.judges.every(j=>p.subm[j])){p.status="scored";addNote(S,m,op.cid,`${p.n}: all judges have submitted. Please verify.`,"admin")}},
   verify(S,a,m){if(!ADM(m))return;const p=pOf(S,a.pid);if(p&&p.status==="scored"){p.status="verified";addLog(S,m,`${p.n}: scores verified`)}},
   rescore(S,a,m,op){if(!ADM(m))return;const p=pOf(S,a.pid);if(!p||p.status==="published")return;p.subm={};p.status="pending";addNote(S,m,op.cid,`${p.n}: please enter your marks again`,"judge");addLog(S,m,`${p.n}: sent back to judges`)},
@@ -887,6 +969,8 @@ const R={
   regDate(S,a,m){if(!ADM(m))return;const d=String(a.d||"");if(d&&!/^\d{4}-\d{2}-\d{2}$/.test(d))return;S.locks.regDate=d;addLog(S,m,"Registration closing date: "+(d||"none"))},
   pub(S,a,m){if(!ADM(m)||!PUBNAME[a.mode])return;S.locks.pub=a.mode;addLog(S,m,"Public site: "+PUBNAME[a.mode])},
   teamLock(S,a,m,op){if(!ADM(m))return;S.locks.teams=!!a.v;addLog(S,m,`Team leader login ${a.v?"closed":"opened"}`);if(a.v)addNote(S,m,op.cid,"Team leader access is closed for now.","team")},
+  brand(S,a,m){if(!ADM(m))return;if(!S.brand)S.brand={color:"",logo:""};if(a.color!=null){const c=String(a.color);if(c===""||/^#[0-9a-fA-F]{6}$/.test(c))S.brand.color=c.toUpperCase()}
+    if(a.logo!=null){const l=String(a.logo);if(l===""||safeLogo(l))S.brand.logo=l}addLog(S,m,"Fest logo and colour updated")},
   tpl(S,a,m){if(!ADM(m))return;if(a.cert!=null)S.tpl.cert=Math.abs(+a.cert)%3;if(a.poster!=null)S.tpl.poster=Math.abs(+a.poster)%3}
 };
 function apply(S,op){const f=R[op.type];if(!f)return;if(S.locks.fest&&!(op.type==="lock"&&op.a&&op.a.k==="fest"))return;try{f(S,op.a||{},op.m||{},op)}catch(e){console.warn("Mehfil: op failed",op.type,e)}}
@@ -897,7 +981,7 @@ function apply(S,op){const f=R[op.type];if(!f)return;if(S.locks.fest&&!(op.type=
 let VIEW="landing",ME=null,TOKEN=null,DEMO=false,FESTLIST=[],FID=null,D=null,USERS=[],DBURL="",PUBCODE="";
 let PAGE="",UI={sf:-1,cf:{q:"",team:"",skill:""},dt:"cert"},DIRTY={},NEEDPAINT=false,LOADMSG="";
 const SY={conf:null,seq:0,pend:[],sending:false,status:"ok",timer:null,fail:0};
-let PUBV=null,LFEST="",LFESTNAME="";
+let PUBV=null,LFEST="",LFESTNAME="",LBRAND=null;
 
 const C=id=>D&&cOf(D,id), P=id=>D&&pOf(D,id), slotOf=pid=>D&&slotOfS(D,pid);
 const teamOf=id=>tOf(D,id);
@@ -907,7 +991,7 @@ const isAdmin=()=>!!ME&&ADM(ME);
 const isOrg=()=>!!ME&&(ME.role==="owner"||ME.role==="org");
 const calc=p=>calcS(D,p), teamPts=()=>teamPtsS(D), conflicts=()=>conflictsS(D);
 const regClosed=()=>regClosedAt(D,Date.now());
-const userName=u=>{const x=USERS.find(y=>y.u===u);return x?x.name:u};
+const userName=u=>{if(u==="adm")return "Admin";const x=USERS.find(y=>y.u===u);return x?x.name:u};
 const slotLabel=s=>s?`${D.cfg.days>1?"Day "+s.day+" · ":""}${fmtMin(s.t)}`:"";
 const STAT={pending:["Awaiting marks","wait"],scored:["Needs verification","bad"],verified:["Verified",""],published:["Published","ok"]};
 const statPill=s=>`<span class="pill ${STAT[s][1]}">${STAT[s][0]}</span>`;
@@ -973,6 +1057,17 @@ async function doCoupon(){const c=document.getElementById("lc").value.trim().toL
   b.disabled=true;b.innerHTML="Checking…";
   try{const r=await api("couponLogin",{code:c});TOKEN=r.token;ME=r.user;saveSession();await enter()}
   catch(x){b.disabled=false;b.innerHTML=`Enter ${ic("arrow")}`;e.innerHTML=`<div class="msg bad">${esc(x.message)}</div>`}}
+async function doSignup(){const g=id=>(document.getElementById(id).value||"").trim();const e=document.getElementById("lerr"),b=document.getElementById("lbtn");
+  const d={name:g("su_n"),inst:g("su_i"),phone:g("su_ph"),place:g("su_pl"),u:g("su_u").toLowerCase(),p:document.getElementById("su_p").value};
+  const bad=m=>{e.innerHTML=`<div class="msg bad">${esc(m)}</div>`};
+  if(!d.name)return bad("Please enter your name.");if(!d.inst)return bad("Please enter the name of your institution.");
+  if(d.phone.replace(/\D/g,"").length<10)return bad("Please enter a valid WhatsApp number.");
+  if(!/^[a-z0-9_.]{3,30}$/.test(d.u))return bad("Usernames use lowercase letters, numbers, dots and _ only (3 to 30).");
+  if(d.p.length<6)return bad("Passwords need at least 6 characters.");
+  if(!HAS_API)return bad("The live site isn't connected yet. You can explore the demo instead.");
+  b.disabled=true;b.innerHTML="Creating your account…";
+  try{const r=await api("signup",d);TOKEN=r.token;ME=r.user;saveSession();toast("Welcome to Mehfil! Your free account is ready.");await enter()}
+  catch(x){b.disabled=false;b.innerHTML=`Create my free account ${ic("arrow")}`;bad(x.message)}}
 async function enter(){VIEW="loading";LOADMSG="Opening your desk…";paint();
   try{const r=await api("fests");ME=r.user;saveSession();FESTLIST=r.fests||[];DBURL=r.db||"";
     const last=store.get("mf_last_"+ME.u)||{};
@@ -992,7 +1087,7 @@ function buildDemo(){const S=blankFest("demo","Mehfil Arts Fest 2026");let t=new
   const A={u:"convener",role:"admin",name:"Fest Convener"};const run=(type,a,m)=>{t+=60000;apply(S,{type,a,cid:"d"+t,m:Object.assign({t},m||A)})};
   run("cfg",{key:"teams",val:[{id:"hira",name:"Hira",color:"#0E9F6E"},{id:"safa",name:"Safa",color:"#E2622B"},{id:"marwa",name:"Marwa",color:"#6D4ED8"}]});
   run("site",{title:"Mehfil Arts Fest 2026",tag:"Art and knowledge on one stage"});
-  const names=["Muhammed Rashid","Fathima Nasrin","Abdul Basith","Ayisha Hana","Sinan Ali","Hiba Fathima","Shamil K","Naja Maryam","Irfan P","Rida Sherin","Hafiz M","Sana Fathima","Farhan T","Liya Mehrin","Adil C","Shifa Nasrin","Yaseen A","Nida Farha","Sahal V","Minha K","Rayyan M","Afra T","Bilal P","Hanna C"];
+  const names=["Muhammed Rizwan","Fathima Nasrin","Abdul Basith","Ayisha Hana","Sinan Ali","Hiba Fathima","Shamil K","Naja Maryam","Irfan P","Rida Sherin","Hafiz M","Sana Fathima","Faris T","Liya Mehrin","Adil C","Shifa Nasrin","Yaseen A","Nida Farha","Sahal V","Minha K","Rayyan M","Afra T","Bilal P","Hanna C"];
   const cats=["k","sj","j","sr"],teams=["hira","safa","marwa"];
   run("bulk",{rows:names.map((n,i)=>({id:"c"+i,name:n,team:teams[i%3],cat:cats[i%4]}))});
   S.cands.forEach((c,i)=>c.skills=[SKILLS[i%6]]);
@@ -1031,17 +1126,18 @@ function LANDING(){const nw=MOCKNOW[MOCK.i%3],ev=MOCKEV[MOCK.i%4];
     <div class="lbl">MEHFIL</div>
     ${[["how","bolt","How it works"],["roles","cands","Who it's for"],["features","dash","Features"],["faq","appeals","FAQ"]].map(([h,i,l])=>`<a href="#${h}" onclick="closeDrop()">${ic(i)}${l}</a>`).join("")}
     <hr>
+    <button onclick="VIEW='signup';paint();window.scrollTo({top:0})">${ic("plus")}Create a free account</button>
     <button onclick="VIEW='login';paint();window.scrollTo({top:0})">${ic("users")}Log in</button>
     <button onclick="startDemo()">${ic("eye")}Try the demo</button>
    </div>
-   <div class="cta"><button class="btn ghost" onclick="startDemo()">Demo</button><button class="btn" onclick="VIEW='login';paint();window.scrollTo({top:0})">Log in</button></div></div></nav>
+   <div class="cta"><button class="btn ghost" onclick="VIEW='login';paint();window.scrollTo({top:0})">Log in</button><button class="btn" onclick="VIEW='signup';paint();window.scrollTo({top:0})">Sign up free</button></div></div></nav>
  <header class="hero"><div class="in gut wrap">
   <div>
-   <span class="eyebrow"><span>New</span>For madrasa, school and college arts fests</span>
+   <span class="eyebrow"><span>Free</span>For madrasa, school and college arts fests</span>
    <h1>From registration to certificates, <em>one desk.</em></h1>
    <p class="lede">Chest numbers, clash-free schedules, judging from a phone, a live leaderboard and QR-verified certificates. No more paper bundles and late-night spreadsheet totals.</p>
-   <div class="ctas"><button class="btn lg" onclick="VIEW='login';paint();window.scrollTo({top:0})">Log in and start ${ic("arrow")}</button><button class="btn ghost lg" onclick="startDemo()">${ic("eye")} See the live demo</button></div>
-   <div class="reassure"><span>${ic("check")} New fest in seconds</span><span>${ic("check")} Works on phone and computer</span><span>${ic("check")} A login for every role</span></div>
+   <div class="ctas"><button class="btn lg" onclick="VIEW='signup';paint();window.scrollTo({top:0})">Create a free account ${ic("arrow")}</button><button class="btn ghost lg" onclick="startDemo()">${ic("eye")} See the live demo</button></div>
+   <div class="reassure"><span>${ic("check")} Free to use</span><span>${ic("check")} New fest in seconds</span><span>${ic("check")} Works on phone and computer</span><span>${ic("check")} A login for every role</span></div>
   </div>
   <div class="shot" aria-label="A preview of the app">
    <div class="win">
@@ -1115,8 +1211,8 @@ function LANDING(){const nw=MOCKNOW[MOCK.i%3],ev=MOCKEV[MOCK.i%4];
    .map(([q,a],i)=>`<details ${i===0?"open":""}><summary>${q}</summary><p>${a}</p></details>`).join("")}</div>
  </div></section>
  <section class="sec"><div class="gut wrap"><div class="final">
-  <h2>Your next fest, without the stress.</h2><p>Log in, name your fest and start right away.</p>
-  <div class="ctas" style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><button class="btn alt lg" onclick="VIEW='login';paint();window.scrollTo({top:0})">Log in ${ic("arrow")}</button><button class="btn ghost lg" onclick="startDemo()">${ic("eye")} Try the demo</button></div>
+  <h2>Your next fest, without the stress.</h2><p>Create a free account, name your fest and start right away.</p>
+  <div class="ctas" style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><button class="btn alt lg" onclick="VIEW='signup';paint();window.scrollTo({top:0})">Create a free account ${ic("arrow")}</button><button class="btn ghost lg" onclick="startDemo()">${ic("eye")} Try the demo</button></div>
  </div></div></section>
  <footer class="foot gut"><div class="in wrap">${BRAND("Fest management on one desk")}<span>© ${new Date().getFullYear()} Mehfil</span></div></footer>`}
 function updBoard(lb){const mx=Math.max(...Object.values(MOCK.pts))*1.08;const ord=Object.entries(MOCK.pts).sort((a,b)=>b[1]-a[1]).map(x=>x[0]);
@@ -1138,8 +1234,8 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape")closeDrop()});
 /* =========================================================
    SHELL
    ========================================================= */
-const ADMIN_MENU=[["dash","Dashboard"],["settings","Fest settings"],["cands","Candidates"],["progs","Programmes"],["sched","Schedule"],["verify","Score verification"],["results","Results and points"],["appeals","Appeals"],["docs","Certificates and cards"],["media","News and media"],["site","Public website"],["locks","Locks"],["users","Logins"],["export","Export"],["help","Help"]];
-const MENU={owner:[["fests","All fests"],["coupons","Coupons"],...ADMIN_MENU],org:[["fests","My fests"],...ADMIN_MENU],admin:ADMIN_MENU,
+const ADMIN_MENU=[["dash","Dashboard"],["settings","Fest settings"],["cands","Candidates"],["progs","Programmes"],["sched","Schedule"],["mentry","Mark entry"],["verify","Score verification"],["results","Results and points"],["appeals","Appeals"],["docs","Certificates and cards"],["media","News and media"],["site","Public website"],["locks","Locks"],["users","Logins"],["export","Export"],["help","Help"]];
+const MENU={owner:[["fests","All fests"],["coupons","Organisers"],...ADMIN_MENU],org:[["fests","My fests"],...ADMIN_MENU],admin:ADMIN_MENU,
   team:[["tdash","My team"],["cands","Candidates"],["sched","Schedule"],["appeals","Appeals"],["docs","Cards and certificates"],["help","Help"]],
   judge:[["jdash","My programmes"],["help","Help"]]};
 const ROLE={owner:"Master login",org:"Organiser",admin:"Fest admin",team:"Team leader",judge:"Judge"};
@@ -1148,11 +1244,34 @@ function readKey(){return `mf_read_${FID}_${ME&&ME.u}`}
 function myNotifs(){if(!ME||!D)return[];return D.notifs.filter(n=>n.to==="all"||n.to===ME.role||(isAdmin()&&n.to==="admin")||(ME.role==="team"&&n.to===ME.team))}
 const lastRead=()=>+(store.get(readKey())||0);
 
-function paint(){NEEDPAINT=false;const app=document.getElementById("app");const y=window.scrollY;const ae=document.activeElement;const fid=ae&&ae.id;let ss=null,se=null;try{ss=ae.selectionStart;se=ae.selectionEnd}catch(e){}
+/* ---------- fest colour theme ---------- */
+const hexRgb=h=>[1,3,5].map(i=>parseInt(h.slice(i,i+2),16));
+const toHex=a=>"#"+a.map(v=>Math.max(0,Math.min(255,Math.round(v))).toString(16).padStart(2,"0")).join("").toUpperCase();
+const mixC=(a,b,t)=>{const A=hexRgb(a),B=hexRgb(b);return toHex(A.map((v,i)=>v+(B[i]-v)*t))};
+const relLum=h=>{const c=hexRgb(h).map(v=>{v/=255;return v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4)});return .2126*c[0]+.7152*c[1]+.0722*c[2]};
+const contrastC=(a,b)=>{const x=relLum(a),y=relLum(b);return (Math.max(x,y)+.05)/(Math.min(x,y)+.05)};
+const rgbaC=(h,a)=>{const c=hexRgb(h);return `rgba(${c[0]},${c[1]},${c[2]},${a})`};
+function brandSolid(col){let b=col;for(let i=0;i<14&&contrastC("#FFFFFF",b)<4.6;i++)b=mixC(b,"#000000",.1);return b}
+function themeCSS(col){const b=brandSolid(col);let d=mixC(col,"#FFFFFF",.2);for(let i=0;i<14&&contrastC(d,"#0A1220")<6;i++)d=mixC(d,"#FFFFFF",.12);
+  const L=`--brand:${b};--brand-2:${mixC(b,"#000000",.16)};--brand-soft:${mixC(col,"#FFFFFF",.88)};--accent:${mixC(col,"#FFFFFF",.4)};--accent-soft:${mixC(col,"#FFFFFF",.9)};--bg:${mixC(col,"#FFFFFF",.955)};--surface-2:${mixC(col,"#FFFFFF",.92)};--line:${mixC(col,"#FFFFFF",.84)};--logo:${mixC(b,"#000000",.3)};--blobA:${rgbaC(col,.2)};--blobB:${rgbaC(mixC(col,"#FFFFFF",.4),.3)};--blobC:${rgbaC(col,.12)};--shadow:0 1px 2px rgba(15,35,64,.05),0 10px 30px ${rgbaC(col,.1)};--shadow-lg:0 2px 6px rgba(15,35,64,.06),0 28px 64px ${rgbaC(col,.18)}`;
+  const Dk=`--brand:${d};--brand-2:${mixC(d,"#000000",.12)};--brand-soft:${mixC(col,"#0A1220",.78)};--accent:${mixC(col,"#FFFFFF",.5)};--accent-soft:${mixC(col,"#0A1220",.82)};--bg:${mixC(col,"#0A1220",.94)};--surface-2:${mixC(col,"#142238",.88)};--line:${mixC(col,"#1F3150",.82)};--logo:${mixC(col,"#FFFFFF",.75)};--blobA:${rgbaC(col,.28)};--blobB:${rgbaC(d,.14)};--blobC:${rgbaC(col,.14)}`;
+  return `:root{${L}}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){${Dk}}}:root[data-theme="dark"]{${Dk}}`}
+let THEMEKEY="";
+function applyTheme(br){const col=br&&/^#[0-9A-Fa-f]{6}$/.test(br.color||"")?br.color.toUpperCase():"";if(col===THEMEKEY)return;THEMEKEY=col;let st=document.getElementById("ftheme");
+  if(!st){st=document.createElement("style");st.id="ftheme";document.head.appendChild(st)}st.textContent=col?themeCSS(col):"";
+  const mt=document.querySelector('meta[name="theme-color"]');if(mt)mt.setAttribute("content",col?brandSolid(col):"#1F78D1")}
+function curBrand(){if(VIEW==="public"||VIEW==="screen"){const S=pubS();return S&&S.brand}if(VIEW==="login"&&LFEST)return LBRAND;
+  if(D&&VIEW==="app"){if(PAGE==="settings"&&UI.brd)return UI.brd;return D.brand}return null}
+const festLogo=(br,sz,cls)=>{const l=br&&safeLogo(br.logo);return l?`<img class="flogo ${cls||""}" src="${l}" alt="" style="width:${sz}px;height:${sz}px">`:""};
+const FBRAND=()=>`<div style="display:flex;align-items:center;gap:10px;min-width:0">${festLogo(D.brand,38)}<div class="brandname">${esc(D.name)}<small>Mehfil</small></div></div>`;
+
+function paint(){NEEDPAINT=false;applyTheme(curBrand());document.body.classList.toggle("noFQ",VIEW==="screen");const app=document.getElementById("app");const y=window.scrollY;const ae=document.activeElement;const fid=ae&&ae.id;let ss=null,se=null;try{ss=ae.selectionStart;se=ae.selectionEnd}catch(e){}
   if(VIEW==="public"){app.innerHTML=PUBLIC_VIEW();afterPub();return}
   if(VIEW==="screen"){app.innerHTML=SCREEN_VIEW();return}
-  if(VIEW==="loading"){app.innerHTML=`<div class="loading">${mark(54)}<div class="spin"></div><p>${esc(LOADMSG||"Loading…")}</p></div>`;return}
+  if(VIEW==="loading"){app.innerHTML=`<div class="loading">${LOADER()}<p>${esc(LOADMSG||"Loading…")}</p></div>`;return}
   if(VIEW==="landing"){app.innerHTML=LANDING();startMock();return}
+  if(VIEW==="signup"&&!ME){const keep={};["su_n","su_i","su_ph","su_pl","su_u","su_p"].forEach(id=>{const el=document.getElementById(id);if(el)keep[id]=el.value});app.innerHTML=SIGNUP();
+    Object.entries(keep).forEach(([id,v])=>{const el=document.getElementById(id);if(el&&v)el.value=v});if(fid){const el=document.getElementById(fid);if(el)el.focus({preventScroll:true})}return}
   if(VIEW==="login"||!ME){const keep={};["lu","lp","lc"].forEach(id=>{const el=document.getElementById(id);if(el)keep[id]=el.value});app.innerHTML=LOGIN();
     Object.entries(keep).forEach(([id,v])=>{const el=document.getElementById(id);if(el&&v)el.value=v});if(fid){const el=document.getElementById(fid);if(el){el.focus({preventScroll:true});try{if(ss!=null)el.setSelectionRange(ss,se)}catch(e){}}}return}
   if(!PAGE||!menu().some(m=>m[0]===PAGE))PAGE=(menu()[0]||["help"])[0];
@@ -1160,9 +1279,9 @@ function paint(){NEEDPAINT=false;const app=document.getElementById("app");const 
   const crumb=(menu().find(m=>m[0]===PAGE)||["",""])[1];
   app.innerHTML=`<div class="scrim" id="scrim" hidden onclick="closeDrop()"></div><div class="top"><div class="in gut">
     <button class="hb" aria-expanded="false" aria-controls="drop" aria-label="Menu" onclick="toggleDrop(this)"><i></i></button>
-    ${BRAND(D?esc(D.name):"Fest Desk")}<span class="crumb">${crumb}</span>
+    ${D&&D.brand&&safeLogo(D.brand.logo)?FBRAND():BRAND(D?esc(D.name):"Fest Desk")}<span class="crumb">${crumb}</span>
     <div class="drop" id="drop" hidden><div class="lbl">${ROLE[ME.role].toUpperCase()}</div>${menu().map(([k,l])=>`<button aria-current="${k===PAGE}" onclick="go('${k}')">${ic(k)}${l}</button>`).join("")}<hr>
-      ${DEMO||ME.role==="org"?"":`<button onclick="go('account')">${ic("key")}Change password</button>`}<button onclick="${DEMO?"exitDemo()":"logout()"}">${ic("out")}${DEMO?"Exit demo":"Log out"}</button></div>
+      ${DEMO||(ME.role==="org"&&String(ME.u).startsWith("c:"))?"":`<button onclick="go('account')">${ic("key")}Change password</button>`}<button onclick="${DEMO?"exitDemo()":"logout()"}">${ic("out")}${DEMO?"Exit demo":"Log out"}</button></div>
     <div class="sp">
       ${isOrg()&&FESTLIST.length?`<select aria-label="Switch fest" onchange="this.value==='__all'?go('fests'):openFest(this.value)"><option value="__all"${!D?" selected":""}>${ME.role==="org"?"My fests":"All fests"}</option>${FESTLIST.map(f=>`<option value="${f.id}"${f.id===FID?" selected":""}>${esc(f.name)}</option>`).join("")}</select>`:""}
       <span class="sync ${DEMO?"demo":SY.status}" id="sync">${syncLabel()}</span>
@@ -1178,7 +1297,7 @@ function paint(){NEEDPAINT=false;const app=document.getElementById("app");const 
   if(UI._last===PAGE)window.scrollTo(0,y);
   const en=UI._last!==PAGE;UI._last=PAGE;if(en)countUp();
   renderQRs();const a=PG[PAGE]&&PG[PAGE].after;if(a)a()}
-function go(k){PAGE=k;if(!DEMO&&ME)store.set("mf_last_"+ME.u,{fest:FID,page:k});UI.bell=false;DIRTY={};if(k==="settings")draftInit();paint();window.scrollTo({top:0})}
+function go(k){PAGE=k;if(!DEMO&&ME)store.set("mf_last_"+ME.u,{fest:FID,page:k});UI.bell=false;DIRTY={};UI.brd=null;if(k==="settings")draftInit();paint();window.scrollTo({top:0})}
 function exitDemo(){DEMO=false;D=null;ME=null;FID=null;USERS=[];VIEW="landing";paint();window.scrollTo({top:0})}
 function lockBanner(){
   if(D.locks.fest)return `<div class="lockbar">${ic("lock",20)}<div><b>This fest is locked.</b> Everything is read-only.${isAdmin()&&PAGE!=="locks"?` <a href="#" onclick="go('locks');return false" style="color:inherit;font-weight:700">Unlock it on the Locks page.</a>`:""}</div></div>`;
@@ -1187,23 +1306,42 @@ function lockBanner(){
 function lockPills(){const L=D.locks,rc=regClosed();return `<div class="chips" style="margin-top:14px">${[[rc,"Registration "+(rc?"closed":"open")],[L.results,"Result lock "+(L.results?"on":"off")],[L.teams,"Team leader login "+(L.teams?"closed":"open")],[L.pub!=="open","Public site: "+PUBNAME[L.pub]],[L.fest,"Fest "+(L.fest?"locked":"active")]].map(([on,t])=>`<button class="chip" onclick="go('locks')" style="display:inline-flex;gap:6px;align-items:center">${ic(on?"lock":"unlock",14)}${t}</button>`).join("")}</div>`}
 
 /* ---------- login ---------- */
-function LOGIN(){const msg=UI.loginMsg;UI.loginMsg="";const lf=LFEST;const tab=lf?"user":(UI.ltab||"coupon");return `<div class="login gut"><div class="lcard">
+function LOGIN(){const msg=UI.loginMsg;UI.loginMsg="";const lf=LFEST;const tab=lf?"user":(UI.ltab||"user");return `<div class="login gut"><div class="lcard">
   <div class="lside">${BRAND("","var(--on-brand)")}
-   ${lf?`<h2>${esc(LFESTNAME||"Your fest")}</h2><ul><li>Team leaders register their students and follow their team</li><li>Judges enter marks by chest number</li><li>Use the username and password the convener gave you</li></ul>`:`<h2>Welcome.</h2><ul><li>Organisers enter with a coupon ID and can run any number of fests</li><li>Team leaders see only their team</li><li>Judges see only their mark sheet</li></ul>`}
+   ${lf?`${festLogo(LBRAND,76,"pubimg")}<h2>${esc(LFESTNAME||"Your fest")}</h2><ul><li>Team leaders register their students and follow their team</li><li>Judges enter marks by chest number</li><li>Use the username and password the convener gave you</li></ul>`:`<h2>Welcome.</h2><ul><li>Organisers create a free account and run any number of fests</li><li>Team leaders see only their team</li><li>Judges see only their mark sheet</li></ul>`}
    <div style="margin-top:auto;font-size:13px;opacity:.85">One login page, a different view for each role.</div></div>
   <form class="lform" onsubmit="event.preventDefault();${tab==="coupon"?"doCoupon()":"doLogin()"}">
    ${lf?`<div><div class="steps2">${esc(LFESTNAME||"")}</div><h2 style="margin-top:4px">Team leaders and judges</h2></div>`:`<button type="button" class="back" onclick="VIEW='landing';paint()">${ic("back")} Back to home</button>
    <div><h2>Log in</h2></div>
-   <div class="seg" role="tablist"><button type="button" role="tab" aria-selected="${tab==="coupon"}" onclick="UI.ltab='coupon';paint()">Organiser</button><button type="button" role="tab" aria-selected="${tab==="user"}" onclick="UI.ltab='user';paint()">Judge or team leader</button></div>`}
+   <div class="seg" role="tablist"><button type="button" role="tab" aria-selected="${tab==="user"}" onclick="UI.ltab='user';paint()">Username</button><button type="button" role="tab" aria-selected="${tab==="coupon"}" onclick="UI.ltab='coupon';paint()">Coupon ID</button></div>`}
    ${tab==="coupon"?`<p class="hint" style="margin:0">Organisers enter with the coupon ID they were given.</p>
    <label class="f">Enter coupon ID<input id="lc" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="e.g. abcd1234" style="font-family:var(--mono);font-size:17px;letter-spacing:.06em"></label>
    <div id="lerr">${msg?`<div class="msg bad">${esc(msg)}</div>`:""}</div>
-   <button class="btn lg" type="submit" id="lbtn">Enter ${ic("arrow")}</button>`:`<p class="hint" style="margin:0">Enter the username and password the convener gave you.</p>
+   <button class="btn lg" type="submit" id="lbtn">Enter ${ic("arrow")}</button>`:`<p class="hint" style="margin:0">${lf?"Enter the username and password the convener gave you.":"Organisers, team leaders and judges log in here."}</p>
    <label class="f">Username<input id="lu" autocomplete="username" autocapitalize="none" spellcheck="false"></label>
    <label class="f pw">Password<input id="lp" type="password" autocomplete="current-password"><button type="button" onclick="const i=document.getElementById('lp');i.type=i.type==='password'?'text':'password';this.textContent=i.type==='password'?'Show':'Hide'">Show</button></label>
    <div id="lerr">${msg?`<div class="msg bad">${esc(msg)}</div>`:""}</div>
    <button class="btn lg" type="submit" id="lbtn">Log in ${ic("arrow")}</button>`}
-   <p class="hint" style="margin:0">${tab==="coupon"?"Don't have a coupon ID? Ask the Mehfil team.":"Forgot your password? Ask the convener."}${lf?"":` Just looking around? <a href="#" onclick="startDemo();return false" style="color:var(--brand);font-weight:600">Try the demo</a>.`}</p>
+   ${lf?"":`<div class="freebox"><span class="freetag">Free</span><div><b>New organiser?</b><br><small>Create your free account in a minute.</small></div><button type="button" class="btn ghost" onclick="VIEW='signup';paint();window.scrollTo({top:0})">Sign up free</button></div>`}
+   <p class="hint" style="margin:0">${tab==="coupon"?"Have a coupon ID from the Mehfil team? Enter it here.":lf?"Forgot your password? Ask the convener.":"Forgot your password? Organisers can ask the Mehfil team; others, the convener."}${lf?"":` Just looking around? <a href="#" onclick="startDemo();return false" style="color:var(--brand);font-weight:600">Try the demo</a>.`}</p>
+  </form></div></div>`}
+
+function SIGNUP(){return `<div class="login gut"><div class="lcard">
+  <div class="lside">${BRAND("","var(--on-brand)")}
+   <span class="freebig">100% Free</span>
+   <h2>Run your fest on Mehfil.</h2><ul><li>Any number of fests from one account</li><li>Logins for team leaders and judges</li><li>Live results, certificates and a public website</li></ul>
+   <div style="margin-top:auto;font-size:13px;opacity:.85">Free for madrasas, schools and colleges.</div></div>
+  <form class="lform" onsubmit="event.preventDefault();doSignup()">
+   <button type="button" class="back" onclick="VIEW='landing';paint()">${ic("back")} Back to home</button>
+   <div><h2>Create a free account</h2><p class="hint" style="margin:6px 0 0">For fest organisers. Team leaders and judges get their login from you later.</p></div>
+   <label class="f">Your name<input id="su_n" autocomplete="name" maxlength="60"></label>
+   <label class="f">Institution<input id="su_i" maxlength="80" placeholder="Your madrasa, school or college"></label>
+   <div class="row" style="gap:12px"><label class="f" style="flex:1 1 180px">WhatsApp number<input id="su_ph" type="tel" inputmode="tel" autocomplete="tel" maxlength="15" placeholder="10-digit number"></label><label class="f" style="flex:1 1 160px">Place (optional)<input id="su_pl" maxlength="60"></label></div>
+   <label class="f">Choose a username<input id="su_u" autocomplete="username" autocapitalize="none" spellcheck="false" maxlength="30" placeholder="e.g. greenvalley.fest"></label>
+   <label class="f pw">Choose a password<input id="su_p" type="password" autocomplete="new-password" placeholder="At least 6 characters"><button type="button" onclick="const i=document.getElementById('su_p');i.type=i.type==='password'?'text':'password';this.textContent=i.type==='password'?'Show':'Hide'">Show</button></label>
+   <div id="lerr"></div>
+   <button class="btn lg" type="submit" id="lbtn">Create my free account ${ic("arrow")}</button>
+   <p class="hint" style="margin:0">Already have an account? <a href="#" onclick="VIEW='login';UI.ltab='user';paint();return false" style="color:var(--brand);font-weight:600">Log in</a>. Just looking around? <a href="#" onclick="startDemo();return false" style="color:var(--brand);font-weight:600">Try the demo</a>.</p>
   </form></div></div>`}
 
 /* =========================================================
@@ -1212,7 +1350,7 @@ function LOGIN(){const msg=UI.loginMsg;UI.loginMsg="";const lf=LFEST;const tab=l
 const PG={};
 
 /* ---- all fests (main account) ---- */
-PG.fests=()=>{const del=UI.delFest;return `${head(ME.role==="org"?"My fests":"All fests",ME.role==="org"?"Create as many fests as you like with your coupon. Open one to manage it.":"Every fest on Mehfil, from every coupon.")}
+PG.fests=()=>{const del=UI.delFest;return `${head(ME.role==="org"?"My fests":"All fests",ME.role==="org"?"Create as many fests as you like, free. Open one to manage it.":"Every fest on Mehfil, from every coupon.")}
   <div class="panel" style="border:2px solid var(--brand)"><h3 style="display:flex;gap:8px;align-items:center">${ic("plus")} Create a new fest</h3>
    <div class="row"><label class="f">Fest name<input id="nf_n" placeholder="e.g. Milad Fest 2027" autocomplete="off" maxlength="60" onkeydown="if(event.key==='Enter')newFest()"></label><button class="btn lg" id="nf_b" onclick="newFest()">Create fest ${ic("arrow")}</button></div></div>
   ${FESTLIST.length?`<div class="grid" style="margin-top:16px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))">${FESTLIST.map(f=>`<div class="stat"><b style="font-size:20px">${esc(f.name)}</b><span>Created ${fmtDate(f.created)}${ME.role==="owner"&&f.by?` · ${String(f.by).startsWith("c:")?"coupon "+esc(String(f.by).slice(2)):esc(f.by)}`:""}</span>
@@ -1228,11 +1366,14 @@ async function delFest(id){const f=FESTLIST.find(x=>x.id===id);const v=(document
 
 /* ---- coupons (master login) ---- */
 PG.coupons=()=>{const L=UI.coupons;if(!L){loadCoupons();return `${head("Coupons","Organisers enter with a coupon ID. Each coupon can run any number of fests.")}<div class="panel">Loading…</div>`}
-  return `${head("Coupons","Organisers enter with a coupon ID. Each coupon can run any number of fests. Turning a coupon off logs its organisers out.")}
-  <div class="panel"><h3>New coupon</h3><div class="row"><label class="f">Coupon ID<input id="cn_c" maxlength="20" autocapitalize="none" spellcheck="false" value="${genPass()}"></label><label class="f">Who it's for (optional)<input id="cn_l" maxlength="40" placeholder="e.g. Noorul Huda Madrasa"></label><button class="btn" onclick="addCoupon()">Create coupon</button></div></div>
+  return `${head("Organisers","Free accounts and coupon IDs. Each can run any number of fests. Turning a coupon off logs its organisers out.")}
+  <div class="panel"><h3>New coupon</h3><div class="row"><label class="f">Coupon ID<input id="cn_c" maxlength="20" autocapitalize="none" spellcheck="false" value="${genPass()}"></label><label class="f">Who it's for (optional)<input id="cn_l" maxlength="40" placeholder="e.g. Green Valley School"></label><button class="btn" onclick="addCoupon()">Create coupon</button></div></div>
   <div class="panel"><div class="tbl"><table><tr><th>Coupon ID</th><th>For</th><th class="num">Fests</th><th>Status</th><th></th></tr>${L.map(c=>`<tr><td><code class="k">${esc(c.code)}</code></td><td>${esc(c.label)}</td><td class="num">${c.fests}</td><td>${c.active?'<span class="pill ok">Active</span>':'<span class="pill bad">Off</span>'}</td>
-   <td><button class="btn ${c.active?"ghost":""} sm" onclick="setCoupon('${esc(c.code)}',${!c.active})">${c.active?"Turn off":"Turn on"}</button></td></tr>`).join("")}</table></div></div>`};
-async function loadCoupons(){try{const r=await api("coupons");UI.coupons=r.coupons;softPaint()}catch(e){toast(e.message)}}
+   <td><button class="btn ${c.active?"ghost":""} sm" onclick="setCoupon('${esc(c.code)}',${!c.active})">${c.active?"Turn off":"Turn on"}</button></td></tr>`).join("")}</table></div></div>
+  <div class="panel"><div class="row" style="justify-content:space-between;align-items:center"><div><h3 style="margin:0">Free sign-up</h3><p class="hint" style="margin:4px 0 0">${UI.signup===false?"Closed. New organisers can't create accounts; coupons still work.":"Open. Anyone can create a free organiser account."}</p></div>${UI.signup==null?"":`<button class="btn ${UI.signup?"ghost":""}" onclick="setSignup(${!UI.signup})">${UI.signup?"Close sign-up":"Open sign-up"}</button>`}</div></div>
+  <div class="panel"><h3>Free accounts</h3><p class="hint">Organisers who signed up on the site, newest first.</p>${!UI.orgs?`<p class="hint">Loading…</p>`:UI.orgs.length?`<div class="tbl"><table><tr><th>Name</th><th>Institution</th><th>WhatsApp</th><th>Place</th><th>Username</th><th class="num">Fests</th><th>Joined</th></tr>${UI.orgs.map(o=>`<tr><td>${esc(o.name)}</td><td>${esc(o.inst)}</td><td>${esc(o.phone)}</td><td>${esc(o.place)}</td><td><code class="k">${esc(o.u)}</code></td><td class="num">${o.fests}</td><td>${esc(fmtDate(o.created))}</td></tr>`).join("")}</table></div>`:`<p class="hint" style="margin:0">No sign-ups yet.</p>`}</div>`};
+async function loadCoupons(){try{const r=await api("coupons");UI.coupons=r.coupons;softPaint();const o=await api("organisers");UI.orgs=o.organisers;UI.signup=o.signup!==false;softPaint()}catch(e){toast(e.message)}}
+async function setSignup(open){try{const r=await api("setSignup",{open});UI.signup=r.signup;toast(open?"Sign-up is open":"Sign-up is closed");paint()}catch(e){toast(e.message)}}
 async function addCoupon(){const c=document.getElementById("cn_c").value.trim().toLowerCase(),l=document.getElementById("cn_l").value.trim();if(!/^[a-z0-9]{4,20}$/.test(c))return toast("Use 4 to 20 letters or numbers");
   try{const r=await api("addCoupon",{code:c,label:l});UI.coupons=r.coupons;DIRTY={};toast("Coupon created");paint()}catch(e){toast(e.message)}}
 async function setCoupon(code,on){try{const r=await api("setCoupon",{code,active:on});UI.coupons=r.coupons;toast(on?"Coupon turned on":"Coupon turned off");paint()}catch(e){toast(e.message)}}
@@ -1297,9 +1438,11 @@ function listEditor(kind,title,hint,extra){const L=UI.dr[kind];return `<div clas
   <div class="row" style="margin-top:12px"><label class="f">Add ${extra}<input id="add_${kind}" maxlength="40" placeholder="Name" onkeydown="if(event.key==='Enter')drAdd('${kind}')"></label><button class="btn ghost" onclick="drAdd('${kind}')">${ic("plus",16)} Add</button><button class="btn" onclick="drSave('${kind}')">Save ${title.toLowerCase()}</button></div></div>`}
 PG.settings=()=>{if(!UI.dr)draftInit();const s=UI.dr.sched;const slots=[10,15,20,30,45,60,90];
   return `${head("Fest settings","Set up the teams, categories, stages and timing for this fest.")}
+  ${brandPanel()}
   ${listEditor("teams","Teams","Houses, groups or institutions that compete for points. Tap the colour to change it.","a team")}
   ${listEditor("cats","Categories","Age or class groups. Chest numbers in each category start after the number you set (for example 100 gives 101, 102…).","a category")}
   ${listEditor("stages","Stages","Places where programmes happen at the same time.","a stage")}
+  ${ptsPanel()}
   ${listEditor("subs","Sub-fests","Groups of programmes, for example stage and off-stage events.","a sub-fest")}
   <div class="panel"><h3>Schedule</h3><p class="hint">How many days the fest runs and how long each programme slot is.</p>
    <div class="row"><label class="f">Days<select onchange="UI.dr.sched.days=+this.value">${[1,2,3,4,5,6,7].map(d=>`<option ${d===s.days?"selected":""}>${d}</option>`).join("")}</select></label>
@@ -1416,22 +1559,59 @@ PG.sched=()=>{const cf=conflicts(),bad=new Set(cf.flatMap(c=>[c.a,c.b]));const a
      ${admin?`<span style="display:flex;gap:6px;flex-wrap:wrap">${D.cfg.days>1?`<select aria-label="Day" style="width:84px" onchange="act('setTime',{pid:'${p.id}',day:+this.value,t:${s.t}})">${days.map(x=>`<option value="${x}" ${x===s.day?"selected":""}>Day ${x}</option>`).join("")}</select>`:""}<select aria-label="Time" style="width:108px" onchange="act('setTime',{pid:'${p.id}',day:${s.day},t:+this.value})">${(times.includes(s.t)?times:[...times,s.t].sort((a,b)=>a-b)).map(t=>`<option value="${t}" ${t===s.t?"selected":""}>${fmtMin(t)}</option>`).join("")}</select></span>`:`<span class="chest">${fmtMin(s.t)}</span>`}
      <div><b>${esc(p.n)}</b><br><small style="color:var(--muted)">${esc(catName(D,p.cat))} · ${p.parts.length} entries</small></div></div>`}).join("")}</div>`}).join("")}</div>`}).join("")}`};
 
+/* ---- fest logo and colour ---- */
+const BRAND_SW=["#1F78D1","#0E7490","#0B7A55","#15803D","#B91C1C","#9F1239","#C2410C","#B45309","#6D28D9","#7E22CE","#BE185D","#0F2340"];
+function brandPanel(){if(!UI.brd)UI.brd={color:D.brand.color||"",logo:D.brand.logo||""};const b=UI.brd;
+  return `<div class="panel"><h3>Logo and colour</h3><p class="hint">Your fest's own logo and colour. Your pages, the public website, the big screen, the login link, certificates and ID cards all follow them.</p>
+   <div class="brandrow"><div class="logobox">${b.logo?`<img src="${safeLogo(b.logo)}" alt="Fest logo">`:`<span>${ic("media",28)}</span>`}</div>
+    <div style="display:flex;flex-direction:column;gap:8px;min-width:0;flex:1"><label class="btn ghost sm" style="cursor:pointer;align-self:flex-start">${ic("plus",14)} ${b.logo?"Change logo":"Upload logo"}<input type="file" accept="image/*" hidden onchange="pickLogo(this)"></label>${b.logo?`<button class="btn ghost sm" style="align-self:flex-start" onclick="UI.brd.logo='';paint()">Remove logo</button>`:""}<span class="hint" style="margin:0">A square logo with a clear background works best.</span></div></div>
+   <p class="hint" style="margin:16px 0 8px">Colour</p><div class="chips">${BRAND_SW.map(c=>`<button class="swatch" style="background:${c}" aria-label="Colour ${c}" aria-pressed="${(b.color||"").toUpperCase()===c}" onclick="UI.brd.color='${c}';paint()"></button>`).join("")}<label class="swatch custom" title="Any colour"><input type="color" value="${b.color||"#1F78D1"}" onchange="UI.brd.color=this.value.toUpperCase();paint()" aria-label="Choose any colour"></label><button class="chip" aria-pressed="${!b.color}" onclick="UI.brd.color='';paint()">Mehfil blue</button></div>
+   <p class="hint" style="margin:10px 0 0">You see the colour here right away. Press Save to apply it for everyone.</p>
+   <div class="row" style="margin-top:14px"><button class="btn" onclick="saveBrand()">Save logo and colour</button></div></div>`}
+function pickLogo(inp){const f=inp.files&&inp.files[0];if(!f)return;if(!/^image\//.test(f.type))return toast("Please choose an image file");
+  const rd=new FileReader();rd.onload=()=>{const im=new Image();im.onload=()=>{let out="";for(const [sz,type,q] of [[256,"image/png"],[192,"image/png"],[160,"image/webp",.9],[160,"image/jpeg",.88],[128,"image/jpeg",.8]]){const k=Math.min(1,sz/Math.max(im.width,im.height));const cv=document.createElement("canvas");cv.width=Math.max(1,Math.round(im.width*k));cv.height=Math.max(1,Math.round(im.height*k));const x=cv.getContext("2d");if(type==="image/jpeg"){x.fillStyle="#fff";x.fillRect(0,0,cv.width,cv.height)}x.drawImage(im,0,0,cv.width,cv.height);const u=cv.toDataURL(type,q);if(u.startsWith("data:"+type)&&u.length<=46000){out=u;break}}
+    if(!out)return toast("This image is too detailed. Try a simpler logo.");UI.brd.logo=out;paint()};im.onerror=()=>toast("Couldn't read this image");im.src=rd.result};rd.readAsDataURL(f)}
+function saveBrand(){const b=UI.brd||{};if(act("brand",{color:b.color||"",logo:b.logo||""})){UI.brd=null;toast("Logo and colour saved")}}
+function ptsPanel(){const p=D.cfg.pts||DEFPTS;const n=(id,v,l)=>`<label class="f mini-f">${l}<input id="${id}" type="number" inputmode="numeric" min="0" max="100" value="${v}"></label>`;
+  return `<div class="panel"><h3>Points and grades</h3><p class="hint">How each published result adds points to the team and the student. Changes apply to all results, including ones already published.</p>
+   <p class="hint" style="margin:12px 0 6px"><b>Points for places</b></p><div class="row">${n("pt_p1",p.p[0],"1st place")}${n("pt_p2",p.p[1],"2nd place")}${n("pt_p3",p.p[2],"3rd place")}</div>
+   <p class="hint" style="margin:14px 0 6px"><b>Grade from average mark</b> (out of 100)</p><div class="row">${n("pt_cA",p.cut.A,"Grade A from")}${n("pt_cB",p.cut.B,"Grade B from")}${n("pt_cC",p.cut.C,"Grade C from")}</div>
+   <p class="hint" style="margin:14px 0 6px"><b>Extra points for grades</b></p><div class="row">${n("pt_gA",p.g.A,"Grade A")}${n("pt_gB",p.g.B,"Grade B")}${n("pt_gC",p.g.C,"Grade C")}</div>
+   <div class="row" style="margin-top:14px"><button class="btn" onclick="savePts()">Save points</button><button class="btn ghost" onclick="act('cfg',{key:'pts',val:DEFPTS})&&toast('Back to the usual points')">Use the usual points</button></div></div>`}
+function savePts(){const g=id=>+document.getElementById(id).value;const v={p:[g("pt_p1"),g("pt_p2"),g("pt_p3")],g:{A:g("pt_gA"),B:g("pt_gB"),C:g("pt_gC")},cut:{A:g("pt_cA"),B:g("pt_cB"),C:g("pt_cC")}};
+  if(![...v.p,v.g.A,v.g.B,v.g.C,v.cut.A,v.cut.B,v.cut.C].every(x=>Number.isFinite(x)&&x>=0&&x<=100))return toast("Use numbers from 0 to 100");
+  if(!(v.cut.A>v.cut.B&&v.cut.B>v.cut.C))return toast("Grade A must start higher than B, and B higher than C");
+  if(act("cfg",{key:"pts",val:v}))toast("Points saved")}
+
+/* ---- admin mark entry ---- */
+PG.mentry=()=>{const list=D.progs.filter(p=>p.status==="pending"&&p.parts.length);const cur=list.find(p=>p.id===UI.mp)||list[0];
+  const slots=cur?(cur.judges.length?cur.judges.filter(j=>!cur.subm[j]):["adm"]):[];if(cur&&!slots.includes(UI.mj))UI.mj=slots[0]||"";
+  return `${head("Mark entry","Enter marks yourself: copy a judge's paper mark sheet, or give the marks directly for a programme that has no judges.")}
+  <div class="panel jlist">${list.map(p=>{const s=slotOf(p.id);const left=p.judges.length?p.judges.filter(j=>!p.subm[j]).length:1;return `<button class="jitem${cur&&cur.id===p.id?" on":""}" onclick="UI.mp='${p.id}';UI.mj='';paint();document.getElementById('msheet').scrollIntoView({behavior:'smooth'})"><span><b>${esc(p.n)}</b><small>${esc(catName(D,p.cat))} · ${p.parts.length} entries${s?" · "+slotLabel(s):""}</small></span><span class="pill wait">${p.judges.length?left+" of "+p.judges.length+" to enter":"No judges"}</span></button>`}).join("")||`<p class="hint" style="margin:0">Nothing is waiting for marks. Programmes appear here once they have students and their marks aren't complete.</p>`}</div>
+  ${cur?`<div class="panel" id="msheet"><h3>${esc(cur.n)} <small style="color:var(--muted);font:500 13px var(--body)">${esc(catName(D,cur.cat))}</small></h3>
+   ${slots.length?`<label class="f" style="max-width:340px">Enter marks for<select id="mj_sel" onchange="UI.mj=this.value;paint()">${slots.map(j=>`<option value="${esc(j)}" ${j===UI.mj?"selected":""}>${j==="adm"?"Admin (direct marks)":esc(userName(j))}</option>`).join("")}</select></label>
+   <div class="tbl" style="margin-top:12px"><table><tr><th>Chest</th><th>Name</th>${cur.topic?"<th>Topic</th>":""}<th class="num">Mark (out of 100)</th></tr>${cur.parts.map(cid=>{const c=C(cid);return c?`<tr><td><span class="chest">${c.chest}</span></td><td>${esc(c.name)}</td>${cur.topic?`<td style="white-space:normal">${esc(cur.topics[cid]||"—")}</td>`:""}<td class="num"><input type="number" inputmode="decimal" min="0" max="100" step="0.5" id="am_${cid}" style="width:100px;text-align:right" aria-label="Mark for chest ${c.chest}"></td></tr>`:""}).join("")}</table></div>
+   <div class="row" style="margin-top:14px"><button class="btn lg" onclick="submitA('${cur.id}')" ${D.locks.fest?"disabled":""}>Save these marks</button></div><p class="hint" style="margin:10px 0 0">${UI.mj==="adm"?"These marks are the final marks for this programme.":"These count as this judge's marks."} Check carefully: they can't be changed after saving, but you can send the programme back from Score verification.</p>`
+   :`<div class="msg ok">All marks are in. Verify them on the Score verification page.</div>`}</div>`:""}`};
+function submitA(pid){const p=P(pid);const j=(document.getElementById("mj_sel")||{}).value||UI.mj;const marks={};for(const cid of p.parts){const el=document.getElementById("am_"+cid);const v=el?el.value:"";if(v===""||!(+v>=0&&+v<=100)){toast(`Chest ${(C(cid)||{}).chest}: enter a mark from 0 to 100`);if(el)el.focus();return}marks[cid]=+v}
+  if(act("marks",{pid,j,marks})){UI.mj="";toast("Marks saved")}}
+
 /* ---- verification ---- */
 PG.verify=()=>{const list=D.progs.filter(p=>p.status!=="published"&&p.judges.length);
   return `${head("Score verification","Programmes arrive here once every judge has submitted. Differences of more than 15 marks between judges are flagged in red.")}
   ${list.map(p=>{const rows=calc(p);const js=p.judges;const done=js.filter(j=>p.subm[j]).length;
    return `<div class="panel"><div class="row" style="justify-content:space-between;align-items:center"><h3 style="margin:0">${esc(p.n)} <small style="color:var(--muted);font:500 13px var(--body)">${esc(catName(D,p.cat))}</small></h3>${statPill(p.status)}</div>
-   <p class="hint" style="margin:6px 0 12px">Submitted: ${done}/${js.length} · ${js.map(j=>`${esc(userName(j))} ${p.subm[j]?"✓":"…"}`).join(" · ")}</p>
+   <p class="hint" style="margin:6px 0 12px">${p.status==="pending"?`<button class="btn ghost sm" style="float:right" onclick="UI.mp='${p.id}';go('mentry')">${ic("mentry",14)} Enter marks</button>`:""}Submitted: ${done}/${js.length} · ${js.map(j=>`${esc(userName(j))} ${p.subm[j]?"✓":"…"}`).join(" · ")}</p>
    ${p.status==="pending"?"":`<div class="tbl"><table><tr><th>Rank</th><th>Chest</th><th>Name</th>${js.map((j,i)=>`<th class="num" title="${esc(userName(j))}">J${i+1}</th>`).join("")}<th class="num">Average</th><th>Grade</th><th>Spread</th></tr>
     ${rows.map(r=>{const c=C(r.cid)||{name:"?",chest:"?"};return `<tr class="${r.spread>15?"flag":""}"><td>${r.rank}</td><td><span class="chest">${c.chest}</span></td><td>${esc(c.name)}</td>${js.map(j=>`<td class="num">${(p.marks[j]||{})[r.cid]??"—"}</td>`).join("")}<td class="num"><b>${r.avg}</b></td><td>${r.grade}</td><td>${r.spread>15?`<span class="pill bad">${r.spread} mismatch</span>`:r.spread}</td></tr>`}).join("")}</table></div>
     <div class="row" style="margin-top:12px">${p.status==="scored"?`<button class="btn" onclick="act('verify',{pid:'${p.id}'})&&toast('Scores verified')">${ic("verify")} Verify scores</button><button class="btn ghost" onclick="act('rescore',{pid:'${p.id}'})&&toast('Sent back to the judges')">Send back to judges</button>`:""}${p.status==="verified"?`<button class="btn alt" onclick="act('publish',{pids:['${p.id}']})&&toast('Published to the leaderboard and public site')">Publish result</button>`:""}</div>`}</div>`}).join("")||`<div class="panel">${D.progs.length?"Every result with judges has been published 🎉":"No programmes yet."}</div>`}
-  ${D.progs.some(p=>!p.judges.length)?`<div class="panel"><h3>Programmes without judges</h3><p class="hint">${D.progs.filter(p=>!p.judges.length).map(p=>esc(p.n)).join(", ")}. Assign judges on the Programmes page.</p></div>`:""}`};
+  ${D.progs.some(p=>!p.judges.length)?`<div class="panel"><h3>Programmes without judges</h3><p class="hint">${D.progs.filter(p=>!p.judges.length).map(p=>esc(p.n)).join(", ")}. Assign judges on the Programmes page, or enter the marks yourself on the Mark entry page.</p></div>`:""}`};
 
 /* ---- results ---- */
 PG.results=()=>{const tp=teamPts();const ord=Object.entries(tp).sort((a,b)=>b[1]-a[1]);const ind={};
   D.progs.filter(p=>p.status==="published").forEach(p=>calc(p).forEach(r=>ind[r.cid]=(ind[r.cid]||0)+r.pts));const top=Object.entries(ind).sort((a,b)=>b[1]-a[1]).slice(0,10);
   const ver=D.progs.filter(p=>p.status==="verified");
-  return `${head("Results and points","1st place 5 points, 2nd 3, 3rd 1. Grade A adds 2 and grade B adds 1. Equal averages share a place. Only published results count.",ver.length?`<button class="btn alt" onclick="act('publish',{pids:${esc(JSON.stringify(ver.map(p=>p.id)))}})&&toast('All verified results published')">Publish all ${ver.length} verified</button>`:"")}
+  return `${head("Results and points",ptsText(D),ver.length?`<button class="btn alt" onclick="act('publish',{pids:${esc(JSON.stringify(ver.map(p=>p.id)))}})&&toast('All verified results published')">Publish all ${ver.length} verified</button>`:"")}
   <div class="panel"><h3>Live leaderboard</h3>${ord.length?bars(Object.fromEntries(ord),k=>teamOf(k).color,k=>teamOf(k).name):`<p class="hint">Add teams in Fest settings.</p>`}</div>
   <div class="two" style="margin-top:16px"><div class="panel"><h3>Top individuals</h3>${top.length?`<div class="tbl"><table><tr><th>Chest</th><th>Name</th><th>Team</th><th class="num">Points</th></tr>${top.map(([id,p])=>{const c=C(id);return c?`<tr><td><span class="chest">${c.chest}</span></td><td>${esc(c.name)}</td><td>${teamBadge(c.team)}</td><td class="num">${p}</td></tr>`:""}).join("")}</table></div>`:`<p class="hint" style="margin:0">None yet</p>`}</div>
   <div class="panel"><h3>Published results</h3><div class="news">${D.progs.filter(p=>p.status==="published").map(p=>`<p><button class="btn ghost sm" style="float:right;margin-left:8px" ${D.locks.results?"disabled title='Result lock is on'":""} onclick="act('unpublish',{pid:'${p.id}'})&&toast('Withdrawn. Find it on the Score verification page.')">${ic(D.locks.results?"lock":"back",14)} Withdraw</button><b>${esc(p.n)}</b> <small style="color:var(--muted)">${esc(catName(D,p.cat))}</small><br>${calc(p).filter(r=>r.rank<=3).map(r=>`${["🥇","🥈","🥉"][r.rank-1]} ${esc((C(r.cid)||{}).name||"")}`).join(" · ")}</p>`).join("")||"<p>None yet</p>"}</div></div></div>`};
@@ -1457,7 +1637,7 @@ function linksPanel(){const L=D.locks;return `<div class="panel"><div class="row
 const SITE_URL=()=>location.protocol.startsWith("http")&&!/claude|anthropic/.test(location.host)?location.origin+location.pathname:"";
 const certCode=(c,p)=>`${c.chest}-${p.id.slice(0,5).toUpperCase()}`;
 const verifyUrl=code=>SITE_URL()?`${SITE_URL()}?f=${encodeURIComponent(FID)}&v=${encodeURIComponent(code)}`:code;
-function certHTML(c,p,r){const code=certCode(c,p);const win=r.rank<=3;return `<div class="cert t${D.tpl.cert}"><div class="k">${esc(D.site.title).toUpperCase()}</div><h4>${win?"Certificate of Merit":"Certificate of Participation"}</h4><p>This is to certify that</p><div class="nm">${esc(c.name)}</div>
+function certHTML(c,p,r){const code=certCode(c,p);const win=r.rank<=3;return `<div class="cert t${D.tpl.cert}">${festLogo(D.brand,64,"certlogo")}<div class="k">${esc(D.site.title).toUpperCase()}</div><h4>${win?"Certificate of Merit":"Certificate of Participation"}</h4><p>This is to certify that</p><div class="nm">${esc(c.name)}</div>
   <p>${win?`won <b>${ordn(r.rank)} place with grade ${r.grade}</b>`:`took part and earned <b>grade ${r.grade}</b>`} in <b>${esc(p.n)}</b>, ${esc(catName(D,c.cat))} category${D.cfg.teams.length>1?`, representing team ${esc(teamOf(c.team).name)}`:""}.</p>
   <div class="qr"><span class="qrx" data-q="${esc(verifyUrl(code))}"></span><span>Verification code<br><b style="font-family:var(--mono);color:#14241f">${code}</b><br>Scan to check it on the fest website</span></div></div>`}
 PG.docs=()=>{const sc=scope();const tabs=[["cert","Certificates"],["id","ID cards"],["poster","Posters"]].filter(t=>!(sc&&t[0]==="poster"));if(!tabs.some(t=>t[0]===UI.dt))UI.dt="cert";
@@ -1473,7 +1653,7 @@ PG.docs=()=>{const sc=scope();const tabs=[["cert","Certificates"],["id","ID card
   if(UI.dt==="id"){const list=D.cands.filter(c=>(!sc||c.team===sc)&&(!UI.idt||c.team===UI.idt)).sort((a,b)=>a.chest-b.chest);
     body=`<div class="panel"><div class="row" style="align-items:center">${sc?"":`<div class="chips" style="flex:1"><button class="chip" aria-pressed="${!UI.idt}" onclick="UI.idt='';paint()">All</button>${D.cfg.teams.map(t=>`<button class="chip" aria-pressed="${UI.idt===t.id}" onclick="UI.idt='${t.id}';paint()">${esc(t.name)}</button>`).join("")}</div>`}
      <button class="btn" ${list.length?"":"disabled"} onclick="printEl('idcards')">${ic("print")} Print ${list.length} card${list.length===1?"":"s"}</button></div></div>
-     <div class="idgrid" id="idcards">${list.map(c=>`<div class="idc"><div class="tp" style="background:${teamOf(c.team).color}"><span>${esc(D.site.title)}</span><span>${esc(teamOf(c.team).name)}</span></div><div class="big">${c.chest}</div><div class="bd"><b>${esc(c.name)}</b><br>${esc(catName(D,c.cat))}<br><small>${D.progs.filter(p=>p.parts.includes(c.id)).map(p=>esc(p.n)+(slotOf(p.id)?" · "+slotLabel(slotOf(p.id)):"")).join("<br>")||"No programmes"}</small></div></div>`).join("")}</div>`}
+     <div class="idgrid" id="idcards">${list.map(c=>`<div class="idc"><div class="tp" style="background:${teamOf(c.team).color}"><span style="display:flex;align-items:center;gap:6px;min-width:0">${festLogo(D.brand,18,"idlogo")}${esc(D.site.title)}</span><span>${esc(teamOf(c.team).name)}</span></div><div class="big">${c.chest}</div><div class="bd"><b>${esc(c.name)}</b><br>${esc(catName(D,c.cat))}<br><small>${D.progs.filter(p=>p.parts.includes(c.id)).map(p=>esc(p.n)+(slotOf(p.id)?" · "+slotLabel(slotOf(p.id)):"")).join("<br>")||"No programmes"}</small></div></div>`).join("")}</div>`}
   if(UI.dt==="poster"){const winners=[];pubs.forEach(p=>calc(p).filter(r=>r.rank<=3).forEach(r=>{const c=C(r.cid);if(c)winners.push({p,r,c})}));const k=Math.min(UI.pe||0,Math.max(0,winners.length-1));
     body=`<div class="panel"><div class="row"><label class="f">Winner<select onchange="UI.pe=+this.value;paint()">${winners.map((e,i)=>`<option value="${i}" ${i===k?"selected":""}>${esc(e.c.name)} · ${esc(e.p.n)} · ${ordn(e.r.rank)} place</option>`).join("")||"<option>No winners yet</option>"}</select></label></div>
      <p class="hint" style="margin:14px 0 8px">Template</p><div class="chips">${["Plain","Circles","Stripes"].map((t,i)=>`<button class="chip" aria-pressed="${D.tpl.poster===i}" onclick="act('tpl',{poster:${i}})">${t}</button>`).join("")}</div></div>
@@ -1490,7 +1670,8 @@ function printEl(id){const el=document.getElementById(id);if(!el)return;renderQR
     pr.innerHTML="";pr.appendChild(cl);document.body.classList.add("printing");
     const done=()=>{document.body.classList.remove("printing");pr.innerHTML="";window.removeEventListener("afterprint",done)};window.addEventListener("afterprint",done);
     try{window.print()}catch(e){done();toast("Printing isn't available here.")}},350)}
-let LOGO_IMG=null;function logoImg(){if(LOGO_IMG)return LOGO_IMG;const m=getComputedStyle(document.documentElement).getPropertyValue("--logo-url").trim().match(/url\("?(.*?)"?\)$/);if(!m)return null;LOGO_IMG=new Image();LOGO_IMG.src=m[1];LOGO_IMG.onload=()=>{if(UI.dt==="poster")drawPoster()};return LOGO_IMG}
+let LOGO_IMG=null;let FLOGO=null;function festLogoImg(){const src=D&&D.brand&&safeLogo(D.brand.logo);if(!src)return null;if(FLOGO&&FLOGO.src===src)return FLOGO;FLOGO=new Image();FLOGO.onload=()=>{if(UI.dt==="poster")drawPoster()};FLOGO.src=src;return FLOGO}
+function logoImg(){if(LOGO_IMG)return LOGO_IMG;const m=getComputedStyle(document.documentElement).getPropertyValue("--logo-url").trim().match(/url\("?(.*?)"?\)$/);if(!m)return null;LOGO_IMG=new Image();LOGO_IMG.src=m[1];LOGO_IMG.onload=()=>{if(UI.dt==="poster")drawPoster()};return LOGO_IMG}
 function wrapText(x,text,maxW){const words=String(text).split(/\s+/);const lines=[];let cur="";words.forEach(w=>{const t=cur?cur+" "+w:w;if(x.measureText(t).width>maxW&&cur){lines.push(cur);cur=w}else cur=t});if(cur)lines.push(cur);return lines}
 function drawPoster(){const cv=document.getElementById("poster");const W=UI._poster;if(!cv||!W)return;const x=cv.getContext("2d");const col=teamOf(W.c.team).color;const tpl=D.tpl.poster;
   x.clearRect(0,0,1080,1080);x.fillStyle=col;x.fillRect(0,0,1080,1080);
@@ -1498,9 +1679,10 @@ function drawPoster(){const cv=document.getElementById("poster");const W=UI._pos
   if(tpl===1){x.fillStyle="rgba(255,255,255,.16)";[[900,170,230],[140,980,300],[980,860,120]].forEach(([cx,cy,r])=>{x.beginPath();x.arc(cx,cy,r,0,7);x.fill()})}
   if(tpl===2){x.save();x.strokeStyle="rgba(255,255,255,.09)";x.lineWidth=34;for(let i=-1080;i<2160;i+=90){x.beginPath();x.moveTo(i,0);x.lineTo(i+1080,1080);x.stroke()}x.restore()}
   x.fillStyle="#fff";x.textBaseline="alphabetic";
-  const L=logoImg();if(L&&L.complete&&L.naturalWidth){const o=document.createElement("canvas");o.width=o.height=120;const ox=o.getContext("2d");ox.drawImage(L,0,0,120,120);ox.globalCompositeOperation="source-in";ox.fillStyle="#fff";ox.fillRect(0,0,120,120);x.drawImage(o,80,78,84,84)}
+  const FL=festLogoImg();if(FL&&FL.complete&&FL.naturalWidth){x.save();x.fillStyle="#fff";x.beginPath();x.arc(122,120,52,0,7);x.fill();const k=Math.min(80/FL.naturalWidth,80/FL.naturalHeight);x.drawImage(FL,122-FL.naturalWidth*k/2,120-FL.naturalHeight*k/2,FL.naturalWidth*k,FL.naturalHeight*k);x.restore();x.fillStyle="#fff"}
+  else{const L=logoImg();if(L&&L.complete&&L.naturalWidth){const o=document.createElement("canvas");o.width=o.height=120;const ox=o.getContext("2d");ox.drawImage(L,0,0,120,120);ox.globalCompositeOperation="source-in";ox.fillStyle="#fff";ox.fillRect(0,0,120,120);x.drawImage(o,80,78,84,84)}}
   x.font="700 30px Sora, system-ui, sans-serif";x.globalAlpha=.92;x.fillText(D.site.title.toUpperCase().slice(0,42),184,132);x.globalAlpha=1;
-  x.font="800 112px Sora, system-ui, sans-serif";x.fillText("Congratulations!",80,470);
+  let cs=112;x.font=`800 ${cs}px Sora, system-ui, sans-serif`;while(cs>70&&x.measureText("Congratulations!").width>920){cs-=4;x.font=`800 ${cs}px Sora, system-ui, sans-serif`}x.fillText("Congratulations!",80,470);
   x.font="800 76px Sora, system-ui, sans-serif";const nl=wrapText(x,W.c.name,920).slice(0,2);nl.forEach((l,i)=>x.fillText(l,80,600+i*88));
   x.font="600 38px Manrope, system-ui, sans-serif";x.globalAlpha=.92;x.fillText(`Chest ${W.c.chest}  ·  Team ${teamOf(W.c.team).name}`,80,600+nl.length*88+20);x.globalAlpha=1;
   const pill=`${W.p.n}  ·  ${ordn(W.r.rank)} place  ·  Grade ${W.r.grade}`;x.font="700 38px Manrope, system-ui, sans-serif";const pw=Math.min(920,x.measureText(pill).width+80);
@@ -1540,7 +1722,7 @@ PG.site=()=>{const s=D.site;const url=SITE_URL()&&!DEMO?`${SITE_URL()}?f=${FID}`
     <div class="row" style="margin-top:14px;align-items:center"><span class="qrx big" data-q="${esc(url)}"></span><div style="flex:1;min-width:200px"><b>Big-screen display</b><p class="hint" style="margin:4px 0 10px">For a projector or TV in the hall: shows the leaderboard and latest results, refreshing by itself.</p><a class="btn ghost sm" href="${esc(url)}&screen=1" target="_blank" rel="noopener">${ic("screen",16)} Open big-screen view</a></div></div>`
     :`<p class="hint" style="margin:0">${DEMO?"In the demo there's no public link. On the live site each fest gets its own link and QR code here.":"The share link appears here on the live site."}</p>`}</div>
   <div class="panel"><div class="row"><label class="f">Title<input id="ws_t" value="${esc(s.title)}" maxlength="80"></label><label class="f">Tagline<input id="ws_g" value="${esc(s.tag)}" maxlength="120"></label></div>
-   <p class="hint" style="margin:16px 0 8px">Main colour</p><div class="chips">${COLORS.map((c,i)=>`<button class="swatch" style="background:${c}" aria-label="Colour ${i+1}" aria-pressed="${(UI.wsc??s.color)===i}" onclick="UI.wsc=${i};paint()"></button>`).join("")}</div>
+   <p class="hint" style="margin:16px 0 0">The site's colour and logo come from <a href="#" onclick="go('settings');return false" style="color:var(--brand);font-weight:600">Fest settings</a>.</p>
    <p class="hint" style="margin:16px 0 8px">Sections to show</p><div class="chips">${Object.entries({results:"Results",board:"Leaderboard",sched:"Schedule",news:"News and links",gallery:"Gallery",verify:"Certificate check"}).map(([k,l])=>`<label class="chk"><input type="checkbox" id="ws_${k}" ${s.sec[k]?"checked":""}>${l}</label>`).join("")}</div>
    <div class="row" style="margin-top:16px"><button class="btn" onclick="saveSite()">Save website</button></div>
    <p class="hint" style="margin:12px 0 0">Who can see the site is set on the Locks page.</p></div>`};
@@ -1666,8 +1848,8 @@ function PUBLIC_VIEW(){const pv=PUBV||{};
   if(!pv.preview&&pv.need)return `<div class="pubgate gut"><div class="gate"><div class="gt" style="background:${COLORS[0]}">${ic("lock",30)}<h1>${esc(pv.name||"Mehfil")}</h1><div style="opacity:.85;font-size:14px;margin-top:4px">Enter the access code to view this site</div></div>
    <form class="gb" onsubmit="event.preventDefault();pubUnlock()"><label class="f">Access code<input id="pc" type="password" autocomplete="off"></label><div id="pcmsg">${pv.bad?`<div class="msg bad">That code isn't right. Please try again.</div>`:""}</div><button class="btn lg" type="submit">${ic("unlock")} Open</button>
    <p class="hint" style="margin:0">Don't have the code? Ask your institution's fest convener.</p></form></div></div>`;
-  const S=pubS();if(!S)return `<div class="loading">${mark(54)}<div class="spin"></div><p>Loading results…</p></div>`;
-  const s=S.site,col=COLORS[s.color]||COLORS[0];const hideRes=(pv.preview?S.locks.pub:pv.pub||S.locks.pub)==="results";
+  const S=pubS();if(!S)return `<div class="loading">${LOADER()}<p>Loading results…</p></div>`;
+  const s=S.site,col=S.brand&&/^#[0-9A-Fa-f]{6}$/.test(S.brand.color||"")?brandSolid(S.brand.color):(COLORS[s.color]||COLORS[0]);const hideRes=(pv.preview?S.locks.pub:pv.pub||S.locks.pub)==="results";
   const T=[["results","Results"],["board","Leaderboard"],["sched","Schedule"],["news","News"],["gallery","Gallery"],["verify","Certificate check"]].filter(([k])=>s.sec[k]);
   if(!T.some(t=>t[0]===pv.tab)&&T.length)pv.tab=T[0][0];let b="";const pubs=S.progs.filter(p=>p.status==="published").sort((a,b)=>(b.pubT||0)-(a.pubT||0));
   const tN=id=>tOf(S,id).name,tC=id=>tOf(S,id).color,tB=id=>`<span class="team"><span class="dot" style="background:${tC(id)}"></span>${esc(tN(id))}</span>`;
@@ -1679,7 +1861,7 @@ function PUBLIC_VIEW(){const pv=PUBV||{};
   else if(pv.tab==="gallery")b=`<div class="panel" style="margin-top:20px"><div class="gal">${S.gallery.map(g=>`<figure><img src="${g.src}" alt="${esc(g.cap)}" loading="lazy"><figcaption>${esc(g.cap)}</figcaption></figure>`).join("")||"No photos yet"}</div></div>`;
   else if(pv.tab==="verify")b=`<div class="panel" style="margin-top:20px;max-width:640px"><h3>Is this certificate genuine?</h3><p class="hint">Enter the code printed on the certificate, or scan its QR code.</p><div class="row"><label class="f">Code<input id="vc" placeholder="e.g. 214-K3XQ9" autocapitalize="characters" value="${esc(pv.v||"")}"></label><button class="btn" onclick="verifyCode()">Check</button></div><div id="vres"></div></div>`;
   return `${pv.preview?`<div class="prev gut"><b>Preview</b><span>This is what the public sees</span><button class="btn sm" style="margin-left:auto" onclick="VIEW='app';PUBV=null;paint()">${ic("back")} Back</button></div>`:""}
-  <div class="pub-top" style="background:${col}"><div class="in gut wrap"><div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center"><div><div style="opacity:.85;font-size:14px">${esc(s.tag)}</div><h1>${esc(s.title)}</h1></div></div>
+  <div class="pub-top" style="background:${col}"><div class="in gut wrap"><div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center">${festLogo(S.brand,72,"pubimg")}<div style="min-width:0"><div style="opacity:.85;font-size:14px">${esc(s.tag)}</div><h1>${esc(s.title)}</h1></div></div>
    <div class="pub-tabs">${T.map(([k,l])=>`<button aria-current="${k===pv.tab}" onclick="PUBV.tab='${k}';paint()">${l}</button>`).join("")}</div></div></div>
   <div class="gut wrap" style="padding-block:0 48px">${b}</div>
   <footer class="foot gut"><div class="in wrap" style="justify-content:center"><span style="display:flex;align-items:center;gap:8px">${mark(20)} Powered by Mehfil</span></div></footer>`}
@@ -1688,10 +1870,10 @@ function pubUnlock(){const v=document.getElementById("pc").value.trim();if(!v)re
 function verifyCode(){const S=pubS();const v=(document.getElementById("vc").value||"").trim().toUpperCase().replace(/\s/g,"");const m=v.match(/^(\d+)-([A-Z0-9]{1,5})$/);const out=document.getElementById("vres");
   let ok=null;if(m&&S){const c=S.cands.find(x=>x.chest===+m[1]);const p=S.progs.find(x=>x.id.slice(0,5).toUpperCase()===m[2]);if(c&&p&&p.status==="published"){const r=calcS(S,p).find(x=>x.cid===c.id);if(r)ok={c,p,r}}}
   out.innerHTML=ok?`<div class="msg ok">✓ <b>Genuine certificate.</b> ${esc(ok.c.name)} (chest ${ok.c.chest}), ${esc(ok.p.n)}: ${ok.r.rank<=3?ordn(ok.r.rank)+" place, ":""}grade ${ok.r.grade}.</div>`:`<div class="msg bad">No certificate matches this code. Check the letters and numbers and try again.</div>`}
-function SCREEN_VIEW(){const pv=PUBV||{};if(pv.need||pv.closed)return PUBLIC_VIEW();const S=pv.S;if(!S)return `<div class="loading">${mark(54)}<div class="spin"></div><p>${esc(pv.err||"Loading…")}</p></div>`;
+function SCREEN_VIEW(){const pv=PUBV||{};if(pv.need||pv.closed)return PUBLIC_VIEW();const S=pv.S;if(!S)return `<div class="loading">${LOADER()}<p>${esc(pv.err||"Loading…")}</p></div>`;
   const hide=(pv.pub||S.locks.pub)==="results";const tp=teamPtsS(S);const ord=Object.entries(tp).sort((a,b)=>b[1]-a[1]);const mx=Math.max(1,...ord.map(x=>x[1]));
   const pubs=S.progs.filter(p=>p.status==="published").sort((a,b)=>(b.pubT||0)-(a.pubT||0)).slice(0,4);
-  return `<div class="screen"><div class="sc-head">${mark(56,"#fff")}<div><div class="sc-t">${esc(S.site.title)}</div><div class="sc-s">${esc(S.site.tag)}</div></div><div class="sc-live">LIVE</div></div>
+  return `<div class="screen"><div class="sc-head">${S.brand&&safeLogo(S.brand.logo)?festLogo(S.brand,72,"pubimg"):mark(56,"#fff")}<div><div class="sc-t">${esc(S.site.title)}</div><div class="sc-s">${esc(S.site.tag)}</div></div><div class="sc-live">LIVE</div></div>
   ${hide?`<div class="sc-soon">Results coming soon</div>`:`<div class="sc-grid"><div class="sc-board"><h2>Leaderboard</h2>${ord.map(([t,p],i)=>`<div class="sc-row"><span class="sc-rank">${i+1}</span><span class="sc-name">${esc(tOf(S,t).name)}</span><div class="sc-track"><div style="width:${p/mx*100}%;background:${tOf(S,t).color}"></div></div><b>${p}</b></div>`).join("")||"<p>No teams yet</p>"}</div>
    <div class="sc-latest"><h2>Latest results</h2>${pubs.map(p=>`<div class="sc-res"><div class="sc-pn">${esc(p.n)} <small>${esc(catName(S,p.cat))}</small></div>${calcS(S,p).filter(r=>r.rank<=3).map(r=>{const c=cOf(S,r.cid);return c?`<div class="sc-w">${["🥇","🥈","🥉"][r.rank-1]} ${esc(c.name)} <small>${esc(tOf(S,c.team).name)}</small></div>`:""}).join("")}</div>`).join("")||"<p>Waiting for the first result…</p>"}</div></div>`}
   <div class="sc-foot">${mark(20,"rgba(255,255,255,.8)")} Powered by Mehfil</div></div>`}
@@ -1717,9 +1899,195 @@ function countUp(){if(RM)return;document.querySelectorAll(".main.enter .stat b")
     if(VIEW==="screen")document.body.classList.add("screen-mode");paint();pubLoad();return}
   const lf=q.get("login");
   if(lf&&HAS_API){LFEST=lf;const s=store.get("mf_session");if(s&&s.token&&s.lfest===lf){TOKEN=s.token;ME=s.user;enter();return}
-    VIEW="login";paint();api("festInfo",{fest:lf}).then(r=>{LFESTNAME=r.name;if(r.teamlock)UI.loginMsg="Team leader access is closed for now. Judges can still log in.";if(VIEW==="login")paint()}).catch(e=>{UI.loginMsg=e.message;if(VIEW==="login")paint()});return}
+    VIEW="login";paint();api("festInfo",{fest:lf}).then(r=>{LFESTNAME=r.name;LBRAND={color:/^#[0-9A-Fa-f]{6}$/.test(r.color||"")?r.color:"",logo:safeLogo(r.logo)};if(r.teamlock)UI.loginMsg="Team leader access is closed for now. Judges can still log in.";if(VIEW==="login")paint()}).catch(e=>{UI.loginMsg=e.message;if(VIEW==="login")paint()});return}
   const s=store.get("mf_session");if(s&&s.token&&HAS_API){TOKEN=s.token;ME=s.user;LFEST=s.lfest||"";enter();return}
   VIEW="landing";paint()})();
+
+/* =========================================================
+   FESTIQ · Mehfil's assistant
+   Answers from its own knowledge right away; when the server
+   has an AI key it answers through the server instead.
+   ========================================================= */
+const FQKB=[
+ {k:["what is mehfil","about mehfil","what can it do","what can mehfil","features","what does","എന്താണ് മെഹ്ഫിൽ","മെഹ്ഫിൽ എന്ത","സൗകര്യങ്ങൾ","എന്തൊക്കെ ചെയ്യ"],
+  en:"Mehfil is a website for running arts fests and competitions in madrasas, schools and colleges. It covers everything from start to finish:\n• Team leaders register their own students; chest numbers come automatically\n• Programmes and a clash-free schedule\n• Judges enter marks on their phones\n• Ranks, grades and team points are worked out for you\n• Live leaderboard, a public results link and a big-screen view\n• Certificates with a QR check, ID cards and winner posters\n• Locks to control registration and results",
+  ml:"മദ്രസ, സ്കൂൾ, കോളേജ് എന്നിവിടങ്ങളിലെ കലാമേളകളും മത്സരങ്ങളും നടത്താനുള്ള വെബ്സൈറ്റാണ് മെഹ്ഫിൽ. തുടക്കം മുതൽ അവസാനം വരെ എല്ലാം ഇതിലുണ്ട്:\n• ടീം ലീഡർമാർ സ്വന്തം കുട്ടികളെ ചേർക്കും; ചെസ്റ്റ് നമ്പർ തനിയെ വരും\n• പരിപാടികളും ക്ലാഷ് ഇല്ലാത്ത ഷെഡ്യൂളും\n• ജഡ്ജസ് ഫോണിൽ മാർക്ക് ഇടും\n• റാങ്കും ഗ്രേഡും ടീം പോയിന്റും തനിയെ കണക്കാക്കും\n• തത്സമയ പോയിന്റ് നില, പൊതു ഫല ലിങ്ക്, വലിയ സ്ക്രീൻ\n• ക്യൂആർ പരിശോധനയുള്ള സർട്ടിഫിക്കറ്റ്, ഐഡി കാർഡ്, വിജയി പോസ്റ്റർ\n• രജിസ്ട്രേഷനും ഫലവും നിയന്ത്രിക്കാൻ പൂട്ടുകൾ"},
+ {k:["free","cost","price","pay","money","charge","rupee","paisa","cash","fee","subscription","സൗജന്യ","പണം","പൈസ","ഫീസ്","രൂപ","ചാർജ്","വില","ഫ്രീ","കാശ്"],
+  en:"Yes, Mehfil is completely free right now. Create a free account on the site and run as many fests as you like.",
+  ml:"അതെ, മെഹ്ഫിൽ ഇപ്പോൾ തികച്ചും സൗജന്യമാണ്. സൈറ്റിൽ ഒരു സൗജന്യ അക്കൗണ്ട് ഉണ്ടാക്കി എത്ര ഫെസ്റ്റ് വേണമെങ്കിലും നടത്താം."},
+ {k:["sign up","signup","create account","new account","free account","how to start","get started","how do i start","join","how to use","account","തുടങ്ങ","അക്കൗണ്ട്","സൈൻ അപ്പ്","എങ്ങനെ ഉപയോഗി"],
+  en:"To start:\n1. Open the site and press 'Create a free account' (or 'Sign up free').\n2. Enter your name, institution, WhatsApp number, a username and a password.\n3. On 'My fests', type your fest's name and press 'Create fest'.\n4. In 'Fest settings', add your teams and check the categories and stages.\n5. On 'Logins', create usernames for your team leaders and judges.\n6. Share the two links from the Dashboard.",
+  ml:"തുടങ്ങാൻ:\n1. സൈറ്റ് തുറന്ന് 'Create a free account' (അല്ലെങ്കിൽ 'Sign up free') അമർത്തുക.\n2. പേര്, സ്ഥാപനം, വാട്സാപ്പ് നമ്പർ, യൂസർനെയിം, പാസ്‌വേഡ് എന്നിവ നൽകുക.\n3. 'My fests' പേജിൽ ഫെസ്റ്റിന്റെ പേര് എഴുതി 'Create fest' അമർത്തുക.\n4. 'Fest settings'-ൽ ടീമുകൾ ചേർക്കുക; കാറ്റഗറിയും സ്റ്റേജും നോക്കുക.\n5. 'Logins' പേജിൽ ടീം ലീഡർമാർക്കും ജഡ്ജസിനും യൂസർനെയിം ഉണ്ടാക്കുക.\n6. ഡാഷ്ബോർഡിലെ രണ്ട് ലിങ്കുകൾ ഷെയർ ചെയ്യുക."},
+ {k:["create fest","new fest","another fest","many fests","how many fests","multiple fests","second fest","ഫെസ്റ്റ് ഉണ്ടാക്ക","പുതിയ ഫെസ്റ്റ്","എത്ര ഫെസ്റ്റ്","വേറെ ഫെസ്റ്റ്"],
+  en:"After logging in as an organiser, go to 'My fests', type the fest's name and press 'Create fest'. One account can run any number of fests, and each fest has its own students, logins and links.",
+  ml:"ഓർഗനൈസർ ആയി ലോഗിൻ ചെയ്ത ശേഷം 'My fests' പേജിൽ ഫെസ്റ്റിന്റെ പേര് എഴുതി 'Create fest' അമർത്തുക. ഒരു അക്കൗണ്ടിൽ എത്ര ഫെസ്റ്റും നടത്താം. ഓരോ ഫെസ്റ്റിനും വേറെ കുട്ടികളും ലോഗിനുകളും ലിങ്കുകളും ഉണ്ടാകും."},
+ {k:["coupon","കൂപ്പൺ"],
+  en:"Coupon IDs are another way for organisers to log in; the Mehfil team gives them. You don't need one, because anyone can create a free account. If you have a coupon, choose the 'Coupon ID' tab on the login page.",
+  ml:"ഓർഗനൈസർമാർക്ക് ലോഗിൻ ചെയ്യാനുള്ള മറ്റൊരു വഴിയാണ് കൂപ്പൺ ഐഡി; മെഹ്ഫിൽ ടീമാണ് അത് നൽകുന്നത്. അത് നിർബന്ധമില്ല, ആർക്കും സൗജന്യ അക്കൗണ്ട് ഉണ്ടാക്കാം. കൂപ്പൺ ഉണ്ടെങ്കിൽ ലോഗിൻ പേജിലെ 'Coupon ID' ടാബ് തിരഞ്ഞെടുക്കുക."},
+ {k:["log in","login","sign in","can't enter","cannot enter","not able to login","forgot","ലോഗിൻ","കയറാൻ പറ്റ","മറന്നു","കയറാൻ കഴിയ"],
+  en:"Organisers, team leaders and judges all log in on the same page with their username and password. Team leaders and judges get their login from the fest admin, usually through the fest's login link.\nForgot the password? Team leaders and judges: ask your convener, who can make a new one on the 'Logins' page. Organisers: contact the Mehfil team.",
+  ml:"ഓർഗനൈസർ, ടീം ലീഡർ, ജഡ്ജ് എല്ലാവരും ഒരേ പേജിൽ യൂസർനെയിമും പാസ്‌വേഡും നൽകി ലോഗിൻ ചെയ്യുന്നു. ടീം ലീഡർമാർക്കും ജഡ്ജസിനും ലോഗിൻ നൽകുന്നത് ഫെസ്റ്റ് അഡ്മിനാണ്, സാധാരണ ഫെസ്റ്റിന്റെ ലോഗിൻ ലിങ്ക് വഴി.\nപാസ്‌വേഡ് മറന്നോ? ടീം ലീഡർമാരും ജഡ്ജസും കൺവീനറോട് ചോദിക്കുക; അവർക്ക് 'Logins' പേജിൽ പുതിയത് ഉണ്ടാക്കാം. ഓർഗനൈസർമാർ മെഹ്ഫിൽ ടീമിനെ ബന്ധപ്പെടുക."},
+ {k:["change password","new password","reset password","പാസ്‌വേഡ് മാറ്റ","പാസ്വേഡ് മാറ്റ","password"],
+  en:"To change your own password: open the ☰ menu → 'Change password', enter the current password and the new one twice. An admin can make a new password for a team leader or judge on the 'Logins' page.",
+  ml:"സ്വന്തം പാസ്‌വേഡ് മാറ്റാൻ: ☰ മെനു → 'Change password' തുറന്ന് ഇപ്പോഴത്തെ പാസ്‌വേഡും പുതിയത് രണ്ടുതവണയും നൽകുക. ടീം ലീഡർക്കോ ജഡ്ജിനോ അഡ്മിന് 'Logins' പേജിൽ പുതിയ പാസ്‌വേഡ് ഉണ്ടാക്കാം."},
+ {k:["roles","who can","what can a team leader","what can a judge","കഴിയുക","റോൾ"],
+  en:"There are four kinds of users:\n• Organiser / fest admin: controls the whole fest.\n• Team leader: registers and manages only their own team's students, sees the team's points, files appeals.\n• Judge: sees only the programmes given to them and enters marks by chest number (names are hidden).\n• Public (parents and everyone): opens the results link without logging in.",
+  ml:"നാല് തരം ഉപയോക്താക്കളുണ്ട്:\n• ഓർഗനൈസർ / ഫെസ്റ്റ് അഡ്മിൻ: ഫെസ്റ്റ് മുഴുവൻ നിയന്ത്രിക്കുന്നു.\n• ടീം ലീഡർ: സ്വന്തം ടീമിലെ കുട്ടികളെ മാത്രം ചേർക്കും, ടീമിന്റെ പോയിന്റ് കാണും, അപ്പീൽ നൽകും.\n• ജഡ്ജ്: തനിക്ക് നൽകിയ പരിപാടികൾ മാത്രം കാണും, ചെസ്റ്റ് നമ്പർ നോക്കി മാർക്ക് ഇടും (പേര് കാണില്ല).\n• പൊതുജനം (രക്ഷിതാക്കൾ ഉൾപ്പെടെ): ലോഗിൻ ഇല്ലാതെ ഫല ലിങ്ക് തുറക്കാം."},
+ {k:["create login","add judge","add team leader","username for","logins page","give login","judge login","team leader login","ലോഗിൻ ഉണ്ടാക്ക","ജഡ്ജിനെ ചേർ","ടീം ലീഡറെ ചേർ","യൂസർനെയിം ഉണ്ടാക്ക"],
+  en:"Open ☰ → 'Logins'. Choose the role (Team leader, Judge or Fest admin), enter a name, username and password (for a team leader, also choose the team) and create it. From there you can share the details on WhatsApp, make a new password, or delete a login.",
+  ml:"☰ → 'Logins' തുറക്കുക. റോൾ (Team leader, Judge, Fest admin) തിരഞ്ഞെടുത്ത് പേര്, യൂസർനെയിം, പാസ്‌വേഡ് നൽകുക (ടീം ലീഡർക്ക് ടീമും തിരഞ്ഞെടുക്കണം). അവിടെനിന്ന് വിവരങ്ങൾ വാട്സാപ്പിൽ അയക്കാം, പുതിയ പാസ്‌വേഡ് ഉണ്ടാക്കാം, ലോഗിൻ നീക്കാം."},
+ {k:["add team","teams","house","category","categories","stage","stages","sub-fest","fest settings","setup","set up","ടീം ചേർ","കാറ്റഗറി","സ്റ്റേജ്","സെറ്റിങ്"],
+  en:"Open ☰ → 'Fest settings':\n• Teams: add each team (house or group) and tap its colour to change it.\n• Categories: Kids, Sub Junior, Junior and Senior are ready; rename or add more. Each has its own starting chest number.\n• Stages: places where programmes run at the same time.\n• Schedule: number of days, start and end time, and slot length.\n• Programme limit per student, and Points and grades.\nPress Save under each section.",
+  ml:"☰ → 'Fest settings' തുറക്കുക:\n• ടീമുകൾ: ഓരോ ടീമും ചേർക്കുക; നിറം മാറ്റാൻ നിറത്തിൽ തൊടുക.\n• കാറ്റഗറി: Kids, Sub Junior, Junior, Senior തയ്യാറാണ്; പേര് മാറ്റാം, പുതിയത് ചേർക്കാം. ഓരോന്നിനും തുടങ്ങുന്ന ചെസ്റ്റ് നമ്പർ വേറെ.\n• സ്റ്റേജുകൾ: ഒരേ സമയം പരിപാടി നടക്കുന്ന സ്ഥലങ്ങൾ.\n• ഷെഡ്യൂൾ: ദിവസങ്ങൾ, തുടങ്ങുന്നതും അവസാനിക്കുന്നതുമായ സമയം, ഓരോ സ്ലോട്ടിന്റെ നീളം.\n• ഒരു കുട്ടിക്ക് എത്ര പരിപാടി, പോയിന്റും ഗ്രേഡും.\nഓരോ ഭാഗത്തിനും താഴെയുള്ള Save അമർത്തുക."},
+ {k:["chest","ചെസ്റ്റ്"],
+  en:"Chest numbers are given automatically when a student is registered. Each category starts from its own number (for example Kids 101, 102… and Sub Junior 201…). You can change the starting number in 'Fest settings' → Categories.",
+  ml:"കുട്ടിയെ ചേർക്കുമ്പോൾ ചെസ്റ്റ് നമ്പർ തനിയെ വരും. ഓരോ കാറ്റഗറിയും സ്വന്തം നമ്പറിൽ നിന്ന് തുടങ്ങും (ഉദാഹരണം Kids 101, 102… Sub Junior 201…). തുടങ്ങുന്ന നമ്പർ 'Fest settings' → Categories-ൽ മാറ്റാം."},
+ {k:["register student","add student","candidate","enter students","bulk","excel list","register","കുട്ടികളെ ചേർ","കുട്ടിയെ ചേർ","വിദ്യാർത്ഥി","രജിസ്ട്രേഷൻ","രജിസ്റ്റർ"],
+  en:"Team leaders: open 'Candidates', type the student's name, choose the category (and skills if you like) and press 'Register'. The chest number comes automatically. Admins can register for any team, and can add many students at once with Bulk entry by pasting lines copied from Excel.",
+  ml:"ടീം ലീഡർമാർ: 'Candidates' തുറന്ന് കുട്ടിയുടെ പേര് എഴുതി കാറ്റഗറി തിരഞ്ഞെടുത്ത് 'Register' അമർത്തുക. ചെസ്റ്റ് നമ്പർ തനിയെ വരും. അഡ്മിന് ഏത് ടീമിനും ചേർക്കാം; Excel-ൽ നിന്ന് കോപ്പി ചെയ്ത വരികൾ ഒട്ടിച്ച് ഒരുമിച്ച് (Bulk entry) ചേർക്കാനും കഴിയും."},
+ {k:["choose programme","select programme","enroll","programme limit","how many programmes","പരിപാടി തിരഞ്ഞെടു","എത്ര പരിപാടി","പരിപാടിക്ക് ചേർ"],
+  en:"On 'Candidates', press 'Programmes' next to a student and tick the programmes. Mehfil won't allow two programmes at the same time, and it keeps to the limit set in Fest settings (4 per student unless you change it).",
+  ml:"'Candidates' പേജിൽ കുട്ടിയുടെ നേരെയുള്ള 'Programmes' അമർത്തി പരിപാടികൾ ടിക്ക് ചെയ്യുക. ഒരേ സമയത്തുള്ള രണ്ട് പരിപാടികൾ മെഹ്ഫിൽ അനുവദിക്കില്ല. Fest settings-ൽ നിശ്ചയിച്ച പരിധിയും പാലിക്കും (മാറ്റിയില്ലെങ്കിൽ ഒരാൾക്ക് 4)."},
+ {k:["substitut","replace student","change student","can't take part","absent","പകരം","പങ്കെടുക്കാൻ പറ്റ"],
+  en:"If a student can't take part, use the Substitution section on 'Candidates': choose the programme, the student going out and the one coming in (same team and category). It's allowed until judging starts.",
+  ml:"ഒരു കുട്ടിക്ക് പങ്കെടുക്കാൻ കഴിയില്ലെങ്കിൽ 'Candidates' പേജിലെ Substitution ഭാഗം ഉപയോഗിക്കുക: പരിപാടി, പോകുന്ന കുട്ടി, പകരം വരുന്ന കുട്ടി (ഒരേ ടീമും കാറ്റഗറിയും) തിരഞ്ഞെടുക്കുക. ജഡ്ജിങ് തുടങ്ങും വരെ ഇത് ചെയ്യാം."},
+ {k:["topic","വിഷയം","ടോപ്പിക്"],
+  en:"For programmes like speech or essay, tick 'Needs a topic' when adding the programme. Team leaders then enter each student's topic on 'Candidates', and judges see the topic next to the chest number.",
+  ml:"പ്രസംഗം, ഉപന്യാസം പോലുള്ള പരിപാടികൾ ചേർക്കുമ്പോൾ 'Needs a topic' ടിക്ക് ചെയ്യുക. ടീം ലീഡർമാർ 'Candidates' പേജിൽ ഓരോ കുട്ടിയുടെയും വിഷയം നൽകും; ജഡ്ജസ് ചെസ്റ്റ് നമ്പറിനൊപ്പം വിഷയം കാണും."},
+ {k:["add programme","new programme","programmes","programme","event","item","competition item","assign judge","പരിപാടി ചേർ","ഇനം","മത്സര ഇനം","പ്രോഗ്രാം","പരിപാടി"],
+  en:"Open ☰ → 'Programmes'. Enter the name, category, sub-fest and stage, tick 'Needs a topic' if needed, choose the judges and press 'Add programme'. It's placed on the schedule automatically. Use 'Edit' to change it later. A programme can have up to 7 judges.",
+  ml:"☰ → 'Programmes' തുറക്കുക. പേര്, കാറ്റഗറി, സബ് ഫെസ്റ്റ്, സ്റ്റേജ് നൽകുക; വേണമെങ്കിൽ 'Needs a topic' ടിക്ക് ചെയ്യുക; ജഡ്ജസിനെ തിരഞ്ഞെടുത്ത് 'Add programme' അമർത്തുക. അത് ഷെഡ്യൂളിൽ തനിയെ വരും. പിന്നീട് മാറ്റാൻ 'Edit' ഉപയോഗിക്കാം. ഒരു പരിപാടിക്ക് 7 ജഡ്ജസ് വരെ ആകാം."},
+ {k:["schedule","time table","timetable","clash","ഷെഡ്യൂൾ","സമയക്രമം","ക്ലാഷ്","ടൈം ടേബിൾ"],
+  en:"Open ☰ → 'Schedule' and press 'Build automatically'. Mehfil places every programme so that no student has two programmes at the same time and no stage is double-booked. You can change any time by hand; clashes show in red, and 'Fix automatically' sorts them out. The public site shows the schedule too.",
+  ml:"☰ → 'Schedule' തുറന്ന് 'Build automatically' അമർത്തുക. ഒരു കുട്ടിക്കും ഒരേ സമയം രണ്ട് പരിപാടി വരാതെയും ഒരു സ്റ്റേജിൽ ഒരേ സമയം രണ്ടെണ്ണം വരാതെയും മെഹ്ഫിൽ എല്ലാം ക്രമീകരിക്കും. ഏത് സമയവും കൈകൊണ്ട് മാറ്റാം; ക്ലാഷ് ചുവപ്പിൽ കാണിക്കും, 'Fix automatically' അത് ശരിയാക്കും. പൊതു സൈറ്റിലും ഷെഡ്യൂൾ കാണാം."},
+ {k:["judge mark","enter mark","give mark","marks","mark sheet","scoring","judging","മാർക്ക്","ജഡ്ജ് എങ്ങനെ","ജഡ്ജിങ്"],
+  en:"Judges log in with the username the admin gave them, open 'My programmes', choose a programme, enter a mark from 0 to 100 for each chest number and press 'Submit marks'. Student names are hidden to keep judging fair. Marks can't be changed after submitting; the admin can send the programme back if needed. If the internet drops, the marks are kept and sent when the phone is back online.",
+  ml:"അഡ്മിൻ നൽകിയ യൂസർനെയിമിൽ ജഡ്ജ് ലോഗിൻ ചെയ്ത് 'My programmes' തുറന്ന് പരിപാടി തിരഞ്ഞെടുക്കുക. ഓരോ ചെസ്റ്റ് നമ്പറിനും 0 മുതൽ 100 വരെ മാർക്ക് നൽകി 'Submit marks' അമർത്തുക. നീതിക്കായി കുട്ടികളുടെ പേര് ജഡ്ജസിന് കാണില്ല. സമർപ്പിച്ച ശേഷം മാറ്റാനാവില്ല; ആവശ്യമെങ്കിൽ അഡ്മിന് തിരിച്ചയക്കാം. ഇന്റർനെറ്റ് പോയാലും മാർക്ക് ഫോണിൽ സൂക്ഷിച്ച് പിന്നീട് തനിയെ അയക്കും."},
+ {k:["admin mark","admin enter","admin can enter","without judge","no judge","paper mark","mark entry","enter for judge","admin result","അഡ്മിന് മാർക്ക്","അഡ്മിൻ മാർക്ക്","ജഡ്ജ് ഇല്ലാതെ","മാർക്ക് എൻട്രി","അഡ്മിന് റിസൾട്ട്"],
+  en:"Yes, admins can enter marks too. Open ☰ → 'Mark entry', choose the programme and whose marks you're entering (a judge's paper sheet, or 'Admin (direct marks)' when the programme has no judges), type the marks and press 'Save these marks'. The 'Enter marks' button on Score verification takes you there as well.",
+  ml:"അതെ, അഡ്മിനും മാർക്ക് ഇടാം. ☰ → 'Mark entry' തുറന്ന് പരിപാടി തിരഞ്ഞെടുക്കുക. ആരുടെ മാർക്കാണ് നൽകുന്നത് എന്ന് തിരഞ്ഞെടുക്കുക (ഒരു ജഡ്ജിന്റെ പേപ്പർ ഷീറ്റ്, അല്ലെങ്കിൽ ജഡ്ജസ് ഇല്ലാത്ത പരിപാടിക്ക് 'Admin (direct marks)'). മാർക്ക് നൽകി 'Save these marks' അമർത്തുക. Score verification പേജിലെ 'Enter marks' ബട്ടൺ വഴിയും എത്താം."},
+ {k:["verify","verification","check marks","mismatch","send back","difference","പരിശോധ","വെരിഫൈ"],
+  en:"When all judges have submitted, the programme appears on ☰ → 'Score verification' with each judge's marks, the average, rank and grade. A difference of more than 15 marks between judges is flagged in red. Press 'Verify scores' if all is well, or 'Send back to judges' to have them mark again.",
+  ml:"എല്ലാ ജഡ്ജസും സമർപ്പിച്ചാൽ പരിപാടി ☰ → 'Score verification' പേജിൽ വരും: ഓരോ ജഡ്ജിന്റെയും മാർക്ക്, ശരാശരി, റാങ്ക്, ഗ്രേഡ്. ജഡ്ജസ് തമ്മിൽ 15-ൽ കൂടുതൽ മാർക്ക് വ്യത്യാസമുണ്ടെങ്കിൽ ചുവപ്പിൽ കാണിക്കും. ശരിയാണെങ്കിൽ 'Verify scores', വീണ്ടും മാർക്കിടാൻ 'Send back to judges' അമർത്തുക."},
+ {k:["publish","announce","declare result","release result","പ്രസിദ്ധ","ഫലം പ്രഖ്യാപ","റിസൾട്ട് ഇട","ഫലം ഇട"],
+  en:"After verifying, press 'Publish result' on Score verification, or 'Publish all verified' on 'Results and points'. The leaderboard, public site, big screen and certificates update at once. A published result can be withdrawn unless the Result lock is on.",
+  ml:"പരിശോധിച്ച ശേഷം Score verification-ൽ 'Publish result', അല്ലെങ്കിൽ 'Results and points' പേജിൽ 'Publish all verified' അമർത്തുക. പോയിന്റ് നില, പൊതു സൈറ്റ്, വലിയ സ്ക്രീൻ, സർട്ടിഫിക്കറ്റ് എല്ലാം ഉടനെ മാറും. Result lock ഓൺ അല്ലെങ്കിൽ പ്രസിദ്ധീകരിച്ച ഫലം പിൻവലിക്കാം."},
+ {k:["point","points","grade","rank","distribution","score system","total","place","പോയിന്റ്","ഗ്രേഡ്","റാങ്ക്","സ്ഥാനം","ടോട്ടൽ","മാർക്ക് വിതരണം"],
+  en:"How results are worked out:\n• Each judge gives a mark out of 100. The student's mark is the average of all judges.\n• Rank: the highest average is 1st. Equal averages share the same place.\n• Grade (usual setting): A from 80, B from 65, C from 50.\n• Points (usual setting): 1st place 5, 2nd 3, 3rd 1, plus grade A +2 and grade B +1.\n• A team's total is the sum of its points from all published results. Students' totals appear under Top individuals.\nThe admin can change all these numbers in 'Fest settings' → 'Points and grades'.",
+  ml:"ഫലം കണക്കാക്കുന്ന രീതി:\n• ഓരോ ജഡ്ജും 100-ൽ മാർക്ക് നൽകും. എല്ലാ ജഡ്ജസിന്റെയും ശരാശരിയാണ് കുട്ടിയുടെ മാർക്ക്.\n• റാങ്ക്: ഏറ്റവും കൂടിയ ശരാശരി ഒന്നാം സ്ഥാനം. ശരാശരി തുല്യമായാൽ ഒരേ സ്ഥാനം.\n• ഗ്രേഡ് (സാധാരണ): 80 മുതൽ A, 65 മുതൽ B, 50 മുതൽ C.\n• പോയിന്റ് (സാധാരണ): ഒന്നാം സ്ഥാനം 5, രണ്ടാം 3, മൂന്നാം 1; കൂടാതെ A ഗ്രേഡിന് +2, B ഗ്രേഡിന് +1.\n• പ്രസിദ്ധീകരിച്ച എല്ലാ ഫലങ്ങളിലെയും പോയിന്റ് കൂട്ടിയതാണ് ടീമിന്റെ ടോട്ടൽ. കുട്ടികളുടെ ടോട്ടൽ Top individuals-ൽ കാണാം.\nഈ സംഖ്യകളെല്ലാം അഡ്മിന് 'Fest settings' → 'Points and grades'-ൽ മാറ്റാം."},
+ {k:["leaderboard","big screen","projector","tv","display","standing","വലിയ സ്ക്രീൻ","പ്രൊജക്ടർ","ടിവി","പോയിന്റ് നില"],
+  en:"The live leaderboard is on 'Results and points' and on the public site. For the hall, open ☰ → 'Public website' → 'Open big-screen view' on a projector or TV. It shows the leaderboard and latest results and refreshes by itself.",
+  ml:"തത്സമയ പോയിന്റ് നില 'Results and points' പേജിലും പൊതു സൈറ്റിലും കാണാം. ഹാളിലേക്ക്: ☰ → 'Public website' → 'Open big-screen view' പ്രൊജക്ടറിലോ ടിവിയിലോ തുറക്കുക. പോയിന്റ് നിലയും പുതിയ ഫലങ്ങളും കാണിക്കും, തനിയെ പുതുക്കും."},
+ {k:["public","parents","share link","results link","link","qr","whatsapp","രക്ഷിതാ","ലിങ്ക്","ഷെയർ","ക്യൂആർ","വാട്സാപ്പ്"],
+  en:"Each fest has two links on the Dashboard (and on 'Public website'):\n1. Team leaders and judges: opens their login page.\n2. Everyone: the public results site, no login needed. Parents can see results, the leaderboard, the schedule, news, and check certificates.\nUse Copy or WhatsApp to share, or print the QR code for the notice board.",
+  ml:"ഓരോ ഫെസ്റ്റിനും ഡാഷ്ബോർഡിൽ (കൂടാതെ 'Public website' പേജിൽ) രണ്ട് ലിങ്കുണ്ട്:\n1. ടീം ലീഡർമാർക്കും ജഡ്ജസിനും: അവരുടെ ലോഗിൻ പേജ്.\n2. എല്ലാവർക്കും: ലോഗിൻ വേണ്ടാത്ത പൊതു ഫല സൈറ്റ്. രക്ഷിതാക്കൾക്ക് ഫലം, പോയിന്റ് നില, ഷെഡ്യൂൾ, വാർത്ത എന്നിവ കാണാം, സർട്ടിഫിക്കറ്റ് പരിശോധിക്കാം.\nCopy അല്ലെങ്കിൽ WhatsApp ബട്ടൺ വഴി ഷെയർ ചെയ്യാം; നോട്ടീസ് ബോർഡിനായി ക്യൂആർ പ്രിന്റ് ചെയ്യാം."},
+ {k:["hide result","hidden","secret","access code","close site","closing ceremony","suspense","മറയ്ക്ക","രഹസ്യ","ആക്സസ് കോഡ്","സമാപന"],
+  en:"Open ☰ → 'Locks' → 'Public site' and choose: Everyone, Hide results only (until the closing ceremony; the site shows 'Results coming soon'), Access code required, or Closed to everyone.",
+  ml:"☰ → 'Locks' → 'Public site'-ൽ തിരഞ്ഞെടുക്കുക: Everyone (എല്ലാവർക്കും), Hide results only (സമാപനം വരെ ഫലം മറയ്ക്കും; 'Results coming soon' എന്ന് കാണിക്കും), Access code required (കോഡ് ഉള്ളവർക്ക് മാത്രം), Closed to everyone (പൂർണമായി അടയ്ക്കും)."},
+ {k:["registration lock","close registration","last date","deadline","closing date","stop registration","രജിസ്ട്രേഷൻ പൂട്ട","അവസാന തീയതി","രജിസ്ട്രേഷൻ അവസാനിപ്പി"],
+  en:"On ☰ → 'Locks', turn on the Registration lock to stop team leaders from adding or changing students and programmes. You can also set a closing date; registration closes automatically after that day. Admins can still make changes.",
+  ml:"☰ → 'Locks'-ൽ Registration lock ഓൺ ചെയ്താൽ ടീം ലീഡർമാർക്ക് കുട്ടികളെയോ പരിപാടികളെയോ ചേർക്കാനോ മാറ്റാനോ കഴിയില്ല. അവസാന തീയതിയും നൽകാം; ആ ദിവസം കഴിഞ്ഞാൽ തനിയെ അടയും. അഡ്മിന് അപ്പോഴും മാറ്റങ്ങൾ വരുത്താം."},
+ {k:["team leader lock","block team leader","stop team leader","team leader can't login","ടീം ലീഡർ ലോഗിൻ പൂട്ട","ടീം ലീഡറെ തടയ"],
+  en:"On ☰ → 'Locks', turn on 'Team leader login'. Team leaders can't log in and anyone already logged in is signed out. Judges and admins aren't affected.",
+  ml:"☰ → 'Locks'-ൽ 'Team leader login' ഓൺ ചെയ്യുക. ടീം ലീഡർമാർക്ക് ലോഗിൻ ചെയ്യാൻ കഴിയില്ല; ഇതിനകം കയറിയവരും പുറത്താകും. ജഡ്ജസിനെയും അഡ്മിനെയും ഇത് ബാധിക്കില്ല."},
+ {k:["appeal","complaint","objection","wrong result","result lock","അപ്പീൽ","പരാതി","തെറ്റായ ഫലം"],
+  en:"After a result is published, team leaders file an appeal with a reason on 'Appeals'. The admin sees it on 'Appeals' and accepts or rejects it. If accepted, the result goes back for review and the leaderboard corrects itself. With the Result lock on, published results change only through an accepted appeal.",
+  ml:"ഫലം പ്രസിദ്ധീകരിച്ച ശേഷം ടീം ലീഡർമാർക്ക് 'Appeals' പേജിൽ കാരണം സഹിതം അപ്പീൽ നൽകാം. അഡ്മിൻ അത് 'Appeals'-ൽ കണ്ട് സ്വീകരിക്കുകയോ തള്ളുകയോ ചെയ്യും. സ്വീകരിച്ചാൽ ഫലം വീണ്ടും പരിശോധനയ്ക്ക് പോകും, പോയിന്റ് നില തനിയെ ശരിയാകും. Result lock ഓൺ ആണെങ്കിൽ സ്വീകരിച്ച അപ്പീൽ വഴി മാത്രമേ ഫലം മാറൂ."},
+ {k:["lock fest","fest lock","after fest","read only","ഫെസ്റ്റ് പൂട്ട","ഫെസ്റ്റ് മുഴുവൻ പൂട്ട"],
+  en:"After the fest, open ☰ → 'Locks' → 'Lock fest'. Everything becomes read-only; people can still view results and print certificates. You can unlock it there later.",
+  ml:"ഫെസ്റ്റ് കഴിഞ്ഞാൽ ☰ → 'Locks' → 'Lock fest' അമർത്തുക. ഒന്നും മാറ്റാൻ കഴിയില്ല; എന്നാൽ ഫലം കാണാനും സർട്ടിഫിക്കറ്റ് പ്രിന്റ് ചെയ്യാനും കഴിയും. പിന്നീട് അവിടെ നിന്ന് തുറക്കാം."},
+ {k:["certificate","print","pdf","merit","participation","സർട്ടിഫിക്കറ്റ്","പ്രിന്റ്"],
+  en:"Certificates are ready as soon as a result is published. Open ☰ → 'Certificates and cards', choose the programme and who (winners or everyone), pick a design (Classic, Band or Minimal) and press Print. Choose 'Save as PDF' in the print window to keep a copy. Each certificate has a code and a QR mark for checking.",
+  ml:"ഫലം പ്രസിദ്ധീകരിച്ച ഉടനെ സർട്ടിഫിക്കറ്റ് തയ്യാർ. ☰ → 'Certificates and cards' തുറന്ന് പരിപാടിയും ആർക്കെന്നും (വിജയികൾ അല്ലെങ്കിൽ എല്ലാവരും) തിരഞ്ഞെടുക്കുക, ഡിസൈൻ (Classic, Band, Minimal) തിരഞ്ഞെടുത്ത് Print അമർത്തുക. പ്രിന്റ് വിൻഡോയിൽ 'Save as PDF' തിരഞ്ഞെടുത്താൽ കോപ്പി സൂക്ഷിക്കാം. ഓരോ സർട്ടിഫിക്കറ്റിലും പരിശോധനയ്ക്ക് കോഡും ക്യൂആറും ഉണ്ട്."},
+ {k:["genuine","fake","check certificate","verify certificate","qr scan","scan","ഒറിജിനൽ","വ്യാജ","സ്കാൻ"],
+  en:"Scan the QR on the certificate, or open the fest's public site → 'Certificate check' and type the code printed on it (for example 214-K3XQ9). It shows whether the certificate is genuine and whose it is.",
+  ml:"സർട്ടിഫിക്കറ്റിലെ ക്യൂആർ സ്കാൻ ചെയ്യുക, അല്ലെങ്കിൽ ഫെസ്റ്റിന്റെ പൊതു സൈറ്റിൽ 'Certificate check' തുറന്ന് അതിലെ കോഡ് (ഉദാ: 214-K3XQ9) നൽകുക. സർട്ടിഫിക്കറ്റ് ഒറിജിനലാണോ, ആരുടേതാണ് എന്ന് കാണിക്കും."},
+ {k:["id card","identity card","badge","ഐഡി കാർഡ്","ഐഡി"],
+  en:"Open ☰ → 'Certificates and cards' → 'ID cards'. Choose all teams or one team and press Print. Each card shows the chest number, name, category and the student's programmes with times.",
+  ml:"☰ → 'Certificates and cards' → 'ID cards' തുറക്കുക. എല്ലാ ടീമുകളോ ഒരു ടീമോ തിരഞ്ഞെടുത്ത് Print അമർത്തുക. ഓരോ കാർഡിലും ചെസ്റ്റ് നമ്പർ, പേര്, കാറ്റഗറി, കുട്ടിയുടെ പരിപാടികളും സമയവും ഉണ്ടാകും."},
+ {k:["poster","congratulation","winner poster","share winner","പോസ്റ്റർ","വിജയി"],
+  en:"Open ☰ → 'Certificates and cards' → 'Posters', choose a winner and a design, then press 'Download image' or 'Share' to send it straight to WhatsApp or Instagram.",
+  ml:"☰ → 'Certificates and cards' → 'Posters' തുറന്ന് വിജയിയെയും ഡിസൈനും തിരഞ്ഞെടുക്കുക. 'Download image' അമർത്തി സൂക്ഷിക്കാം, 'Share' വഴി വാട്സാപ്പിലേക്കോ ഇൻസ്റ്റഗ്രാമിലേക്കോ നേരിട്ട് അയക്കാം."},
+ {k:["news","notification","announcement","gallery","photo","notice","bell","വാർത്ത","അറിയിപ്പ്","ഫോട്ടോ","ഗാലറി","നോട്ടിഫിക്കേഷൻ"],
+  en:"Open ☰ → 'News and media' to post news, send notifications (to everyone, team leaders, judges or one team), add photos to the gallery, and add links or downloads. These also appear on the public site. Notifications show under the bell icon at the top.",
+  ml:"☰ → 'News and media' തുറന്ന് വാർത്ത ഇടാം, അറിയിപ്പ് അയക്കാം (എല്ലാവർക്കും, ടീം ലീഡർമാർക്ക്, ജഡ്ജസിന്, ഒരു ടീമിന്), ഗാലറിയിൽ ഫോട്ടോ ചേർക്കാം, ലിങ്കുകളും ഡൗൺലോഡുകളും ചേർക്കാം. ഇവ പൊതു സൈറ്റിലും വരും. അറിയിപ്പുകൾ മുകളിലെ ബെൽ ഐക്കണിൽ കാണാം."},
+ {k:["export","excel","download data","google sheets","csv","backup","എക്സൽ","ഡൗൺലോഡ്"],
+  en:"Open ☰ → 'Export'. Candidates, results and the schedule can be copied or downloaded for Excel or Google Sheets in one click.",
+  ml:"☰ → 'Export' തുറക്കുക. കുട്ടികളുടെ ലിസ്റ്റ്, ഫലങ്ങൾ, ഷെഡ്യൂൾ എന്നിവ ഒറ്റ ക്ലിക്കിൽ Excel-ലേക്കോ Google Sheets-ലേക്കോ കോപ്പി ചെയ്യാം, ഡൗൺലോഡ് ചെയ്യാം."},
+ {k:["logo","colour","color","theme","brand","red","green","ലോഗോ","കളർ","നിറം","തീം"],
+  en:"Open ☰ → 'Fest settings' → 'Logo and colour'. Upload your fest's logo and choose a colour (any colour works). Press 'Save logo and colour'. Your pages, the public website, the big screen, the login link, certificates and ID cards all follow it.",
+  ml:"☰ → 'Fest settings' → 'Logo and colour' തുറക്കുക. ഫെസ്റ്റിന്റെ ലോഗോ അപ്‌ലോഡ് ചെയ്ത് ഒരു നിറം തിരഞ്ഞെടുക്കുക (ഏത് നിറവും ആകാം). 'Save logo and colour' അമർത്തുക. നിങ്ങളുടെ പേജുകൾ, പൊതു സൈറ്റ്, വലിയ സ്ക്രീൻ, ലോഗിൻ ലിങ്ക്, സർട്ടിഫിക്കറ്റ്, ഐഡി കാർഡ് എല്ലാം ആ നിറത്തിലും ലോഗോയിലും ആകും."},
+ {k:["offline","internet","network","no signal","saved","sync","not saving","ഇന്റർനെറ്റ്","നെറ്റ്","സേവ്"],
+  en:"If the internet drops, your work is kept on your phone and sent automatically when you're back online. The pill at the top shows 'Saved', 'Saving…' or 'Offline · will retry'. Wait for 'Saved' before closing.",
+  ml:"ഇന്റർനെറ്റ് പോയാലും നിങ്ങൾ ചെയ്തത് ഫോണിൽ സൂക്ഷിക്കും; നെറ്റ് തിരിച്ചുവരുമ്പോൾ തനിയെ അയക്കും. മുകളിലെ ചെറിയ ബട്ടണിൽ 'Saved', 'Saving…' അല്ലെങ്കിൽ 'Offline · will retry' എന്ന് കാണിക്കും. അടയ്ക്കും മുമ്പ് 'Saved' ആകും വരെ കാത്തിരിക്കുക."},
+ {k:["phone","mobile","computer","laptop","download app","install","play store","app","ഫോൺ","മൊബൈൽ","ആപ്പ്","കമ്പ്യൂട്ടർ","ഇൻസ്റ്റാൾ"],
+  en:"Mehfil is a website, so there's nothing to download. It works in any browser on phones, tablets and computers. You can add it to your phone's home screen from the browser menu if you like.",
+  ml:"മെഹ്ഫിൽ ഒരു വെബ്സൈറ്റാണ്; ഒന്നും ഡൗൺലോഡ് ചെയ്യേണ്ട. ഫോൺ, ടാബ്‌ലെറ്റ്, കമ്പ്യൂട്ടർ എന്നിവയിലെ ഏത് ബ്രൗസറിലും പ്രവർത്തിക്കും. വേണമെങ്കിൽ ബ്രൗസർ മെനുവിൽ നിന്ന് ഫോണിന്റെ ഹോം സ്ക്രീനിലേക്ക് ചേർക്കാം."},
+ {k:["safe","security","privacy","data","stored","secure","hack","സുരക്ഷ","ഡാറ്റ","സ്വകാര്യ"],
+  en:"Each fest's data is kept separately, and only people with a login for that fest can change it. Team leaders see only their own team, and judges see chest numbers, not names. Passwords are stored in scrambled form. The public site shows only what you allow on the Locks page.",
+  ml:"ഓരോ ഫെസ്റ്റിന്റെയും വിവരങ്ങൾ വേറെവേറെയാണ് സൂക്ഷിക്കുന്നത്; ആ ഫെസ്റ്റിൽ ലോഗിൻ ഉള്ളവർക്ക് മാത്രമേ മാറ്റാൻ കഴിയൂ. ടീം ലീഡർമാർ സ്വന്തം ടീം മാത്രം കാണും; ജഡ്ജസ് ചെസ്റ്റ് നമ്പർ മാത്രം കാണും, പേര് കാണില്ല. പാസ്‌വേഡുകൾ രഹസ്യ രൂപത്തിലാണ് സൂക്ഷിക്കുന്നത്. Locks പേജിൽ അനുവദിക്കുന്നത് മാത്രമേ പൊതു സൈറ്റിൽ കാണൂ."},
+ {k:["delete","remove","മായ്ക്ക","ഡിലീറ്റ്","നീക്ക"],
+  en:"To delete a fest: 'My fests' → Delete, then type its name to confirm. To remove a student: on 'Candidates' (allowed until their programmes are marked). To remove a programme: 'Programmes' → Edit (only before marking starts). Logins can be deleted on 'Logins'.",
+  ml:"ഫെസ്റ്റ് നീക്കാൻ: 'My fests' → Delete, എന്നിട്ട് ഉറപ്പിക്കാൻ അതിന്റെ പേര് ടൈപ്പ് ചെയ്യുക. കുട്ടിയെ നീക്കാൻ: 'Candidates'-ൽ (പരിപാടിക്ക് മാർക്ക് ഇടും വരെ). പരിപാടി നീക്കാൻ: 'Programmes' → Edit (മാർക്കിടൽ തുടങ്ങും മുമ്പ്). ലോഗിനുകൾ 'Logins' പേജിൽ നീക്കാം."},
+ {k:["demo","try it","test it","sample","ഡെമോ"],
+  en:"Press 'See the live demo' on the home page. It opens a full sample fest you can try as an admin, a team leader or a judge. Nothing you do in the demo is saved.",
+  ml:"ഹോം പേജിലെ 'See the live demo' അമർത്തുക. അഡ്മിനായോ ടീം ലീഡറായോ ജഡ്ജായോ ഉപയോഗിച്ചുനോക്കാവുന്ന ഒരു മാതൃകാ ഫെസ്റ്റ് തുറക്കും. ഡെമോയിൽ ചെയ്യുന്നതൊന്നും സേവ് ആകില്ല."},
+ {k:["language","malayalam","english","arabic","urdu","ഭാഷ","മലയാളം"],
+  en:"The site itself is in English. You can ask me in Malayalam or English and I'll reply in the same language. Names, programme names and news can be typed in any language.",
+  ml:"സൈറ്റ് ഇംഗ്ലീഷിലാണ്. എന്നോട് മലയാളത്തിലോ ഇംഗ്ലീഷിലോ ചോദിക്കാം, അതേ ഭാഷയിൽ മറുപടി തരാം. പേരുകൾ, പരിപാടിയുടെ പേര്, വാർത്ത എന്നിവ ഏത് ഭാഷയിലും ടൈപ്പ് ചെയ്യാം."},
+ {k:["contact","support","help me","customer care","call","ബന്ധപ്പെ","സഹായം","സപ്പോർട്ട്"],
+  en:"Start with the 'Help' page in the ☰ menu, or just ask me. Team leaders and judges can contact their fest convener. Organisers can reach the Mehfil team for anything else.",
+  ml:"☰ മെനുവിലെ 'Help' പേജ് നോക്കാം, അല്ലെങ്കിൽ എന്നോട് ചോദിക്കാം. ടീം ലീഡർമാരും ജഡ്ജസും ഫെസ്റ്റ് കൺവീനറെ ബന്ധപ്പെടുക. മറ്റ് കാര്യങ്ങൾക്ക് ഓർഗനൈസർമാർക്ക് മെഹ്ഫിൽ ടീമിനെ ബന്ധപ്പെടാം."},
+ {k:["who made","who built","who created","developer","owner","creator","company","made by","ആര് ഉണ്ടാക്കി","ആരാണ് ഉണ്ടാക്കിയ","ഉടമ","ആരുടേതാണ്"],
+  en:"Mehfil is built and run by the Mehfil team.",
+  ml:"മെഹ്ഫിൽ ടീമാണ് മെഹ്ഫിൽ നിർമിച്ചതും നടത്തുന്നതും."},
+ {k:["group","team event","duff","oppana","group item","ഗ്രൂപ്പ്","ദഫ്","ഒപ്പന"],
+  en:"For group items (like Duff), register the group as one candidate, for example 'Duff Team A', in the right category, and add it to the programme. Judges then mark the group by its chest number.",
+  ml:"ഗ്രൂപ്പ് ഇനങ്ങൾക്ക് (ദഫ് പോലുള്ളവ) ഗ്രൂപ്പിനെ ഒരു കാൻഡിഡേറ്റായി ചേർക്കുക, ഉദാഹരണം 'Duff Team A', ശരിയായ കാറ്റഗറിയിൽ. എന്നിട്ട് അതിനെ പരിപാടിയിൽ ചേർക്കുക. ജഡ്ജസ് ആ ചെസ്റ്റ് നമ്പറിന് മാർക്ക് ഇടും."},
+ {k:["maximum","how many students","how many teams","how many judges","capacity","any limit","പരമാവധി","എത്ര കുട്ടി","എത്ര ടീം","എത്ര ജഡ്ജ്"],
+  en:"There's no fixed limit on teams, students or programmes. A programme can have up to 7 judges, a fest can run up to 7 days, and you choose how many programmes each student may take (1 to 20).",
+  ml:"ടീമുകൾക്കും കുട്ടികൾക്കും പരിപാടികൾക്കും നിശ്ചിത പരിധിയില്ല. ഒരു പരിപാടിക്ക് 7 ജഡ്ജസ് വരെ, ഫെസ്റ്റ് 7 ദിവസം വരെ. ഒരു കുട്ടിക്ക് എത്ര പരിപാടി എന്നത് നിങ്ങൾ തീരുമാനിക്കാം (1 മുതൽ 20 വരെ)."},
+ {k:["who are you","your name","festiq","what are you","നിന്റെ പേര്","നീ ആരാ","നിങ്ങൾ ആരാ"],
+  en:"I'm FESTIQ, Mehfil's assistant. Ask me anything about using Mehfil: setting up a fest, registration, judging, results, certificates or locks.",
+  ml:"ഞാൻ FESTIQ, മെഹ്ഫിലിന്റെ സഹായി. മെഹ്ഫിൽ ഉപയോഗിക്കുന്നതിനെക്കുറിച്ച് എന്തും ചോദിക്കാം: ഫെസ്റ്റ് ഒരുക്കൽ, രജിസ്ട്രേഷൻ, ജഡ്ജിങ്, ഫലം, സർട്ടിഫിക്കറ്റ്, പൂട്ടുകൾ."}
+];
+const FQ={open:false,msgs:[],busy:false,ai:null,cid:""};
+const fqMl=s=>/[ഀ-ൿ]/.test(s);
+function fqLocal(q){const n=" "+String(q).toLowerCase().replace(/[?!.,;:()"'’`]/g," ").replace(/\s+/g," ")+" ";const ml=fqMl(q);
+  if(/^\s*(hi|hello|hey|hai|helo|salam|assalam|as-salam|good (morning|evening|afternoon))\b/.test(n)||/(ഹലോ|ഹായ്|സലാം|അസ്സലാമു)/.test(n))return ml?"നമസ്കാരം! ഞാൻ FESTIQ. മെഹ്ഫിൽ ഉപയോഗിക്കുന്നതിനെക്കുറിച്ച് എന്തും ചോദിക്കൂ.":"Hello! I'm FESTIQ. Ask me anything about using Mehfil.";
+  if(/(thank|thanks|thx|nanni|jazak)/.test(n)||/(നന്ദി|താങ്ക്സ്)/.test(n))return ml?"സന്തോഷം! വേറെ എന്തെങ്കിലും അറിയണോ?":"You're welcome! Anything else?";
+  let best=null,bs=0;FQKB.forEach(e=>{let sc=0;e.k.forEach(k=>{if(n.includes(k.toLowerCase()))sc+=k.length});if(sc>bs){bs=sc;best=e}});
+  if(best&&bs>=3)return ml?best.ml:best.en;
+  return ml?"അതിന് എന്റെ കയ്യിൽ ഉത്തരമില്ല. മറ്റൊരു രീതിയിൽ ചോദിച്ചുനോക്കൂ, അല്ലെങ്കിൽ ☰ മെനുവിലെ Help നോക്കൂ.":"I don't have an answer for that yet. Try asking another way, or open Help in the ☰ menu."}
+function fqChips(){const r=ME&&ME.role;if(VIEW==="public")return ["How do I check a certificate?","How do points work?","Is Mehfil free?"];
+  if(r==="judge")return ["How do I enter marks?","I made a mistake in marks","What if the internet drops?"];
+  if(r==="team")return ["How do I register students?","How do I choose programmes?","How do I file an appeal?"];
+  if(r)return ["How do points work?","Can the admin enter marks?","How do I add my fest logo?","How do I hide results?"];
+  return ["Is Mehfil free?","How do I start?","What can Mehfil do?","എങ്ങനെ തുടങ്ങാം?"]}
+const fqFmt=t=>esc(t).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
+function fqRender(){const box=document.getElementById("fqMsgs");if(!box)return;
+  box.innerHTML=FQ.msgs.map(m=>`<div class="fq-m ${m.r}">${fqFmt(m.t)}</div>`).join("")+(FQ.busy?`<div class="fq-m a"><span class="fq-typing" aria-label="FESTIQ is typing"><i></i><i></i><i></i></span></div>`:"");
+  box.scrollTop=box.scrollHeight;const ch=document.getElementById("fqChips");if(ch)ch.innerHTML=fqChips().map(c=>`<button type="button">${esc(c)}</button>`).join("");
+  if(ch)[...ch.children].forEach(b=>b.onclick=()=>fqAsk(b.textContent))}
+async function fqAsk(q){q=String(q||"").trim().slice(0,500);if(!q||FQ.busy)return;FQ.msgs.push({r:"u",t:q});FQ.busy=true;fqRender();
+  let ans="";if(HAS_API&&FQ.ai!==false){try{const hist=FQ.msgs.slice(-9,-1).map(m=>({r:m.r,t:m.t.slice(0,600)}));
+      const r=await Promise.race([api("ask",{q,h:hist,ctx:{view:VIEW,role:ME?ME.role:"visitor",page:PAGE||""},cid:FQ.cid}),new Promise((_,rej)=>setTimeout(()=>rej(new Error("slow")),15000))]);
+      if(r&&r.a){ans=r.a;FQ.ai=true}else if(r&&r.offline&&!r.busy)FQ.ai=false}catch(e){}}
+  if(!ans){await new Promise(r=>setTimeout(r,350));ans=fqLocal(q)}
+  FQ.busy=false;FQ.msgs.push({r:"a",t:ans});fqRender()}
+function fqToggle(open){FQ.open=open==null?!FQ.open:open;const p=document.getElementById("fqPanel"),f=document.getElementById("fqFab");if(!p)return;p.hidden=!FQ.open;f.classList.toggle("open",FQ.open);f.setAttribute("aria-expanded",String(FQ.open));
+  if(FQ.open){if(!FQ.msgs.length)FQ.msgs.push({r:"a",t:"Hi! I'm FESTIQ, Mehfil's assistant. Ask me anything about running your fest, in English or Malayalam."});fqRender();setTimeout(()=>{const i=document.getElementById("fqIn");if(i)i.focus()},60)}}
+function mountFQ(){if(document.getElementById("fqFab"))return;try{FQ.cid=localStorage.getItem("fq_cid")||"";if(!FQ.cid){FQ.cid=rid(12);localStorage.setItem("fq_cid",FQ.cid)}}catch(e){FQ.cid=rid(12)}
+  document.body.insertAdjacentHTML("beforeend",`<button type="button" class="fq-fab" id="fqFab" aria-label="Ask FESTIQ, Mehfil's assistant" aria-controls="fqPanel" aria-expanded="false">${mark(32)}<span class="fq-dot" aria-hidden="true"></span></button>
+  <section class="fq-panel" id="fqPanel" role="dialog" aria-label="FESTIQ assistant" hidden>
+   <div class="fq-head"><span class="fq-av">${mark(24)}</span><div><b>FESTIQ</b><small>Mehfil assistant · online</small></div><button type="button" class="fq-x" id="fqX" aria-label="Close">✕</button></div>
+   <div class="fq-msgs" id="fqMsgs" aria-live="polite"></div><div class="fq-chips" id="fqChips"></div>
+   <form class="fq-form" id="fqForm"><label for="fqIn" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Message</label><input id="fqIn" autocomplete="off" maxlength="500" placeholder="Ask FESTIQ anything…"><button type="submit">Send</button></form>
+  </section>`);
+  document.getElementById("fqFab").onclick=()=>fqToggle();document.getElementById("fqX").onclick=()=>fqToggle(false);
+  document.getElementById("fqForm").onsubmit=e=>{e.preventDefault();const i=document.getElementById("fqIn");const v=i.value;i.value="";fqAsk(v)};
+  document.addEventListener("keydown",e=>{if(e.key==="Escape"&&FQ.open)fqToggle(false)})}
+mountFQ();
 
 </script>
 </body>
