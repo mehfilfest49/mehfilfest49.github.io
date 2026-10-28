@@ -723,12 +723,12 @@ body.screen-mode .aurora{display:none}
 .mini-f{flex:1 1 120px;max-width:180px}
 
 /* ===== FESTIQ assistant ===== */
-.fq-fab{position:fixed;right:max(30px,env(safe-area-inset-right,0px));bottom:calc(96px + env(safe-area-inset-bottom,0px));z-index:60;width:62px;height:62px;border-radius:50%;border:1px solid rgba(255,255,255,.55);background:color-mix(in srgb,var(--surface) 55%,transparent);backdrop-filter:blur(16px) saturate(1.6);-webkit-backdrop-filter:blur(16px) saturate(1.6);box-shadow:0 10px 30px rgba(15,35,64,.22);display:grid;place-items:center;cursor:pointer;transition:transform .2s;padding:0}
+.fq-fab{position:fixed;right:max(30px,env(safe-area-inset-right,0px));bottom:calc(34px + env(safe-area-inset-bottom,0px));z-index:60;width:62px;height:62px;border-radius:50%;border:1px solid rgba(255,255,255,.55);background:color-mix(in srgb,var(--surface) 55%,transparent);backdrop-filter:blur(16px) saturate(1.6);-webkit-backdrop-filter:blur(16px) saturate(1.6);box-shadow:0 10px 30px rgba(15,35,64,.22);display:grid;place-items:center;cursor:pointer;transition:transform .2s;padding:0}
 .fq-fab:hover{transform:scale(1.06)}.fq-fab:focus-visible{outline:3px solid var(--brand);outline-offset:3px}
 .fq-fab .mark{width:32px;height:32px;background:var(--brand)}
 .fq-fab .fq-dot{position:absolute;top:5px;right:5px;width:12px;height:12px;border-radius:50%;background:var(--good);border:2px solid var(--surface)}
 .fq-fab.open{transform:rotate(90deg) scale(.92)}
-.fq-panel{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(170px + env(safe-area-inset-bottom,0px));z-index:61;width:min(400px,calc(100vw - 32px));height:min(600px,calc(100dvh - 210px));display:flex;flex-direction:column;border-radius:28px;background:color-mix(in srgb,var(--surface) 84%,transparent);backdrop-filter:blur(22px) saturate(1.6);-webkit-backdrop-filter:blur(22px) saturate(1.6);border:1px solid rgba(255,255,255,.5);box-shadow:0 24px 70px rgba(15,35,64,.28);overflow:hidden;color:var(--ink)}
+.fq-panel{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(108px + env(safe-area-inset-bottom,0px));z-index:61;width:min(400px,calc(100vw - 32px));height:min(600px,calc(100dvh - 150px));display:flex;flex-direction:column;border-radius:28px;background:color-mix(in srgb,var(--surface) 84%,transparent);backdrop-filter:blur(22px) saturate(1.6);-webkit-backdrop-filter:blur(22px) saturate(1.6);border:1px solid rgba(255,255,255,.5);box-shadow:0 24px 70px rgba(15,35,64,.28);overflow:hidden;color:var(--ink)}
 .fq-head{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--line)}
 .fq-av{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:var(--brand-soft);flex:0 0 auto}
 .fq-av .mark{width:24px;height:24px;background:var(--brand)}
@@ -1165,15 +1165,20 @@ async function doCoupon(){const c=document.getElementById("lc").value.trim().toL
   try{const r=await api("couponLogin",{code:c});TOKEN=r.token;ME=r.user;saveSession();await enter()}
   catch(x){b.disabled=false;b.innerHTML=`Enter ${ic("arrow")}`;e.innerHTML=`<div class="msg bad">${esc(x.message)}</div>`}}
 async function doSignup(){const g=id=>(document.getElementById(id).value||"").trim();const e=document.getElementById("lerr"),b=document.getElementById("lbtn");
-  const d={name:g("su_n"),inst:g("su_i"),phone:g("su_ph"),place:g("su_pl"),u:g("su_u").toLowerCase(),p:document.getElementById("su_p").value};
+  const d={name:g("su_n"),inst:g("su_i"),phone:g("su_ph"),place:g("su_pl"),email:g("su_e").toLowerCase(),u:g("su_u").toLowerCase(),p:document.getElementById("su_p").value};
   const bad=m=>{e.innerHTML=`<div class="msg bad">${esc(m)}</div>`};
   if(!d.name)return bad("Please enter your name.");if(!d.inst)return bad("Please enter the name of your institution.");
   if(d.phone.replace(/\D/g,"").length<10)return bad("Please enter a valid WhatsApp number.");
+  if(!/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(d.email))return bad("Please enter a valid email address.");
   if(!/^[a-z0-9_.]{3,30}$/.test(d.u))return bad("Usernames use lowercase letters, numbers, dots and _ only (3 to 30).");
   if(d.p.length<6)return bad("Passwords need at least 6 characters.");
   if(!HAS_API)return bad("The live site isn't connected yet. You can explore the demo instead.");
+  if(UI.otpFor!==d.email){UI.otpFor="";b.disabled=true;b.innerHTML="Sending a code…";
+    try{const o=await api("sendOtp",{email:d.email});if(!o.off){UI.otpFor=d.email;b.disabled=false;b.innerHTML="Verify and create account";document.getElementById("otpbox").hidden=false;e.innerHTML=`<div class="msg ok">We sent a 6-digit code to ${esc(d.email)}. Check your inbox (and spam), then type it below.</div>`;document.getElementById("su_o").focus();return}}
+    catch(x){if(!/Unknown action/.test(x.message)){b.disabled=false;b.innerHTML="Create my free account";return bad(x.message)}}}
+  d.otp=g("su_o");if(UI.otpFor&&!/^\d{6}$/.test(d.otp)){b.disabled=false;b.innerHTML="Verify and create account";return bad("Type the 6-digit code from your email.")}
   b.disabled=true;b.innerHTML="Creating your account…";
-  try{const r=await api("signup",d);TOKEN=r.token;ME=r.user;saveSession();toast("Welcome to Mehfil! Your free account is ready.");await enter()}
+  try{const r=await api("signup",d);UI.otpFor="";TOKEN=r.token;ME=r.user;saveSession();toast("Welcome to Mehfil! Your free account is ready.");await enter()}
   catch(x){b.disabled=false;b.innerHTML=`Create my free account ${ic("arrow")}`;bad(x.message)}}
 async function enter(){VIEW="loading";LOADMSG="Opening your desk…";paint();
   try{const r=await api("fests");ME=r.user;saveSession();FESTLIST=r.fests||[];DBURL=r.db||"";MYPLAN=r.plan||null;setTimeout(checkReturn,1200);hit("app");
@@ -1387,7 +1392,7 @@ function paint(){NEEDPAINT=false;applyTheme(curBrand());document.body.classList.
   if(VIEW==="screen"){app.innerHTML=SCREEN_VIEW();return}
   if(VIEW==="loading"){app.innerHTML=`<div class="loading">${LOADER()}<p>${esc(LOADMSG||"Loading…")}</p></div>`;return}
   if(VIEW==="landing"){app.innerHTML=LANDING();startMock();hit("home");return}
-  if(VIEW==="signup"&&!ME){const keep={};["su_n","su_i","su_ph","su_pl","su_u","su_p"].forEach(id=>{const el=document.getElementById(id);if(el)keep[id]=el.value});app.innerHTML=SIGNUP();
+  if(VIEW==="signup"&&!ME){const keep={};["su_n","su_i","su_ph","su_pl","su_e","su_o","su_u","su_p"].forEach(id=>{const el=document.getElementById(id);if(el)keep[id]=el.value});app.innerHTML=SIGNUP();
     Object.entries(keep).forEach(([id,v])=>{const el=document.getElementById(id);if(el&&v)el.value=v});if(fid){const el=document.getElementById(fid);if(el)el.focus({preventScroll:true})}return}
   if(VIEW==="login"||!ME){const keep={};["lu","lp","lc"].forEach(id=>{const el=document.getElementById(id);if(el)keep[id]=el.value});app.innerHTML=LOGIN();
     Object.entries(keep).forEach(([id,v])=>{const el=document.getElementById(id);if(el&&v)el.value=v});if(fid){const el=document.getElementById(fid);if(el){el.focus({preventScroll:true});try{if(ss!=null)el.setSelectionRange(ss,se)}catch(e){}}}return}
@@ -1480,6 +1485,8 @@ function SIGNUP(){return `<div class="login gut"><div class="lcard">
    <label class="f">Your name<input id="su_n" autocomplete="name" maxlength="60"></label>
    <label class="f">Institution<input id="su_i" maxlength="80" placeholder="Your madrasa, school or college"></label>
    <div class="row" style="gap:12px"><label class="f" style="flex:1 1 180px">WhatsApp number<input id="su_ph" type="tel" inputmode="tel" autocomplete="tel" maxlength="15" placeholder="10-digit number"></label><label class="f" style="flex:1 1 160px">Place (optional)<input id="su_pl" maxlength="60"></label></div>
+   <label class="f">Email<input id="su_e" type="email" autocomplete="email" maxlength="80" placeholder="We send a code here to check it" oninput="UI.otpFor=''"></label>
+   <div id="otpbox" hidden><label class="f">6-digit code from your email<input id="su_o" inputmode="numeric" maxlength="6" autocomplete="one-time-code" placeholder="123456"></label><button type="button" class="btn ghost sm" style="margin-top:6px" onclick="UI.otpFor='';doSignup()">Send the code again</button></div>
    <label class="f">Choose a username<input id="su_u" autocomplete="username" autocapitalize="none" spellcheck="false" maxlength="30" placeholder="e.g. greenvalley.fest"></label>
    <label class="f pw">Choose a password<input id="su_p" type="password" autocomplete="new-password" placeholder="At least 6 characters"><button type="button" onclick="const i=document.getElementById('su_p');i.type=i.type==='password'?'text':'password';this.textContent=i.type==='password'?'Show':'Hide'">Show</button></label>
    <div id="lerr"></div>
@@ -1538,7 +1545,7 @@ async function checkReturn(){let ref="";try{ref=new URLSearchParams(location.sea
 PG.accounts=()=>{const A=UI.accts;if(!A){loadAccts();return `${head("Accounts","Every organiser account: search, lock, add months.")}<div class="panel">Loading…</div>`}
   const q=(UI.aq||"").toLowerCase().trim(),f=UI.af||"all";
   const tierOf=a=>a.locked?"locked":a.paid?"paid":a.fests.some(x=>x.tier==="free")?"trial":a.trial?"ended":"new";
-  const list=A.accounts.filter(a=>(!q||[a.id,a.name,a.inst,a.phone,a.place].join(" ").toLowerCase().includes(q))&&(f==="all"||tierOf(a)===f));
+  const list=A.accounts.filter(a=>(!q||[a.id,a.name,a.inst,a.phone,a.place,a.email].join(" ").toLowerCase().includes(q))&&(f==="all"||tierOf(a)===f));
   const cnt=k=>A.accounts.filter(a=>tierOf(a)===k).length,paidSum=A.payments.filter(p=>p.status==="paid").reduce((s,p)=>s+p.amount,0);
   const pillOf=a=>({locked:`<span class="pill bad">Locked</span>`,paid:`<span class="pill ok">Paid · till ${fmtD(a.paidUntil)}</span>`,trial:`<span class="pill wait">On trial</span>`,ended:`<span class="pill bad">Trial ended</span>`,new:`<span class="pill">No fest yet</span>`})[tierOf(a)];
   return `${head("Accounts","Every organiser account: search, lock, add months.")}
@@ -1546,7 +1553,7 @@ PG.accounts=()=>{const A=UI.accts;if(!A){loadAccts();return `${head("Accounts","
   <div class="panel"><div class="row" style="align-items:flex-end"><label class="f" style="flex:2 1 220px">Search<input id="aq" value="${esc(UI.aq||"")}" placeholder="Name, institution, phone or username" oninput="UI.aq=this.value;softPaint()" autocomplete="off"></label>
    <label class="f" style="flex:1 1 140px">Show<select onchange="UI.af=this.value;paint()">${[["all","Everyone"],["paid","Paid"],["trial","On trial"],["ended","Trial ended"],["locked","Locked"],["new","No fest yet"]].map(([k,l])=>`<option value="${k}" ${f===k?"selected":""}>${l}</option>`).join("")}</select></label></div></div>
   ${list.map(a=>`<div class="panel acct"><div class="row" style="justify-content:space-between;align-items:flex-start;gap:8px"><div><b style="font-size:17px">${esc(a.name)}</b>${a.inst?` · ${esc(a.inst)}`:""}<br><small class="hint">${esc(a.id.startsWith("c:")?"Coupon login":"@"+a.id)}${a.place?" · "+esc(a.place):""} · joined ${fmtD(a.created)}</small></div>${pillOf(a)}</div>
-    ${a.phone?`<p style="margin:8px 0 0"><a href="https://wa.me/91${esc(a.phone.replace(/\D/g,"").slice(-10))}" target="_blank" rel="noopener">${ic("share",14)} WhatsApp ${esc(a.phone)}</a></p>`:""}
+    ${a.email?`<p style="margin:8px 0 0">${ic("mail",14)} <a href="mailto:${esc(a.email)}">${esc(a.email)}</a></p>`:""}${a.phone?`<p style="margin:8px 0 0"><a href="https://wa.me/91${esc(a.phone.replace(/\D/g,"").slice(-10))}" target="_blank" rel="noopener">${ic("share",14)} WhatsApp ${esc(a.phone)}</a></p>`:""}
     ${a.fests.length?`<div class="chips" style="margin-top:10px">${a.fests.map(x=>`<span class="chip" style="cursor:default">${esc(x.name)} · ${x.tier==="paid"?"paid":x.tier==="free"?"trial, "+leftTxt(x.ends)+" left":x.tier==="locked"?"locked":"ended"} · ${x.logins} logins</span>`).join("")}</div>`:""}
     <div class="row" style="margin-top:12px;gap:6px;flex-wrap:wrap">${[1,3,6,12].map(m=>`<button class="btn ghost sm" onclick="setAcct('${esc(a.id)}',{addMonths:${m}})">+${m===12?"1 year":m+" month"+(m>1?"s":"")}</button>`).join("")}
      ${a.paid?`<button class="btn ghost sm" onclick="if(confirmAct('End this account\\'s paid plan now?'))setAcct('${esc(a.id)}',{endPlan:true})">End plan</button>`:""}
