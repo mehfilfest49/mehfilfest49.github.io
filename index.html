@@ -723,12 +723,12 @@ body.screen-mode .aurora{display:none}
 .mini-f{flex:1 1 120px;max-width:180px}
 
 /* ===== FESTIQ assistant ===== */
-.fq-fab{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:60;width:62px;height:62px;border-radius:50%;border:1px solid rgba(255,255,255,.55);background:color-mix(in srgb,var(--surface) 55%,transparent);backdrop-filter:blur(16px) saturate(1.6);-webkit-backdrop-filter:blur(16px) saturate(1.6);box-shadow:0 10px 30px rgba(15,35,64,.22);display:grid;place-items:center;cursor:pointer;transition:transform .2s;padding:0}
+.fq-fab{position:fixed;right:max(30px,env(safe-area-inset-right,0px));bottom:calc(96px + env(safe-area-inset-bottom,0px));z-index:60;width:62px;height:62px;border-radius:50%;border:1px solid rgba(255,255,255,.55);background:color-mix(in srgb,var(--surface) 55%,transparent);backdrop-filter:blur(16px) saturate(1.6);-webkit-backdrop-filter:blur(16px) saturate(1.6);box-shadow:0 10px 30px rgba(15,35,64,.22);display:grid;place-items:center;cursor:pointer;transition:transform .2s;padding:0}
 .fq-fab:hover{transform:scale(1.06)}.fq-fab:focus-visible{outline:3px solid var(--brand);outline-offset:3px}
 .fq-fab .mark{width:32px;height:32px;background:var(--brand)}
 .fq-fab .fq-dot{position:absolute;top:5px;right:5px;width:12px;height:12px;border-radius:50%;background:var(--good);border:2px solid var(--surface)}
 .fq-fab.open{transform:rotate(90deg) scale(.92)}
-.fq-panel{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(90px + env(safe-area-inset-bottom,0px));z-index:61;width:min(400px,calc(100vw - 32px));height:min(600px,calc(100dvh - 130px));display:flex;flex-direction:column;border-radius:28px;background:color-mix(in srgb,var(--surface) 84%,transparent);backdrop-filter:blur(22px) saturate(1.6);-webkit-backdrop-filter:blur(22px) saturate(1.6);border:1px solid rgba(255,255,255,.5);box-shadow:0 24px 70px rgba(15,35,64,.28);overflow:hidden;color:var(--ink)}
+.fq-panel{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(170px + env(safe-area-inset-bottom,0px));z-index:61;width:min(400px,calc(100vw - 32px));height:min(600px,calc(100dvh - 210px));display:flex;flex-direction:column;border-radius:28px;background:color-mix(in srgb,var(--surface) 84%,transparent);backdrop-filter:blur(22px) saturate(1.6);-webkit-backdrop-filter:blur(22px) saturate(1.6);border:1px solid rgba(255,255,255,.5);box-shadow:0 24px 70px rgba(15,35,64,.28);overflow:hidden;color:var(--ink)}
 .fq-head{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--line)}
 .fq-av{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:var(--brand-soft);flex:0 0 auto}
 .fq-av .mark{width:24px;height:24px;background:var(--brand)}
@@ -781,6 +781,77 @@ body.noFQ .fq-fab,body.noFQ .fq-panel{display:none!important}
 .c3qr .qrfb{width:7cqw;height:7cqw;font-size:1.2cqw}
 @page c3land{size:A4 landscape;margin:0}
 @media print{#printroot:has(.cert.t3),#printroot:has(.cert.t3) .docs{page:c3land}#printroot .cert.t3{page:c3land;display:block;min-height:0;width:100%;height:auto;aspect-ratio:297/205;border-radius:0;margin:0 auto}}
+
+/* fest name in the top bar: two lines at most */
+.brandname.fb{letter-spacing:.06em;line-height:1.12;min-width:0}
+.brandname.fb .fbn{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:15px}
+@media (min-width:700px){.brandname.fb .fbn{font-size:18px;-webkit-line-clamp:1}}
+
+/* site stats + contact */
+.vbars{display:flex;align-items:flex-end;gap:6px;height:150px;margin-top:16px;padding-top:8px}
+.vb{flex:1;min-width:0;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:4px}
+.vb i{display:block;width:100%;max-width:28px;min-height:3px;border-radius:6px 6px 2px 2px;background:var(--brand)}
+.vb span{font-size:11px;color:var(--muted)}
+.vb small{font-size:10.5px;color:var(--muted);order:-1}
+.cmsg{padding:14px 0;border-top:1px solid var(--line)}
+.cmsg:first-of-type{border-top:0}
+.cmsg.new b{color:var(--brand)}
+.lform textarea{width:100%;box-sizing:border-box;font:inherit;padding:10px 12px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface,#fff);color:inherit;resize:vertical}
+.stats{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.stats .stat span{display:block;margin-top:6px;font-size:13px;color:var(--muted)}
+
+/* plans */
+.planbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:12px 16px;border-radius:18px;margin-bottom:14px;border:1px solid var(--line);background:var(--surface)}
+.planbar>div{flex:1 1 220px;min-width:0;line-height:1.4}
+.planbar small{color:var(--muted)}
+.planbar .pbi,.upsell .pbi{display:grid;place-items:center;width:38px;height:38px;border-radius:12px;flex:0 0 auto;background:var(--brand-soft,#E5F1FD);color:var(--brand)}
+.planbar.trial{border-color:color-mix(in srgb,var(--brand) 35%,transparent)}
+.planbar.soon{border-color:#E8A33C;background:color-mix(in srgb,#E8A33C 10%,var(--surface))}
+.planbar.over{border-color:#D14343;background:color-mix(in srgb,#D14343 9%,var(--surface))}
+.planbar.over .pbi{background:#FBE3E3;color:#B42318}
+.upsell{text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px;padding:32px 18px}
+.upsell .pbi{width:52px;height:52px;border-radius:16px}
+.plans{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}
+.plancard{position:relative;display:flex;flex-direction:column;gap:6px;align-items:flex-start;padding:18px;border-radius:20px;border:1.5px solid var(--line);background:var(--surface)}
+.plancard.best{border-color:var(--brand);box-shadow:0 10px 30px color-mix(in srgb,var(--brand) 18%,transparent)}
+.plancard b{font-family:var(--display);font-size:18px}
+.plancard .price{font-family:var(--display);font-weight:800;font-size:30px;line-height:1.1}
+.plancard .btn{margin-top:auto;width:100%;justify-content:center}
+.plans.land{margin-top:8px}
+.acct .chips .chip{font-size:12.5px}
+
+/* ID card (portrait, scales with its width) */
+.idgrid2{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));margin-top:16px}
+.idc2{position:relative;aspect-ratio:54/85.6;container-type:inline-size;overflow:hidden;border-radius:6cqw;background:#F3F7FC;color:#14181F;box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;font-family:var(--display),sans-serif}
+.idc2>*{position:relative;z-index:1}
+.idc2 .idw{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+.idh{align-self:stretch;display:flex;align-items:center;gap:4cqw;padding:7cqw 6cqw 0}
+.idlogo2{width:18cqw!important;height:18cqw!important;flex:0 0 auto;border-radius:50%;background:#fff;object-fit:contain;padding:1.2cqw;box-sizing:border-box;box-shadow:0 1cqw 3cqw rgba(0,0,0,.18)}
+.idmark{display:grid;place-items:center}
+.idmark .mark,.idmark svg{width:11cqw!important;height:11cqw!important}
+.idt{min-width:0;color:#fff;line-height:1.08;text-transform:uppercase}
+.idt small{display:block;font-size:4cqw;font-weight:700;letter-spacing:.04em;opacity:.9;margin-bottom:1cqw}
+.idt b{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;font-size:6.6cqw;font-weight:800;overflow-wrap:anywhere}
+.idph{margin-top:5cqw;width:42cqw;aspect-ratio:4/5;border-radius:4.5cqw;overflow:hidden;background:#fff;border:1.4cqw solid #fff;box-shadow:0 2cqw 6cqw rgba(15,35,64,.22)}
+.idph img,.idph svg{display:block;width:100%;height:100%;object-fit:cover}
+.idno{margin-top:3cqw;font-size:16cqw;font-weight:800;line-height:1;color:var(--ida);letter-spacing:.01em}
+.idnm{margin-top:2.4cqw;padding:0 5cqw;text-align:center;font-size:7cqw;font-weight:800;line-height:1.1;text-transform:uppercase;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.idtm{margin-top:1.6cqw;display:flex;align-items:center;gap:1.6cqw;font-size:4.3cqw;font-weight:700;color:#5A6472;text-transform:uppercase}
+.idtm i{width:2.6cqw;height:2.6cqw;border-radius:50%}
+.idcat{margin-top:2.4cqw;padding:1.3cqw 5cqw;border-radius:2.6cqw;background:color-mix(in srgb,var(--ida) 12%,#fff);color:var(--ida);font-size:5cqw;font-weight:800;text-transform:uppercase}
+.idbc{margin-top:auto;margin-bottom:15cqw;width:60cqw;height:10cqw;background:#fff;padding:1cqw 2cqw;border-radius:1.5cqw}
+.idbc .bc{display:block;width:100%;height:100%}
+@media print{#printroot .idgrid2{display:grid;grid-template-columns:repeat(3,54mm);gap:5mm;justify-content:center}#printroot .idc2{width:54mm;break-inside:avoid;box-shadow:none;border-radius:3mm}}
+/* certificate code (no QR) */
+.c3qr{flex-direction:column!important;gap:.2cqw!important;width:auto!important}
+.c3qr span{font-size:.9cqw}
+.planbar b{font-size:15px;font-family:var(--display)}
+
+.paidstrip{display:flex;align-items:center;gap:12px;margin-top:14px;padding:12px 16px;border-radius:16px;border:1.5px solid color-mix(in srgb,var(--brand) 30%,transparent);background:var(--surface);color:inherit;text-decoration:none;max-width:520px}
+.paidstrip span:nth-child(2){flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.3}
+.paidstrip small{color:var(--muted);font-size:12.5px}
+.planpill{white-space:nowrap}
+@media (max-width:560px){.plansbtn{display:none}.planpill{padding:6px 10px}}
 </style>
 </head>
 <body>
@@ -808,6 +879,9 @@ const SKILLS = ["Singing","Speech","Writing","Drawing","Qira'ath","Quiz"];
 const IC={
  dash:'<rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/>',
  fests:'<path d="M12 3 2 8l10 5 10-5-10-5Z"/><path d="m2 13 10 5 10-5"/>',
+ card:'<rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 10h19M6 15h4"/>',
+ mail:'<rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m3.5 7 8.5 6 8.5-6"/>',
+ chart:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
  settings:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/>',
  cands:'<circle cx="9" cy="8" r="4"/><path d="M2 21c0-3.9 3.1-7 7-7s7 3.1 7 7"/><path d="M16 4.5a4 4 0 0 1 0 7"/><path d="M22 21c0-3-1.8-5.5-4.5-6.5"/>',
  progs:'<path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.5" cy="6" r="1"/><circle cx="3.5" cy="12" r="1"/><circle cx="3.5" cy="18" r="1"/>',
@@ -997,7 +1071,8 @@ const R={
   regDate(S,a,m){if(!ADM(m))return;const d=String(a.d||"");if(d&&!/^\d{4}-\d{2}-\d{2}$/.test(d))return;S.locks.regDate=d;addLog(S,m,"Registration closing date: "+(d||"none"))},
   pub(S,a,m){if(!ADM(m)||!PUBNAME[a.mode])return;S.locks.pub=a.mode;addLog(S,m,"Public site: "+PUBNAME[a.mode])},
   teamLock(S,a,m,op){if(!ADM(m))return;S.locks.teams=!!a.v;addLog(S,m,`Team leader login ${a.v?"closed":"opened"}`);if(a.v)addNote(S,m,op.cid,"Team leader access is closed for now.","team")},
-  brand(S,a,m){if(!ADM(m))return;if(!S.brand)S.brand={color:"",logo:""};if(a.color!=null){const c=String(a.color);if(c===""||/^#[0-9a-fA-F]{6}$/.test(c))S.brand.color=c.toUpperCase()}
+  candPhoto(S,a,m){const c=cOf(S,a.id);if(!c||!canReg(S,m,c.team))return;const img=String(a.img||"");if(img&&!(/^data:image\/jpeg;base64,[A-Za-z0-9+\/=]+$/.test(img)&&img.length<=20000))return;c.photo=img;addLog(S,m,`${c.name}: photo ${img?"added":"removed"}`)},
+  brand(S,a,m){if(!ADM(m))return;if(!S.brand)S.brand={color:"",logo:""};if(a.inst!=null)S.brand.inst=String(a.inst).trim().slice(0,80);if(a.color!=null){const c=String(a.color);if(c===""||/^#[0-9a-fA-F]{6}$/.test(c))S.brand.color=c.toUpperCase()}
     if(a.logo!=null){const l=String(a.logo);if(l===""||safeLogo(l))S.brand.logo=l}addLog(S,m,"Fest logo and colour updated")},
   tpl(S,a,m){if(!ADM(m))return;if(a.cert!=null)S.tpl.cert=Math.abs(+a.cert)%4;if(a.poster!=null)S.tpl.poster=Math.abs(+a.poster)%3}
 };
@@ -1037,11 +1112,15 @@ async function api(action,data={}){
 function rebuild(){D=clone(SY.conf);SY.pend.forEach(o=>apply(D,o))}
 function integrate(ops,seq){let ch=false;(ops||[]).forEach(o=>{if(o.seq<=SY.seq)return;apply(SY.conf,o);SY.seq=o.seq;ch=true;const i=SY.pend.findIndex(p=>p.cid===o.cid);if(i>=0)SY.pend.splice(i,1)});
   if(seq>SY.seq)SY.seq=seq;if(ch)rebuild();return ch}
-async function loadFest(id){const r=await api("pull",{fest:id,since:0});SY.conf=blankFest(id,r.name);(r.ops||[]).forEach(o=>apply(SY.conf,o));SY.seq=r.seq||0;SY.pend=[];
+let PLAN=null,MYPLAN=null;
+async function loadFest(id){const r=await api("pull",{fest:id,since:0});PLAN=r.plan||null;SY.conf=blankFest(id,r.name);(r.ops||[]).forEach(o=>apply(SY.conf,o));SY.seq=r.seq||0;SY.pend=[];
   FID=id;PUBCODE=r.code||"";USERS=[];rebuild();UI={sf:-1,cf:{q:"",team:"",skill:""},dt:"cert"};if(isAdmin())loadUsers();startPoll()}
 async function loadUsers(){if(DEMO||!FID)return;try{const r=await api("users",{fest:FID});USERS=r.users||[];softPaint()}catch(e){}}
 
 function act(type,a){if(!D||!ME)return false;
+  if(!DEMO&&PLAN&&!["paid","free"].includes(PLAN.tier)){toast(planMsg());return false}
+  if(!DEMO&&isFree()){if(type==="brand"){toast("Your own logo and colour are part of the paid plans.");return false}
+    const add=type==="reg"?1:type==="bulk"?((a&&a.rows)||[]).length:0;if(add&&D.cands.length+add>(PLAN.maxStudents||40)){toast(`The free trial allows up to ${PLAN.maxStudents||40} students. Choose a plan to add more.`);return false}}
   if(D.locks.fest&&!(type==="lock"&&a.k==="fest")){toast("This fest is locked. Everything is read-only.");return false}
   const op={type,a,cid:rid(14),m:{u:ME.u,role:ME.role,team:ME.team||"",name:ME.name,t:Date.now()}};
   const before=JSON.stringify(D);apply(D,op);
@@ -1058,7 +1137,7 @@ async function flush(){if(SY.sending||DEMO)return;const op=SY.pend.find(o=>!o.se
   SY.sending=false;if(SY.pend.some(o=>!o.sent))flush();else setSync("ok")}
 function startPoll(){clearInterval(SY.timer);SY.timer=setInterval(poll,8000)}
 async function poll(){if(DEMO||!FID||!ME||SY.sending||document.hidden)return;
-  try{const r=await api("pull",{fest:FID,since:SY.seq});if(r.code!=null)PUBCODE=r.code;if(integrate(r.ops,r.seq))softPaint();if(SY.status==="offline"&&!SY.pend.length)setSync("ok")}
+  try{SY.pc=(SY.pc||0)+1;const r=await api("pull",{fest:FID,since:SY.seq,plan:SY.pc%15===0});if(r.plan){const ch=JSON.stringify(r.plan)!==JSON.stringify(PLAN);PLAN=r.plan;if(ch)softPaint()}if(r.code!=null)PUBCODE=r.code;if(integrate(r.ops,r.seq))softPaint();if(SY.status==="offline"&&!SY.pend.length)setSync("ok")}
   catch(e){if(e.net)setSync("offline")}}
 function setSync(s){SY.status=s;const el=document.getElementById("sync");if(el){el.className="sync "+s;el.innerHTML=syncLabel()}}
 const syncLabel=()=>DEMO?"Demo":({ok:"Saved",saving:"Saving…",offline:"Offline · will retry"})[SY.status];
@@ -1097,7 +1176,7 @@ async function doSignup(){const g=id=>(document.getElementById(id).value||"").tr
   try{const r=await api("signup",d);TOKEN=r.token;ME=r.user;saveSession();toast("Welcome to Mehfil! Your free account is ready.");await enter()}
   catch(x){b.disabled=false;b.innerHTML=`Create my free account ${ic("arrow")}`;bad(x.message)}}
 async function enter(){VIEW="loading";LOADMSG="Opening your desk…";paint();
-  try{const r=await api("fests");ME=r.user;saveSession();FESTLIST=r.fests||[];DBURL=r.db||"";
+  try{const r=await api("fests");ME=r.user;saveSession();FESTLIST=r.fests||[];DBURL=r.db||"";MYPLAN=r.plan||null;setTimeout(checkReturn,1200);hit("app");
     const last=store.get("mf_last_"+ME.u)||{};
     if(isOrg()){if(last.fest&&FESTLIST.some(f=>f.id===last.fest)){await loadFest(last.fest);VIEW="app";PAGE=last.page||"dash";paint();return}FID=null;D=null;VIEW="app";PAGE="fests";paint();return}
     const f=FESTLIST[0];if(!f)throw new Error("The fest for this login was not found.");
@@ -1152,20 +1231,22 @@ function LANDING(){const nw=MOCKNOW[MOCK.i%3],ev=MOCKEV[MOCK.i%4];
    <button class="hb" aria-expanded="false" aria-controls="drop" aria-label="Menu" onclick="toggleDrop(this)"><i></i></button>${BRAND()}
    <div class="drop" id="drop" hidden>
     <div class="lbl">MEHFIL</div>
-    ${[["how","bolt","How it works"],["roles","cands","Who it's for"],["features","dash","Features"],["faq","appeals","FAQ"]].map(([h,i,l])=>`<a href="#${h}" onclick="closeDrop()">${ic(i)}${l}</a>`).join("")}
+    ${[["how","bolt","How it works"],["roles","cands","Who it's for"],["features","dash","Features"],["pricing","card","Plans"],["faq","appeals","FAQ"]].map(([h,i,l])=>`<a href="#${h}" onclick="closeDrop()">${ic(i)}${l}</a>`).join("")}
     <hr>
     <button onclick="VIEW='signup';paint();window.scrollTo({top:0})">${ic("plus")}Create a free account</button>
     <button onclick="VIEW='login';paint();window.scrollTo({top:0})">${ic("users")}Log in</button>
     <button onclick="startDemo()">${ic("eye")}Try the demo</button>
+    <button onclick="openContact()">${ic("mail")}Contact us</button>
    </div>
-   <div class="cta"><button class="btn ghost" onclick="VIEW='login';paint();window.scrollTo({top:0})">Log in</button><button class="btn" onclick="VIEW='signup';paint();window.scrollTo({top:0})">Sign up free</button></div></div></nav>
+   <div class="cta"><a class="btn ghost plansbtn" href="#pricing">${ic("card",16)} Plans</a><button class="btn ghost" onclick="VIEW='login';paint();window.scrollTo({top:0})">Log in</button><button class="btn" onclick="VIEW='signup';paint();window.scrollTo({top:0})">Sign up free</button></div></div></nav>
  <header class="hero"><div class="in gut wrap">
   <div>
-   <span class="eyebrow"><span>Free</span>For madrasa, school and college arts fests</span>
+   <span class="eyebrow"><span>Free trial</span>For madrasa, school and college arts fests</span>
    <h1>From registration to certificates, <em>one desk.</em></h1>
    <p class="lede">Chest numbers, clash-free schedules, judging from a phone, a live leaderboard and QR-verified certificates. No more paper bundles and late-night spreadsheet totals.</p>
    <div class="ctas"><button class="btn lg" onclick="VIEW='signup';paint();window.scrollTo({top:0})">Create a free account ${ic("arrow")}</button><button class="btn ghost lg" onclick="startDemo()">${ic("eye")} See the live demo</button></div>
-   <div class="reassure"><span>${ic("check")} Free to use</span><span>${ic("check")} New fest in seconds</span><span>${ic("check")} Works on phone and computer</span><span>${ic("check")} A login for every role</span></div>
+   <a class="paidstrip" href="#pricing"><span class="pill ok">Paid</span><span><b>Full plan from ₹499</b><small>Certificates, ID cards, posters, big screen, your logo · unlimited students</small></span>${ic("arrow")}</a>
+   <div class="reassure"><span>${ic("check")} Free trial to start</span><span>${ic("check")} New fest in seconds</span><span>${ic("check")} Works on phone and computer</span><span>${ic("check")} A login for every role</span></div>
   </div>
   <div class="shot" aria-label="A preview of the app">
    <div class="win">
@@ -1226,9 +1307,17 @@ function LANDING(){const nw=MOCKNOW[MOCK.i%3],ev=MOCKEV[MOCK.i%4];
    ${[["Chest numbers","Handwritten and often duplicated","Assigned the moment a student registers"],["Timetable clashes","Discovered on the day","Blocked while you plan"],["Adding up marks","Late at night with a calculator","Done the moment a judge submits"],["Announcing results","Over the mic and on the notice board","Live on everyone's phone"],["Certificates","Written and signed over several days","Printed as soon as results are out, with a QR code"]]
     .map(([a,b,c])=>`<tr><td>${a}</td><td class="old">${b}</td><td class="new">${c}</td></tr>`).join("")}</table></div>
  </div></section>
+ <section class="sec alt" id="pricing"><div class="gut wrap">
+  <div class="sec-h"><div class="k">PLANS</div><h2>Try free. Pay when you're ready.</h2></div>
+  <div class="plans land">
+   <div class="plancard"><span class="pill wait">Free trial</span><b>One fest</b><div class="price">₹0</div><small class="hint">299 hours · up to 40 students · registration, schedule, judging and live results</small></div>
+   ${[["1 month",499,""],["3 months",1199,"Popular"],["6 months",2199,""],["1 year",4199,"Best value"]].map(([n,p,t])=>`<div class="plancard${t==="Best value"?" best":""}">${t?`<span class="pill ${t==="Best value"?"ok":""}">${t}</span>`:""}<b>${n}</b><div class="price">₹${p.toLocaleString("en-IN")}</div><small class="hint">Every feature · any number of fests and students</small></div>`).join("")}
+  </div>
+  <p class="hint" style="text-align:center;margin-top:14px">Paid plans add certificates, ID cards, winner posters, the big screen and your own logo and colour. Moving from the trial keeps all your data.</p>
+ </div></section>
  <section class="sec" id="faq"><div class="gut wrap">
   <div class="sec-h"><div class="k">FAQ</div><h2>Questions people ask</h2></div>
-  <div class="faq">${[["How do I start a new fest?","Log in with your coupon ID, give your fest a name and press Create fest. One coupon can run as many fests as you like. Then add your teams in Fest settings and create logins for your judges and team leaders."],
+  <div class="faq">${[["How do I start a new fest?","Create an account, give your fest a name and press Create fest. Then add your teams in Fest settings and create logins for your judges and team leaders."],["How much does it cost?","Every institution can try one fest free for 299 hours with up to 40 students. Paid plans unlock everything (certificates, ID cards, posters, the big screen, your own logo, any number of students and fests): 1 month ₹499, 3 months ₹1199, 6 months ₹2199, 1 year ₹4199. A coupon from the Mehfil team works too."],
      ["Do judges need any training?","No. They sign in on their phone and see only the programmes assigned to them. They enter a mark next to each chest number and submit."],
      ["Can several people work at the same time?","Yes. Judges, team leaders and the convener can all work at once. Every change is saved to the server and appears on everyone's screen within seconds."],
      ["Can team leaders see other teams?","No. Each team leader sees only their own students and their programmes."],
@@ -1239,10 +1328,10 @@ function LANDING(){const nw=MOCKNOW[MOCK.i%3],ev=MOCKEV[MOCK.i%4];
    .map(([q,a],i)=>`<details ${i===0?"open":""}><summary>${q}</summary><p>${a}</p></details>`).join("")}</div>
  </div></section>
  <section class="sec"><div class="gut wrap"><div class="final">
-  <h2>Your next fest, without the stress.</h2><p>Create a free account, name your fest and start right away.</p>
+  <h2>Your next fest, without the stress.</h2><p>Create an account and try your first fest free. Plans from ₹499.</p>
   <div class="ctas" style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><button class="btn alt lg" onclick="VIEW='signup';paint();window.scrollTo({top:0})">Create a free account ${ic("arrow")}</button><button class="btn ghost lg" onclick="startDemo()">${ic("eye")} Try the demo</button></div>
  </div></div></section>
- <footer class="foot gut"><div class="in wrap">${BRAND("Fest management on one desk")}<span>© ${new Date().getFullYear()} Mehfil</span></div></footer>`}
+ <footer class="foot gut"><div class="in wrap">${BRAND("Fest management on one desk")}<a class="btn ghost sm" href="${CONTACT_URL}" target="_blank" rel="noopener">${ic("mail")} Contact us · Instagram</a><span>© ${new Date().getFullYear()} Mehfil</span></div></footer>`}
 function updBoard(lb){const mx=Math.max(...Object.values(MOCK.pts))*1.08;const ord=Object.entries(MOCK.pts).sort((a,b)=>b[1]-a[1]).map(x=>x[0]);
   [...lb.children].forEach(r=>{const t=r.dataset.t,i=ord.indexOf(t);r.querySelector(".fl").style.width=MOCK.pts[t]/mx*100+"%";r.querySelector("b").textContent=MOCK.pts[t];r.firstElementChild.textContent=i+1;r.style.order=i})}
 function startMock(){clearInterval(window._mk);if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;
@@ -1263,11 +1352,11 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape")closeDrop()});
    SHELL
    ========================================================= */
 const ADMIN_MENU=[["dash","Dashboard"],["settings","Fest settings"],["cands","Candidates"],["progs","Programmes"],["sched","Schedule"],["mentry","Mark entry"],["verify","Score verification"],["results","Results and points"],["appeals","Appeals"],["docs","Certificates and cards"],["media","News and media"],["site","Public website"],["locks","Locks"],["users","Logins"],["export","Export"],["help","Help"]];
-const MENU={owner:[["fests","All fests"],["coupons","Organisers"],...ADMIN_MENU],org:[["fests","My fests"],...ADMIN_MENU],admin:ADMIN_MENU,
+const MENU={owner:[["stats","Site stats"],["accounts","Accounts"],["fests","All fests"],["coupons","Coupons"],...ADMIN_MENU],org:[["fests","My fests"],["plan","Plan"],...ADMIN_MENU],admin:ADMIN_MENU,
   team:[["tdash","My team"],["cands","Candidates"],["sched","Schedule"],["appeals","Appeals"],["docs","Cards and certificates"],["help","Help"]],
   judge:[["jdash","My programmes"],["help","Help"]]};
 const ROLE={owner:"Master login",org:"Organiser",admin:"Fest admin",team:"Team leader",judge:"Judge"};
-function menu(){const m=MENU[ME.role]||[];return D?m:m.filter(x=>["fests","coupons","help"].includes(x[0]))}
+function menu(){const m=MENU[ME.role]||[];return D?m:m.filter(x=>["stats","accounts","fests","coupons","plan","help"].includes(x[0]))}
 function readKey(){return `mf_read_${FID}_${ME&&ME.u}`}
 function myNotifs(){if(!ME||!D)return[];return D.notifs.filter(n=>n.to==="all"||n.to===ME.role||(isAdmin()&&n.to==="admin")||(ME.role==="team"&&n.to===ME.team))}
 const lastRead=()=>+(store.get(readKey())||0);
@@ -1291,13 +1380,13 @@ function applyTheme(br){const col=br&&/^#[0-9A-Fa-f]{6}$/.test(br.color||"")?br.
 function curBrand(){if(VIEW==="public"||VIEW==="screen"){const S=pubS();return S&&S.brand}if(VIEW==="login"&&LFEST)return LBRAND;
   if(D&&VIEW==="app"){if(PAGE==="settings"&&UI.brd)return UI.brd;return D.brand}return null}
 const festLogo=(br,sz,cls)=>{const l=br&&safeLogo(br.logo);return l?`<img class="flogo ${cls||""}" src="${l}" alt="" style="width:${sz}px;height:${sz}px">`:""};
-const FBRAND=()=>`<div style="display:flex;align-items:center;gap:10px;min-width:0">${festLogo(D.brand,38)}<div class="brandname">${esc(D.name)}<small>Mehfil</small></div></div>`;
+const FBRAND=()=>`<div style="display:flex;align-items:center;gap:10px;min-width:0">${festLogo(D.brand,38)}<div class="brandname fb"><span class="fbn">${esc(D.name)}</span><small>Mehfil</small></div></div>`;
 
 function paint(){NEEDPAINT=false;applyTheme(curBrand());document.body.classList.toggle("noFQ",VIEW==="screen");const app=document.getElementById("app");const y=window.scrollY;const ae=document.activeElement;const fid=ae&&ae.id;let ss=null,se=null;try{ss=ae.selectionStart;se=ae.selectionEnd}catch(e){}
-  if(VIEW==="public"){app.innerHTML=PUBLIC_VIEW();afterPub();return}
+  if(VIEW==="public"){app.innerHTML=PUBLIC_VIEW();afterPub();if(PUBV&&!PUBV.preview)hit("public");return}
   if(VIEW==="screen"){app.innerHTML=SCREEN_VIEW();return}
   if(VIEW==="loading"){app.innerHTML=`<div class="loading">${LOADER()}<p>${esc(LOADMSG||"Loading…")}</p></div>`;return}
-  if(VIEW==="landing"){app.innerHTML=LANDING();startMock();return}
+  if(VIEW==="landing"){app.innerHTML=LANDING();startMock();hit("home");return}
   if(VIEW==="signup"&&!ME){const keep={};["su_n","su_i","su_ph","su_pl","su_u","su_p"].forEach(id=>{const el=document.getElementById(id);if(el)keep[id]=el.value});app.innerHTML=SIGNUP();
     Object.entries(keep).forEach(([id,v])=>{const el=document.getElementById(id);if(el&&v)el.value=v});if(fid){const el=document.getElementById(fid);if(el)el.focus({preventScroll:true})}return}
   if(VIEW==="login"||!ME){const keep={};["lu","lp","lc"].forEach(id=>{const el=document.getElementById(id);if(el)keep[id]=el.value});app.innerHTML=LOGIN();
@@ -1312,14 +1401,14 @@ function paint(){NEEDPAINT=false;applyTheme(curBrand());document.body.classList.
       ${DEMO||(ME.role==="org"&&String(ME.u).startsWith("c:"))?"":`<button onclick="go('account')">${ic("key")}Change password</button>`}<button onclick="${DEMO?"exitDemo()":"logout()"}">${ic("out")}${DEMO?"Exit demo":"Log out"}</button></div>
     <div class="sp">
       ${isOrg()&&FESTLIST.length?`<select aria-label="Switch fest" onchange="this.value==='__all'?go('fests'):openFest(this.value)"><option value="__all"${!D?" selected":""}>${ME.role==="org"?"My fests":"All fests"}</option>${FESTLIST.map(f=>`<option value="${f.id}"${f.id===FID?" selected":""}>${esc(f.name)}</option>`).join("")}</select>`:""}
-      <span class="sync ${DEMO?"demo":SY.status}" id="sync">${syncLabel()}</span>
+      <span class="sync ${DEMO?"demo":SY.status}" id="sync">${syncLabel()}</span>${ME&&ME.role==="org"&&!DEMO?`<button class="btn sm planpill" onclick="go('plan')">${ic("card",14)} Plan</button>`:""}
       ${D&&ME.role!=="judge"?`<button class="ib" onclick="UI.bell=!UI.bell;if(!UI.bell)store.set(readKey(),Date.now());paint()" aria-label="Notifications">${ic("bell")}${unread?`<span class="badge">${unread}</span>`:""}</button>`:""}
       <div class="avatar"><i>${esc((ME.name||ME.u).trim()[0]||"?")}</i><div><b>${esc(ME.name)}</b><br><small>${ROLE[ME.role]}</small></div></div>
     </div></div>
     ${UI.bell&&D?`<div class="bellbox" id="bellbox"><div class="h">Notifications <button class="btn ghost sm" onclick="store.set(readKey(),Date.now());UI.bell=false;paint()">Mark all read</button></div>${notifs.slice(0,40).map(n=>`<p class="${n.t>lr?"u":""}">${esc(n.txt)}<br><small>${fmtTs(n.t)}</small></p>`).join("")||"<p>No notifications</p>"}</div>`:""}
   </div>
   ${DEMO?`<div class="demobar gut"><b>Demo</b><span>Nothing is saved. View as:</span>${DEMO_USERS.filter(u=>["convener","hira","judge2"].includes(u.u)).map(u=>`<button class="chip" aria-pressed="${ME.u===u.u}" onclick="demoAs('${u.u}')">${ROLE[u.role]}</button>`).join("")}<button class="btn ghost sm" onclick="exitDemo()">Exit demo</button></div>`:""}
-  <div class="shell gut"><main class="main${UI._last!==PAGE?" enter":""}" id="main">${D?lockBanner():""}${(PG[PAGE]||PG.help)()}</main></div>`;
+  <div class="shell gut"><main class="main${UI._last!==PAGE?" enter":""}" id="main">${D?planBar()+lockBanner():ME&&ME.role==="org"&&PAGE!=="plan"?myPlanBar():""}${(PG[PAGE]||PG.help)()}</main></div>`;
   for(const [id,v] of Object.entries(DIRTY)){const el=document.getElementById(id);if(!el)continue;if(el.type==="checkbox")el.checked=!!v;else if(el.type!=="file")el.value=v}
   if(fid){const el=document.getElementById(fid);if(el&&el!==document.activeElement&&el.closest("#main")){el.focus({preventScroll:true});try{if(ss!=null)el.setSelectionRange(ss,se)}catch(e){}}}
   if(UI._last===PAGE)window.scrollTo(0,y);
@@ -1327,6 +1416,15 @@ function paint(){NEEDPAINT=false;applyTheme(curBrand());document.body.classList.
   renderQRs();const a=PG[PAGE]&&PG[PAGE].after;if(a)a()}
 function go(k){PAGE=k;if(!DEMO&&ME)store.set("mf_last_"+ME.u,{fest:FID,page:k});UI.bell=false;DIRTY={};UI.brd=null;if(k==="settings")draftInit();paint();window.scrollTo({top:0})}
 function exitDemo(){DEMO=false;D=null;ME=null;FID=null;USERS=[];VIEW="landing";paint();window.scrollTo({top:0})}
+const isFree=()=>!DEMO&&PLAN&&PLAN.tier==="free";
+function planMsg(){const t=PLAN&&PLAN.tier;return t==="locked"?"This account has been locked. Please contact the Mehfil team on Instagram.":t==="expired"?"The Mehfil plan for this fest has expired. Nothing has been lost.":"The free trial for this fest has ended. Nothing has been lost."}
+function leftTxt(iso){const ms=new Date(iso)-Date.now();if(!(ms>0))return "ended";const d=Math.floor(ms/864e5),h=Math.floor(ms%864e5/36e5),m=Math.floor(ms%36e5/6e4);return d?`${d} day${d===1?"":"s"} ${h} hr`:h?`${h} hr ${m} min`:`${m} min`}
+function planBar(){if(DEMO||!PLAN)return "";const org=ME.role==="org"||ME.role==="owner";const up=org?` <button class="btn sm" onclick="go('plan')">${ic("card",15)} Choose a plan</button>`:"";
+  if(PLAN.tier==="free")return `<div class="planbar trial"><span class="pbi">${ic("bolt",18)}</span><div><b>Free trial</b> · <span id="pcd" data-end="${esc(PLAN.ends)}">${leftTxt(PLAN.ends)}</span> left · ${D.cands.length}/${PLAN.maxStudents||40} students<br><small>Certificates, ID cards, posters, the big screen and your own logo come with a paid plan.</small></div>${up}</div>`;
+  if(PLAN.tier==="paid"){const ms=PLAN.ends?new Date(PLAN.ends)-Date.now():1e12;return ms<7*864e5&&org?`<div class="planbar soon"><span class="pbi">${ic("bell",18)}</span><div><b>Your plan ends in ${leftTxt(PLAN.ends)}.</b> Renew to keep working without a break.</div>${up}</div>`:""}
+  return `<div class="planbar over"><span class="pbi">${ic("lock",18)}</span><div><b>${planMsg()}</b><br><small>${org?"Choose a plan to open it again with all its data.":"Everything is read-only for now. Please contact your convener."}</small></div>${up}</div>`}
+function upsell(what){return `<div class="panel upsell"><span class="pbi">${ic("card",22)}</span><h3>${what} come with a paid plan</h3><p class="hint">The free trial covers registration, schedule, judging and results. ${ME.role==="org"?"Choose a plan to unlock everything. Your data stays as it is.":"Ask your convener to choose a plan."}</p>${ME.role==="org"?`<button class="btn" onclick="go('plan')">${ic("card",16)} See plans</button>`:""}</div>`}
+setInterval(()=>{const el=document.getElementById("pcd");if(el)el.textContent=leftTxt(el.dataset.end)},30000);
 function lockBanner(){
   if(D.locks.fest)return `<div class="lockbar">${ic("lock",20)}<div><b>This fest is locked.</b> Everything is read-only.${isAdmin()&&PAGE!=="locks"?` <a href="#" onclick="go('locks');return false" style="color:inherit;font-weight:700">Unlock it on the Locks page.</a>`:""}</div></div>`;
   if(regClosed()&&["cands","tdash"].includes(PAGE))return `<div class="lockbar soft">${ic("lock",20)}<div><b>Registration is closed.</b> ${isAdmin()?"As admin, you can still add and change entries.":"To add or change students, contact the convener."}</div></div>`;
@@ -1350,15 +1448,32 @@ function LOGIN(){const msg=UI.loginMsg;UI.loginMsg="";const lf=LFEST;const tab=l
    <label class="f pw">Password<input id="lp" type="password" autocomplete="current-password"><button type="button" onclick="const i=document.getElementById('lp');i.type=i.type==='password'?'text':'password';this.textContent=i.type==='password'?'Show':'Hide'">Show</button></label>
    <div id="lerr">${msg?`<div class="msg bad">${esc(msg)}</div>`:""}</div>
    <button class="btn lg" type="submit" id="lbtn">Log in ${ic("arrow")}</button>`}
-   ${lf?"":`<div class="freebox"><span class="freetag">Free</span><div><b>New organiser?</b><br><small>Create your free account in a minute.</small></div><button type="button" class="btn ghost" onclick="VIEW='signup';paint();window.scrollTo({top:0})">Sign up free</button></div>`}
+   ${lf?"":`<div class="freebox"><span class="freetag">Trial</span><div><b>New organiser?</b><br><small>Create an account and try one fest free.</small></div><button type="button" class="btn ghost" onclick="VIEW='signup';paint();window.scrollTo({top:0})">Sign up free</button></div>`}
    <p class="hint" style="margin:0">${tab==="coupon"?"Have a coupon ID from the Mehfil team? Enter it here.":lf?"Forgot your password? Ask the convener.":"Forgot your password? Organisers can ask the Mehfil team; others, the convener."}${lf?"":` Just looking around? <a href="#" onclick="startDemo();return false" style="color:var(--brand);font-weight:600">Try the demo</a>.`}</p>
   </form></div></div>`}
 
+let HITS={};function hit(k){if(!HAS_API||DEMO||HITS[k])return;HITS[k]=1;let v="";try{v=localStorage.getItem("mf_vid")||"";if(!v){v=rid(12);localStorage.setItem("mf_vid",v)}}catch(e){v=rid(12)}api("hit",{k,v,f:k==="public"&&PUBV?PUBV.fest:""}).catch(()=>{})}
+const CONTACT_URL="https://www.instagram.com/mehfil.fest";
+function openContact(){closeDrop&&closeDrop();window.open(CONTACT_URL,"_blank","noopener")}
+const PG_STATS=()=>{const S=UI.stats;if(!S){loadStats();return `${head("Site stats","Visitors, accounts and users, all in one place.")}<div class="panel">Loading…</div>`}
+  const v=S.visits,num=x=>(x||0).toLocaleString("en-IN"),tile=(b,l)=>`<div class="stat"><b>${num(b)}</b><span>${l}</span></div>`;
+  const days=v.days.slice(-14),mx=Math.max(1,...days.map(d=>d.home+d.pub));
+  return `${head("Site stats","Visitors, accounts and users, all in one place.")}
+  <div class="row" style="justify-content:flex-end;margin-top:-6px"><button class="btn ghost sm" onclick="UI.stats=null;paint()">Refresh</button>${DBURL?`<a class="btn ghost sm" href="${esc(DBURL)}" target="_blank" rel="noopener">${ic("export")} Open the full database</a>`:""}</div>
+  <div class="panel"><h3>Visitors</h3><p class="hint" style="margin-top:0">A visitor is one phone or computer, counted once a day.</p>
+   <div class="stats">${tile(v.today.visitors,"Visitors today")}${tile(v.d7,"Visitors, last 7 days")}${tile(v.d30,"Visitors, last 30 days")}${tile(v.total,"Page views, all time")}</div>
+   <div class="vbars" role="img" aria-label="Visitors per day, last 14 days">${days.map(d=>`<div class="vb"><i style="height:${Math.round((d.home+d.pub)/mx*100)}%"></i><span>${d.date.slice(8)}</span><small>${d.home+d.pub}</small></div>`).join("")}</div>
+   <p class="hint" style="margin:8px 0 0">Today: ${num(v.today.home)} on the home page, ${num(v.today.pub)} on fest result pages, ${num(v.today.app)} logins.</p></div>
+  <div class="panel"><h3>Accounts and users</h3>
+   <div class="stats">${tile(S.orgs,"Free accounts")}${tile(S.coupons,"Coupons in use")}${tile(S.fests,"Fests")}${tile(S.users.team+S.users.judge+S.users.admin,"Logins inside fests")}</div>
+   <p class="hint" style="margin:10px 0 0">${num(S.users.admin)} fest admins · ${num(S.users.team)} team leaders · ${num(S.users.judge)} judges. Organiser details are on the <a href="#" onclick="go('coupons');return false">Organisers</a> page.</p></div>
+  <div class="panel"><h3>Fests</h3>${S.festList.length?`<div class="tbl"><table><tr><th>Fest</th><th>Organiser</th><th>Created</th><th class="num">Logins</th><th class="num">Public views</th></tr>${S.festList.map(f=>`<tr><td>${esc(f.name)}</td><td>${esc(f.by)}</td><td>${esc((f.created||"").slice(0,10))}</td><td class="num">${f.users}</td><td class="num">${num(f.views)}</td></tr>`).join("")}</table></div>`:`<p class="hint">No fests yet.</p>`}</div>`};
+async function loadStats(){try{UI.stats=await api("ownerStats");softPaint()}catch(e){toast(e.message)}}
 function SIGNUP(){return `<div class="login gut"><div class="lcard">
   <div class="lside">${BRAND("","var(--on-brand)")}
-   <span class="freebig">100% Free</span>
-   <h2>Run your fest on Mehfil.</h2><ul><li>Any number of fests from one account</li><li>Logins for team leaders and judges</li><li>Live results, certificates and a public website</li></ul>
-   <div style="margin-top:auto;font-size:13px;opacity:.85">Free for madrasas, schools and colleges.</div></div>
+   <span class="freebig">Free trial</span>
+   <h2>Run your fest on Mehfil.</h2><ul><li>Try one fest free</li><li>Logins for team leaders and judges</li><li>Live results and a public website</li><li>Plans from ₹499 for every feature</li></ul>
+   <div style="margin-top:auto;font-size:13px;opacity:.85">One free trial fest per institution: 299 hours, up to 40 students.</div></div>
   <form class="lform" onsubmit="event.preventDefault();doSignup()">
    <button type="button" class="back" onclick="VIEW='landing';paint()">${ic("back")} Back to home</button>
    <div><h2>Create a free account</h2><p class="hint" style="margin:6px 0 0">For fest organisers. Team leaders and judges get their login from you later.</p></div>
@@ -1378,7 +1493,7 @@ function SIGNUP(){return `<div class="login gut"><div class="lcard">
 const PG={};
 
 /* ---- all fests (main account) ---- */
-PG.fests=()=>{const del=UI.delFest;return `${head(ME.role==="org"?"My fests":"All fests",ME.role==="org"?"Create as many fests as you like, free. Open one to manage it.":"Every fest on Mehfil, from every coupon.")}
+PG.fests=()=>{const del=UI.delFest;return `${head(ME.role==="org"?"My fests":"All fests",ME.role==="org"?"Open a fest to manage it. Your plan decides how many fests you can run.":"Every fest on Mehfil, from every coupon.")}
   <div class="panel" style="border:2px solid var(--brand)"><h3 style="display:flex;gap:8px;align-items:center">${ic("plus")} Create a new fest</h3>
    <div class="row"><label class="f">Fest name<input id="nf_n" placeholder="e.g. Milad Fest 2027" autocomplete="off" maxlength="60" onkeydown="if(event.key==='Enter')newFest()"></label><button class="btn lg" id="nf_b" onclick="newFest()">Create fest ${ic("arrow")}</button></div></div>
   ${FESTLIST.length?`<div class="grid" style="margin-top:16px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))">${FESTLIST.map(f=>`<div class="stat"><b style="font-size:20px">${esc(f.name)}</b><span>Created ${fmtDate(f.created)}${ME.role==="owner"&&f.by?` · ${String(f.by).startsWith("c:")?"coupon "+esc(String(f.by).slice(2)):esc(f.by)}`:""}</span>
@@ -1393,17 +1508,66 @@ async function delFest(id){const f=FESTLIST.find(x=>x.id===id);const v=(document
   try{await api("deleteFest",{fest:id});FESTLIST=FESTLIST.filter(x=>x.id!==id);UI.delFest=null;if(FID===id){stopAll();D=null;FID=null}toast("Fest deleted");paint()}catch(e){toast(e.message)}}
 
 /* ---- coupons (master login) ---- */
+PG.stats=PG_STATS;
+/* ---------- plans (organiser) ---------- */
+const fmtD=iso=>{try{return new Date(iso).toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"})}catch(e){return iso}};
+function myPlanBar(){const p=MYPLAN;if(!p||DEMO)return "";if(p.locked)return `<div class="planbar over"><span class="pbi">${ic("lock",18)}</span><div><b>This account has been locked.</b><br><small>Please contact the Mehfil team on Instagram.</small></div></div>`;
+  if(p.paid)return "";return `<div class="planbar trial"><span class="pbi">${ic("bolt",18)}</span><div><b>${p.trialFest?"Free trial account":"Start with a free trial"}</b><br><small>${p.trialFest?"One trial fest per institution. Choose a plan for more fests, more students and every feature.":"Create one fest free for 299 hours, up to 40 students."}</small></div><button class="btn sm" onclick="go('plan')">${ic("card",15)} Plans</button></div>`}
+PG.plan=()=>{const P=UI.myplan;if(!P){loadMyPlan();return `${head("Plan","Your Mehfil plan and payments.")}<div class="panel">Loading…</div>`}
+  const p=P.plan,now=Date.now();
+  const status=p.locked?`<span class="pill bad">Locked</span>`:p.paid?`<span class="pill ok">Paid plan</span>`:`<span class="pill wait">Free trial</span>`;
+  return `${head("Plan","Your Mehfil plan and payments.")}
+  <div class="panel"><div class="row" style="justify-content:space-between;align-items:center"><h3 style="margin:0">Your plan</h3>${status}</div>
+   <p style="margin:10px 0 0">${p.locked?"This account has been locked. Please contact the Mehfil team on Instagram.":p.paid?`Active until <b>${fmtD(p.paidUntil)}</b> (${leftTxt(p.paidUntil)} left). Every feature, any number of fests and students.`:p.everPaid?`Your plan ended on <b>${fmtD(p.paidUntil)}</b>. Your fests are read-only until you renew. Nothing has been lost.`:`Free trial: one fest per institution, open for ${P.trialHours} hours (about ${Math.round(P.trialHours/24)} days), up to ${P.trialStudents} students. Certificates, ID cards, posters, the big screen and your own logo come with a paid plan.`}</p>
+   ${P.fests.length?`<div class="tbl" style="margin-top:12px"><table><tr><th>Fest</th><th>Status</th></tr>${P.fests.map(f=>`<tr><td>${esc(f.name)}</td><td>${f.tier==="paid"?`<span class="pill ok">Paid</span>`:f.tier==="free"?`<span class="pill wait">Trial · ${leftTxt(f.ends)} left</span>`:`<span class="pill bad">${f.tier==="locked"?"Locked":f.tier==="expired"?"Plan ended":"Trial ended"}</span>`}</td></tr>`).join("")}</table></div>`:""}</div>
+  ${p.locked?"":`<div class="panel"><h3>Choose a plan</h3><p class="hint" style="margin-top:0">Every plan has every feature: unlimited students and fests, certificates, ID cards, posters, the big screen, your own logo and colour. ${p.paid?"Buying now adds the time after your current plan.":"Your trial fest and its data carry over."}</p>
+   <div class="plans">${Object.entries(P.plans).map(([k,v])=>`<div class="plancard${k==="m12"?" best":""}">${k==="m12"?`<span class="pill ok">Best value</span>`:k==="m3"?`<span class="pill">Popular</span>`:""}<b>${esc(v.name)}</b><div class="price">₹${v.price.toLocaleString("en-IN")}</div><small class="hint">${k==="m1"?"Good for one fest":`₹${Math.round(v.price/v.months).toLocaleString("en-IN")} a month`}</small>
+     ${P.coupon?"":P.online?`<button class="btn" onclick="buyPlan('${k}',this)">Pay ₹${v.price.toLocaleString("en-IN")}</button>`:`<button class="btn ghost" onclick="toast('Online payment is coming soon. For now, use a coupon or message us on Instagram.')">Coming soon</button>`}</div>`).join("")}</div>
+   ${P.coupon?`<p class="hint" style="margin:12px 0 0">You logged in with a coupon ID. To pay online, create a free account with a username, then choose a plan there.</p>`:P.online?`<p class="hint" style="margin:12px 0 0">Secure payment by UPI, card or net banking. Your plan starts as soon as the payment goes through.</p>`:`<p class="hint" style="margin:12px 0 0">Online payment is coming soon. For now, add a coupon below, or message the Mehfil team on <a href="${CONTACT_URL}" target="_blank" rel="noopener">Instagram</a>.</p>`}</div>
+  ${P.coupon?"":`<div class="panel"><h3>Have a coupon?</h3><div class="row"><label class="f">Coupon ID<input id="rd_c" autocapitalize="none" spellcheck="false" maxlength="20"></label><button class="btn" onclick="redeem()">Add coupon</button></div><p class="hint" style="margin:8px 0 0">The coupon's months are added to your account. Your fests and data stay as they are.</p></div>`}`}`};
+async function loadMyPlan(){try{UI.myplan=await api("myPlan");MYPLAN=UI.myplan.plan;softPaint()}catch(e){toast(e.message)}}
+async function redeem(){const c=(document.getElementById("rd_c").value||"").trim().toLowerCase();if(!c)return toast("Type the coupon ID");
+  try{UI.myplan=await api("redeem",{code:c});MYPLAN=UI.myplan.plan;PLAN=null;if(FID&&!DEMO){try{const r=await api("pull",{fest:FID,since:SY.seq,plan:true});PLAN=r.plan||PLAN}catch(e){}}toast(`Coupon added. Your plan runs until ${fmtD(MYPLAN.paidUntil)}.`);paint()}catch(e){toast(e.message)}}
+async function buyPlan(k,b){b.disabled=true;b.textContent="Opening payment…";try{const r=await api("buy",{plan:k});try{localStorage.setItem("mf_payref",r.ref)}catch(e){}location.href=r.url}catch(e){b.disabled=false;b.textContent="Try again";toast(e.message)}}
+async function checkReturn(){let ref="";try{ref=new URLSearchParams(location.search).get("paid")||localStorage.getItem("mf_payref")||""}catch(e){}if(!ref||!ME)return;
+  try{const r=await api("checkPay",{ref});if(r.status==="paid"){try{localStorage.removeItem("mf_payref")}catch(e){}UI.myplan=null;const f=await api("fests");MYPLAN=f.plan||MYPLAN;toast("Payment received. Thank you! Your plan is active.");if(FID){const p=await api("pull",{fest:FID,since:SY.seq,plan:true});PLAN=p.plan||PLAN}paint()}
+    else if(["cancelled","expired"].includes(r.status)){try{localStorage.removeItem("mf_payref")}catch(e){}}}catch(e){}
+  try{if(location.search.includes("paid="))history.replaceState(null,"",location.pathname)}catch(e){}}
+
+/* ---------- accounts (master login) ---------- */
+PG.accounts=()=>{const A=UI.accts;if(!A){loadAccts();return `${head("Accounts","Every organiser account: search, lock, add months.")}<div class="panel">Loading…</div>`}
+  const q=(UI.aq||"").toLowerCase().trim(),f=UI.af||"all";
+  const tierOf=a=>a.locked?"locked":a.paid?"paid":a.fests.some(x=>x.tier==="free")?"trial":a.trial?"ended":"new";
+  const list=A.accounts.filter(a=>(!q||[a.id,a.name,a.inst,a.phone,a.place].join(" ").toLowerCase().includes(q))&&(f==="all"||tierOf(a)===f));
+  const cnt=k=>A.accounts.filter(a=>tierOf(a)===k).length,paidSum=A.payments.filter(p=>p.status==="paid").reduce((s,p)=>s+p.amount,0);
+  const pillOf=a=>({locked:`<span class="pill bad">Locked</span>`,paid:`<span class="pill ok">Paid · till ${fmtD(a.paidUntil)}</span>`,trial:`<span class="pill wait">On trial</span>`,ended:`<span class="pill bad">Trial ended</span>`,new:`<span class="pill">No fest yet</span>`})[tierOf(a)];
+  return `${head("Accounts","Every organiser account: search, lock, add months.")}
+  <div class="stats">${[["Accounts",A.accounts.length],["Paid now",cnt("paid")],["On trial",cnt("trial")],["Locked",cnt("locked")],["Received online",`₹${paidSum.toLocaleString("en-IN")}`]].map(([l,v])=>`<div class="stat"><b>${v}</b><span>${l}</span></div>`).join("")}</div>
+  <div class="panel"><div class="row" style="align-items:flex-end"><label class="f" style="flex:2 1 220px">Search<input id="aq" value="${esc(UI.aq||"")}" placeholder="Name, institution, phone or username" oninput="UI.aq=this.value;softPaint()" autocomplete="off"></label>
+   <label class="f" style="flex:1 1 140px">Show<select onchange="UI.af=this.value;paint()">${[["all","Everyone"],["paid","Paid"],["trial","On trial"],["ended","Trial ended"],["locked","Locked"],["new","No fest yet"]].map(([k,l])=>`<option value="${k}" ${f===k?"selected":""}>${l}</option>`).join("")}</select></label></div></div>
+  ${list.map(a=>`<div class="panel acct"><div class="row" style="justify-content:space-between;align-items:flex-start;gap:8px"><div><b style="font-size:17px">${esc(a.name)}</b>${a.inst?` · ${esc(a.inst)}`:""}<br><small class="hint">${esc(a.id.startsWith("c:")?"Coupon login":"@"+a.id)}${a.place?" · "+esc(a.place):""} · joined ${fmtD(a.created)}</small></div>${pillOf(a)}</div>
+    ${a.phone?`<p style="margin:8px 0 0"><a href="https://wa.me/91${esc(a.phone.replace(/\D/g,"").slice(-10))}" target="_blank" rel="noopener">${ic("share",14)} WhatsApp ${esc(a.phone)}</a></p>`:""}
+    ${a.fests.length?`<div class="chips" style="margin-top:10px">${a.fests.map(x=>`<span class="chip" style="cursor:default">${esc(x.name)} · ${x.tier==="paid"?"paid":x.tier==="free"?"trial, "+leftTxt(x.ends)+" left":x.tier==="locked"?"locked":"ended"} · ${x.logins} logins</span>`).join("")}</div>`:""}
+    <div class="row" style="margin-top:12px;gap:6px;flex-wrap:wrap">${[1,3,6,12].map(m=>`<button class="btn ghost sm" onclick="setAcct('${esc(a.id)}',{addMonths:${m}})">+${m===12?"1 year":m+" month"+(m>1?"s":"")}</button>`).join("")}
+     ${a.paid?`<button class="btn ghost sm" onclick="if(confirmAct('End this account\\'s paid plan now?'))setAcct('${esc(a.id)}',{endPlan:true})">End plan</button>`:""}
+     ${a.trial&&!a.paid?`<button class="btn ghost sm" onclick="setAcct('${esc(a.id)}',{resetTrial:true})">Allow a new trial</button>`:""}
+     <button class="btn ${a.locked?"":"bad"} sm" onclick="setAcct('${esc(a.id)}',{locked:${!a.locked}})">${ic(a.locked?"unlock":"lock",14)} ${a.locked?"Unlock":"Lock"}</button></div></div>`).join("")||`<div class="panel"><p class="hint" style="margin:0">No accounts match.</p></div>`}
+  <div class="panel"><h3>Online payments</h3>${A.online?"":`<p class="hint">Online payment is not switched on yet. Add your Razorpay keys to switch it on.</p>`}${A.payments.length?`<div class="tbl"><table><tr><th>Date</th><th>Account</th><th>Plan</th><th class="num">Amount</th><th>Status</th></tr>${A.payments.map(p=>`<tr><td>${fmtD(p.paidAt||p.created)}</td><td>${esc(p.account)}</td><td>${esc(p.plan)}</td><td class="num">₹${p.amount.toLocaleString("en-IN")}</td><td>${p.status==="paid"?`<span class="pill ok">Paid</span>`:`<span class="pill">${esc(p.status)}</span>`}${p.status!=="paid"?` <button class="btn ghost sm" onclick="recheck('${esc(p.ref)}')">Check</button>`:""}</td></tr>`).join("")}</table></div>`:`<p class="hint" style="margin:0">No payments yet.</p>`}</div>`};
+async function loadAccts(){try{UI.accts=await api("accounts");softPaint()}catch(e){toast(e.message)}}
+async function setAcct(id,o){try{UI.accts=await api("setAccount",Object.assign({id},o));toast(o.locked===true?"Account locked":o.locked===false?"Account unlocked":o.addMonths?"Months added":"Saved");paint()}catch(e){toast(e.message)}}
+async function recheck(ref){try{const r=await api("checkPay",{ref});toast("Status: "+r.status);UI.accts=null;paint()}catch(e){toast(e.message)}}
+function confirmAct(t){return window.confirm(t)}
 PG.coupons=()=>{const L=UI.coupons;if(!L){loadCoupons();return `${head("Coupons","Organisers enter with a coupon ID. Each coupon can run any number of fests.")}<div class="panel">Loading…</div>`}
-  return `${head("Organisers","Free accounts and coupon IDs. Each can run any number of fests. Turning a coupon off logs its organisers out.")}
-  <div class="panel"><h3>New coupon</h3><div class="row"><label class="f">Coupon ID<input id="cn_c" maxlength="20" autocapitalize="none" spellcheck="false" value="${genPass()}"></label><label class="f">Who it's for (optional)<input id="cn_l" maxlength="40" placeholder="e.g. Green Valley School"></label><button class="btn" onclick="addCoupon()">Create coupon</button></div></div>
-  <div class="panel"><div class="tbl"><table><tr><th>Coupon ID</th><th>For</th><th class="num">Fests</th><th>Status</th><th></th></tr>${L.map(c=>`<tr><td><code class="k">${esc(c.code)}</code></td><td>${esc(c.label)}</td><td class="num">${c.fests}</td><td>${c.active?'<span class="pill ok">Active</span>':'<span class="pill bad">Off</span>'}</td>
+  return `${head("Coupons","Coupon IDs and sign-up. A coupon gives 1, 3, 6 or 12 months, starting from its first use.")}
+  <div class="panel"><h3>New coupon</h3><div class="row"><label class="f">Coupon ID<input id="cn_c" maxlength="20" autocapitalize="none" spellcheck="false" value="${genPass()}"></label><label class="f">Who it's for (optional)<input id="cn_l" maxlength="40" placeholder="e.g. Green Valley School"></label><label class="f">Valid for<select id="cn_m"><option value="1">1 month</option><option value="3">3 months</option><option value="6">6 months</option><option value="12">1 year</option></select></label><button class="btn" onclick="addCoupon()">Create coupon</button></div></div>
+  <div class="panel"><div class="tbl"><table><tr><th>Coupon ID</th><th>For</th><th>Valid for</th><th>Use</th><th class="num">Fests</th><th>Status</th><th></th></tr>${L.map(c=>`<tr><td><code class="k">${esc(c.code)}</code></td><td>${esc(c.label)}</td><td>${c.months===12?"1 year":c.months+" month"+(c.months>1?"s":"")}</td><td>${c.usedBy?`Added to @${esc(c.usedBy)}`:c.firstUsed?`Till ${fmtD(c.until)}`:"Not used yet"}</td><td class="num">${c.fests}</td><td>${c.active?'<span class="pill ok">Active</span>':'<span class="pill bad">Off</span>'}</td>
    <td><button class="btn ${c.active?"ghost":""} sm" onclick="setCoupon('${esc(c.code)}',${!c.active})">${c.active?"Turn off":"Turn on"}</button></td></tr>`).join("")}</table></div></div>
   <div class="panel"><div class="row" style="justify-content:space-between;align-items:center"><div><h3 style="margin:0">Free sign-up</h3><p class="hint" style="margin:4px 0 0">${UI.signup===false?"Closed. New organisers can't create accounts; coupons still work.":"Open. Anyone can create a free organiser account."}</p></div>${UI.signup==null?"":`<button class="btn ${UI.signup?"ghost":""}" onclick="setSignup(${!UI.signup})">${UI.signup?"Close sign-up":"Open sign-up"}</button>`}</div></div>
   <div class="panel"><h3>Free accounts</h3><p class="hint">Organisers who signed up on the site, newest first.</p>${!UI.orgs?`<p class="hint">Loading…</p>`:UI.orgs.length?`<div class="tbl"><table><tr><th>Name</th><th>Institution</th><th>WhatsApp</th><th>Place</th><th>Username</th><th class="num">Fests</th><th>Joined</th></tr>${UI.orgs.map(o=>`<tr><td>${esc(o.name)}</td><td>${esc(o.inst)}</td><td>${esc(o.phone)}</td><td>${esc(o.place)}</td><td><code class="k">${esc(o.u)}</code></td><td class="num">${o.fests}</td><td>${esc(fmtDate(o.created))}</td></tr>`).join("")}</table></div>`:`<p class="hint" style="margin:0">No sign-ups yet.</p>`}</div>`};
 async function loadCoupons(){try{const r=await api("coupons");UI.coupons=r.coupons;softPaint();const o=await api("organisers");UI.orgs=o.organisers;UI.signup=o.signup!==false;softPaint()}catch(e){toast(e.message)}}
 async function setSignup(open){try{const r=await api("setSignup",{open});UI.signup=r.signup;toast(open?"Sign-up is open":"Sign-up is closed");paint()}catch(e){toast(e.message)}}
 async function addCoupon(){const c=document.getElementById("cn_c").value.trim().toLowerCase(),l=document.getElementById("cn_l").value.trim();if(!/^[a-z0-9]{4,20}$/.test(c))return toast("Use 4 to 20 letters or numbers");
-  try{const r=await api("addCoupon",{code:c,label:l});UI.coupons=r.coupons;DIRTY={};toast("Coupon created");paint()}catch(e){toast(e.message)}}
+  try{const r=await api("addCoupon",{code:c,label:l,months:+(document.getElementById("cn_m")||{}).value||1});UI.coupons=r.coupons;DIRTY={};toast("Coupon created");paint()}catch(e){toast(e.message)}}
 async function setCoupon(code,on){try{const r=await api("setCoupon",{code,active:on});UI.coupons=r.coupons;toast(on?"Coupon turned on":"Coupon turned off");paint()}catch(e){toast(e.message)}}
 
 /* ---- dashboard ---- */
@@ -1485,7 +1649,7 @@ PG.settings=()=>{if(!UI.dr)draftInit();const s=UI.dr.sched;const slots=[10,15,20
 function candRows(){const sc=scope(),f=UI.cf;const q=f.q.toLowerCase();
   const list=D.cands.filter(c=>(!sc||c.team===sc)&&(!q||c.name.toLowerCase().includes(q)||String(c.chest).includes(q))&&(!f.team||c.team===f.team)&&(!f.skill||c.skills.includes(f.skill))).sort((a,b)=>a.chest-b.chest);
   return `<table><tr><th>Chest</th><th>Name</th><th>Team</th><th>Category</th><th>Skills</th><th class="num">Progs</th><th></th></tr>${list.map(c=>`<tr><td><span class="chest">${c.chest}</span></td><td>${esc(c.name)}</td><td>${teamBadge(c.team)}</td><td>${esc(catName(D,c.cat))}</td><td>${c.skills.map(s=>`<span class="tag">${esc(s)}</span>`).join("")}</td><td class="num">${D.progs.filter(p=>p.parts.includes(c.id)).length}</td>
-    <td style="white-space:nowrap"><button class="btn ghost sm" onclick="UI.enroll='${c.id}';UI.edit=null;paint();document.getElementById('enroll').scrollIntoView({behavior:'smooth'})">Programmes</button> <button class="btn ghost sm" onclick="UI.edit='${c.id}';UI.enroll=null;paint();document.getElementById('enroll').scrollIntoView({behavior:'smooth'})">Edit</button></td></tr>`).join("")||`<tr><td colspan="7">No one found</td></tr>`}</table><p class="hint" style="margin:10px 0 0">${list.length} shown</p>`}
+    <td style="white-space:nowrap"><button class="btn ghost sm" onclick="UI.enroll='${c.id}';UI.edit=null;paint();document.getElementById('enroll').scrollIntoView({behavior:'smooth'})">Programmes</button> <button class="btn ghost sm" onclick="UI.edit='${c.id}';UI.enroll=null;paint();document.getElementById('enroll').scrollIntoView({behavior:'smooth'})">Edit</button>${isFree()?"":` <label class="btn ghost sm" style="cursor:pointer" title="${c.photo?"Change photo":"Add photo"}">${c.photo?`<img src="${c.photo}" alt="" style="width:20px;height:25px;object-fit:cover;border-radius:4px">`:ic("plus",14)} Photo<input type="file" accept="image/*" hidden onchange="pickPhoto('${c.id}',this)"></label>${c.photo?` <button class="btn ghost sm" aria-label="Remove photo of ${esc(c.name)}" onclick="act('candPhoto',{id:'${c.id}',img:''})">✕</button>`:""}`}</td></tr>`).join("")||`<tr><td colspan="7">No one found</td></tr>`}</table><p class="hint" style="margin:10px 0 0">${list.length} shown</p>`}
 function enrollPanel(){const c=C(UI.enroll);if(!c)return "";const opts=D.progs.filter(p=>p.cat===c.cat);
   return `<div class="panel" style="border-color:var(--brand)"><div class="row" style="justify-content:space-between;align-items:center"><h3 style="margin:0">${esc(c.name)} <span class="chest">${c.chest}</span> · Programmes</h3><button class="btn ghost sm" onclick="UI.enroll=null;paint()">Close</button></div>
    <p class="hint">Up to ${D.cfg.limit} programmes per student. Two programmes at the same time can't both be chosen.</p>
@@ -1589,17 +1753,40 @@ PG.sched=()=>{const cf=conflicts(),bad=new Set(cf.flatMap(c=>[c.a,c.b]));const a
 
 /* ---- fest logo and colour ---- */
 const BRAND_SW=["#1F78D1","#0E7490","#0B7A55","#15803D","#B91C1C","#9F1239","#C2410C","#B45309","#6D28D9","#7E22CE","#BE185D","#0F2340"];
-function brandPanel(){if(!UI.brd)UI.brd={color:D.brand.color||"",logo:D.brand.logo||""};const b=UI.brd;
+function brandPanel(){if(isFree())return upsell("Your own logo and colour");return brandPanel0()}
+function brandPanel0(){if(!UI.brd)UI.brd={color:D.brand.color||"",logo:D.brand.logo||"",inst:D.brand.inst||""};const b=UI.brd;
   return `<div class="panel"><h3>Logo and colour</h3><p class="hint">Your fest's own logo and colour. Your pages, the public website, the big screen, the login link, certificates and ID cards all follow them.</p>
    <div class="brandrow"><div class="logobox">${b.logo?`<img src="${safeLogo(b.logo)}" alt="Fest logo">`:`<span>${ic("media",28)}</span>`}</div>
     <div style="display:flex;flex-direction:column;gap:8px;min-width:0;flex:1"><label class="btn ghost sm" style="cursor:pointer;align-self:flex-start">${ic("plus",14)} ${b.logo?"Change logo":"Upload logo"}<input type="file" accept="image/*" hidden onchange="pickLogo(this)"></label>${b.logo?`<button class="btn ghost sm" style="align-self:flex-start" onclick="UI.brd.logo='';paint()">Remove logo</button>`:""}<span class="hint" style="margin:0">A square logo with a clear background works best.</span></div></div>
+   <label class="f" style="margin-top:16px;max-width:520px">Institution name (shown on ID cards)<input id="br_inst" maxlength="80" value="${esc(b.inst||"")}" placeholder="e.g. Green Valley Arts College" oninput="UI.brd.inst=this.value"></label>
    <p class="hint" style="margin:16px 0 8px">Colour</p><div class="chips">${BRAND_SW.map(c=>`<button class="swatch" style="background:${c}" aria-label="Colour ${c}" aria-pressed="${(b.color||"").toUpperCase()===c}" onclick="UI.brd.color='${c}';paint()"></button>`).join("")}<label class="swatch custom" title="Any colour"><input type="color" value="${b.color||"#1F78D1"}" onchange="UI.brd.color=this.value.toUpperCase();paint()" aria-label="Choose any colour"></label><button class="chip" aria-pressed="${!b.color}" onclick="UI.brd.color='';paint()">Mehfil blue</button></div>
    <p class="hint" style="margin:10px 0 0">You see the colour here right away. Press Save to apply it for everyone.</p>
    <div class="row" style="margin-top:14px"><button class="btn" onclick="saveBrand()">Save logo and colour</button></div></div>`}
+const C128="212222 222122 222221 121223 121322 131222 122213 122312 132212 221213 221312 231212 112232 122132 122231 113222 123122 123221 223211 221132 221231 213212 223112 312131 311222 321122 321221 312212 322112 322211 212123 212321 232121 111323 131123 131321 112313 132113 132311 211313 231113 231311 112133 112331 132131 113123 113321 133121 313121 211331 231131 213113 213311 213131 311123 311321 331121 312113 312311 332111 314111 221411 431111 111224 111422 121124 121421 141122 141221 112214 112412 122114 122411 142112 142211 241211 221114 413111 241112 134111 111242 121142 121241 114212 124112 124211 411212 421112 421211 212141 214121 412121 111143 111341 131141 114113 114311 411113 411311 113141 114131 311141 411131 211412 211214 211232 2331112".split(" ");
+function barcodeSVG(txt,h){txt=String(txt).replace(/[^\x20-\x7e]/g,"");const v=[104];for(const ch of txt)v.push(ch.charCodeAt(0)-32);let sum=104;for(let i=1;i<v.length;i++)sum+=v[i]*i;v.push(sum%103);v.push(106);
+  let x=10,bars="";for(const k of v){const p=C128[k];for(let i=0;i<p.length;i++){const w=+p[i];if(i%2===0)bars+=`<rect x="${x}" y="0" width="${w}" height="${h||50}"/>`;x+=w}}
+  return `<svg class="bc" viewBox="0 0 ${x+10} ${h||50}" preserveAspectRatio="none" role="img" aria-label="Barcode ${txt}"><rect width="${x+10}" height="${h||50}" fill="#fff"/><g fill="#000">${bars}</g></svg>`}
+
+const PERSON='<svg viewBox="0 0 100 125" aria-hidden="true"><rect width="100" height="125" fill="#E6ECF5"/><circle cx="50" cy="47" r="21" fill="#B7C4D8"/><path d="M12 125c0-24 17-40 38-40s38 16 38 40z" fill="#B7C4D8"/></svg>';
+function idCard(c){const col=/^#[0-9A-Fa-f]{6}$/.test(D.brand.color||"")?D.brand.color:"#1F78D1",a=brandSolid(col),b=mixC(a,"#0B1033",.45),fest=D.site.title||D.name,inst=(D.brand.inst||"").trim()||fest,cat=catName(D,c.cat),team=teamOf(c.team);
+  return `<div class="idc2" style="--ida:${a};--idb:${b}">
+   <svg class="idw" viewBox="0 0 100 158.5" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="idg${c.id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${b}"/><stop offset="1" stop-color="${a}"/></linearGradient></defs><path d="M0 0H100V38C80 35 64 42 47 51C31 59 15 63 0 65Z" fill="url(#idg${c.id})"/><path d="M0 150C26 144 54 153 100 143V158.5H0Z" fill="url(#idg${c.id})"/></svg>
+   <div class="idh">${festLogo(D.brand,64,"idlogo2")||`<span class="idlogo2 idmark">${mark(30)}</span>`}<div class="idt">${inst!==fest?`<small>${esc(fest)}</small>`:""}<b>${esc(inst)}</b></div></div>
+   <div class="idph">${c.photo?`<img src="${c.photo}" alt="">`:PERSON}</div>
+   <div class="idno">${c.chest}</div>
+   <div class="idnm">${esc(c.name)}</div>
+   <div class="idtm"><i style="background:${team.color}"></i>${esc(team.name)}</div>
+   <span class="idcat">${esc(cat)}</span>
+   <div class="idbc">${barcodeSVG(String(c.chest),40)}</div>
+  </div>`}
+function pickPhoto(id,inp){const f=inp.files&&inp.files[0];inp.value="";if(!f)return;if(!/^image\//.test(f.type))return toast("Please choose a photo");
+  const rd=new FileReader();rd.onload=()=>{const im=new Image();im.onload=()=>{const W=160,H=200,r=W/H;let sw=im.width,sh=im.height;if(sw/sh>r)sw=sh*r;else sh=sw/r;
+    let out="";for(const q of [.8,.7,.6,.5,.4]){const cv=document.createElement("canvas");cv.width=W;cv.height=H;const x=cv.getContext("2d");x.fillStyle="#fff";x.fillRect(0,0,W,H);x.drawImage(im,(im.width-sw)/2,Math.max(0,(im.height-sh)/2.6),sw,sh,0,0,W,H);const u=cv.toDataURL("image/jpeg",q);if(u.length<=20000){out=u;break}}
+    if(!out)return toast("This photo is too detailed. Try another.");if(act("candPhoto",{id,img:out}))toast("Photo added")};im.onerror=()=>toast("Couldn't read this photo");im.src=rd.result};rd.readAsDataURL(f)}
 function pickLogo(inp){const f=inp.files&&inp.files[0];if(!f)return;if(!/^image\//.test(f.type))return toast("Please choose an image file");
   const rd=new FileReader();rd.onload=()=>{const im=new Image();im.onload=()=>{let out="";for(const [sz,type,q] of [[256,"image/png"],[192,"image/png"],[160,"image/webp",.9],[160,"image/jpeg",.88],[128,"image/jpeg",.8]]){const k=Math.min(1,sz/Math.max(im.width,im.height));const cv=document.createElement("canvas");cv.width=Math.max(1,Math.round(im.width*k));cv.height=Math.max(1,Math.round(im.height*k));const x=cv.getContext("2d");if(type==="image/jpeg"){x.fillStyle="#fff";x.fillRect(0,0,cv.width,cv.height)}x.drawImage(im,0,0,cv.width,cv.height);const u=cv.toDataURL(type,q);if(u.startsWith("data:"+type)&&u.length<=46000){out=u;break}}
     if(!out)return toast("This image is too detailed. Try a simpler logo.");UI.brd.logo=out;paint()};im.onerror=()=>toast("Couldn't read this image");im.src=rd.result};rd.readAsDataURL(f)}
-function saveBrand(){const b=UI.brd||{};if(act("brand",{color:b.color||"",logo:b.logo||""})){UI.brd=null;toast("Logo and colour saved")}}
+function saveBrand(){const b=UI.brd||{};const ie=document.getElementById("br_inst");if(ie)b.inst=ie.value;if(act("brand",{color:b.color||"",logo:b.logo||"",inst:(b.inst||"").trim()})){UI.brd=null;toast("Logo, colour and name saved")}}
 function ptsPanel(){const p=D.cfg.pts||DEFPTS;const n=(id,v,l)=>`<label class="f mini-f">${l}<input id="${id}" type="number" inputmode="numeric" min="0" max="100" value="${v}"></label>`;
   return `<div class="panel"><h3>Points and grades</h3><p class="hint">How each published result adds points to the team and the student. Changes apply to all results, including ones already published.</p>
    <p class="hint" style="margin:12px 0 6px"><b>Points for places</b></p><div class="row">${n("pt_p1",p.p[0],"1st place")}${n("pt_p2",p.p[1],"2nd place")}${n("pt_p3",p.p[2],"3rd place")}</div>
@@ -1618,7 +1805,7 @@ PG.mentry=()=>{const list=D.progs.filter(p=>p.status==="pending"&&p.parts.length
   <div class="panel jlist">${list.map(p=>{const s=slotOf(p.id);const left=p.judges.length?p.judges.filter(j=>!p.subm[j]).length:1;return `<button class="jitem${cur&&cur.id===p.id?" on":""}" onclick="UI.mp='${p.id}';UI.mj='';paint();document.getElementById('msheet').scrollIntoView({behavior:'smooth'})"><span><b>${esc(p.n)}</b><small>${esc(catName(D,p.cat))} · ${p.parts.length} entries${s?" · "+slotLabel(s):""}</small></span><span class="pill wait">${p.judges.length?left+" of "+p.judges.length+" to enter":"No judges"}</span></button>`}).join("")||`<p class="hint" style="margin:0">Nothing is waiting for marks. Programmes appear here once they have students and their marks aren't complete.</p>`}</div>
   ${cur?`<div class="panel" id="msheet"><h3>${esc(cur.n)} <small style="color:var(--muted);font:500 13px var(--body)">${esc(catName(D,cur.cat))}</small></h3>
    ${slots.length?`<label class="f" style="max-width:340px">Enter marks for<select id="mj_sel" onchange="UI.mj=this.value;paint()">${slots.map(j=>`<option value="${esc(j)}" ${j===UI.mj?"selected":""}>${j==="adm"?"Admin (direct marks)":esc(userName(j))}</option>`).join("")}</select></label>
-   <div class="tbl" style="margin-top:12px"><table><tr><th>Chest</th><th>Name</th>${cur.topic?"<th>Topic</th>":""}<th class="num">Mark (out of 100)</th></tr>${cur.parts.map(cid=>{const c=C(cid);return c?`<tr><td><span class="chest">${c.chest}</span></td><td>${esc(c.name)}</td>${cur.topic?`<td style="white-space:normal">${esc(cur.topics[cid]||"—")}</td>`:""}<td class="num"><input type="number" inputmode="decimal" min="0" max="100" step="0.5" id="am_${cid}" style="width:100px;text-align:right" aria-label="Mark for chest ${c.chest}"></td></tr>`:""}).join("")}</table></div>
+   <div class="tbl" style="margin-top:12px"><table><tr><th>Chest</th><th>Name</th><th class="num">Mark / 100</th></tr>${cur.parts.map(cid=>{const c=C(cid);return c?`<tr><td><span class="chest">${c.chest}</span></td><td style="white-space:normal">${esc(c.name)}${cur.topic?`<small style="display:block;color:var(--muted);margin-top:2px">${esc(cur.topics[cid]||"—")}</small>`:""}</td><td class="num"><input type="number" inputmode="decimal" min="0" max="100" step="0.5" id="am_${cid}" style="width:84px;text-align:right" aria-label="Mark for chest ${c.chest}"></td></tr>`:""}).join("")}</table></div>
    <div class="row" style="margin-top:14px"><button class="btn lg" onclick="submitA('${cur.id}')" ${D.locks.fest?"disabled":""}>Save these marks</button></div><p class="hint" style="margin:10px 0 0">${UI.mj==="adm"?"These marks are the final marks for this programme.":"These count as this judge's marks."} Check carefully: they can't be changed after saving, but you can send the programme back from Score verification.</p>`
    :`<div class="msg ok">All marks are in. Verify them on the Score verification page.</div>`}</div>`:""}`};
 function submitA(pid){const p=P(pid);const j=(document.getElementById("mj_sel")||{}).value||UI.mj;const marks={};for(const cid of p.parts){const el=document.getElementById("am_"+cid);const v=el?el.value:"";if(v===""||!(+v>=0&&+v<=100)){toast(`Chest ${(C(cid)||{}).chest}: enter a mark from 0 to 100`);if(el)el.focus();return}marks[cid]=+v}
@@ -1680,11 +1867,11 @@ function certGold(c,p,r){const code=certCode(c,p),win=r.rank<=3,g=r.grade&&r.gra
   return `<div class="cert t3" style="--c3a:${pa};--c3b:${pb};--c3h:${hd}"><div class="c3frame"></div><div class="c3panel"></div><i class="c3s c3s1"></i><i class="c3s c3s2"></i><div class="c3laurel">${LAUREL}</div>
   <div class="c3top">${festLogo(D.brand,64,"c3logo")}<span class="c3fest" style="font-size:${fs}cqw">${esc(fest)}</span></div>
   <h4 class="c3h"><span>Certificate of</span><span>${win?"Merit":"Participation"}</span></h4><p class="c3body">${body}</p><div class="c3sig"></div>
-  <div class="c3qr"><span class="qrx" data-q="${esc(verifyUrl(code))}"></span><span>Verification code<br><b>${code}</b></span></div></div>`}
+  <div class="c3qr"><span>Certificate code</span><b>${code}</b></div></div>`}
 function certHTML(c,p,r){if(D.tpl.cert===3)return certGold(c,p,r);const code=certCode(c,p);const win=r.rank<=3;return `<div class="cert t${D.tpl.cert}">${festLogo(D.brand,64,"certlogo")}<div class="k">${esc(D.site.title).toUpperCase()}</div><h4>${win?"Certificate of Merit":"Certificate of Participation"}</h4><p>This is to certify that</p><div class="nm">${esc(c.name)}</div>
   <p>${win?`won <b>${ordn(r.rank)} place with grade ${r.grade}</b>`:`took part and earned <b>grade ${r.grade}</b>`} in <b>${esc(p.n)}</b>, ${esc(catName(D,c.cat))} category${D.cfg.teams.length>1?`, representing team ${esc(teamOf(c.team).name)}`:""}.</p>
   <div class="qr"><span class="qrx" data-q="${esc(verifyUrl(code))}"></span><span>Verification code<br><b style="font-family:var(--mono);color:#14241f">${code}</b><br>Scan to check it on the fest website</span></div></div>`}
-PG.docs=()=>{const sc=scope();const tabs=[["cert","Certificates"],["id","ID cards"],["poster","Posters"]].filter(t=>!(sc&&t[0]==="poster"));if(!tabs.some(t=>t[0]===UI.dt))UI.dt="cert";
+PG.docs=()=>{if(isFree())return `${head("Certificates and cards","Ready the moment a result is published.")}${upsell("Certificates, ID cards and winner posters")}`;const sc=scope();const tabs=[["cert","Certificates"],["id","ID cards"],["poster","Posters"]].filter(t=>!(sc&&t[0]==="poster"));if(!tabs.some(t=>t[0]===UI.dt))UI.dt="cert";
   const pubs=D.progs.filter(p=>p.status==="published");let body="";
   if(UI.dt==="cert"){const p=pubs.find(x=>x.id===UI.cp)||pubs[0];const who=UI.cw||"win";
     const rows=p?calc(p).filter(r=>{const c=C(r.cid);return c&&(!sc||c.team===sc)&&(who==="all"||r.rank<=3)}):[];
@@ -1697,7 +1884,7 @@ PG.docs=()=>{const sc=scope();const tabs=[["cert","Certificates"],["id","ID card
   if(UI.dt==="id"){const list=D.cands.filter(c=>(!sc||c.team===sc)&&(!UI.idt||c.team===UI.idt)).sort((a,b)=>a.chest-b.chest);
     body=`<div class="panel"><div class="row" style="align-items:center">${sc?"":`<div class="chips" style="flex:1"><button class="chip" aria-pressed="${!UI.idt}" onclick="UI.idt='';paint()">All</button>${D.cfg.teams.map(t=>`<button class="chip" aria-pressed="${UI.idt===t.id}" onclick="UI.idt='${t.id}';paint()">${esc(t.name)}</button>`).join("")}</div>`}
      <button class="btn" ${list.length?"":"disabled"} onclick="printEl('idcards')">${ic("print")} Print ${list.length} card${list.length===1?"":"s"}</button></div></div>
-     <div class="idgrid" id="idcards">${list.map(c=>`<div class="idc"><div class="tp" style="background:${teamOf(c.team).color}"><span style="display:flex;align-items:center;gap:6px;min-width:0">${festLogo(D.brand,18,"idlogo")}${esc(D.site.title)}</span><span>${esc(teamOf(c.team).name)}</span></div><div class="big">${c.chest}</div><div class="bd"><b>${esc(c.name)}</b><br>${esc(catName(D,c.cat))}<br><small>${D.progs.filter(p=>p.parts.includes(c.id)).map(p=>esc(p.n)+(slotOf(p.id)?" · "+slotLabel(slotOf(p.id)):"")).join("<br>")||"No programmes"}</small></div></div>`).join("")}</div>`}
+     <div class="idgrid2" id="idcards">${list.map(idCard).join("")}</div>`}
   if(UI.dt==="poster"){const winners=[];pubs.forEach(p=>calc(p).filter(r=>r.rank<=3).forEach(r=>{const c=C(r.cid);if(c)winners.push({p,r,c})}));const k=Math.min(UI.pe||0,Math.max(0,winners.length-1));
     body=`<div class="panel"><div class="row"><label class="f">Winner<select onchange="UI.pe=+this.value;paint()">${winners.map((e,i)=>`<option value="${i}" ${i===k?"selected":""}>${esc(e.c.name)} · ${esc(e.p.n)} · ${ordn(e.r.rank)} place</option>`).join("")||"<option>No winners yet</option>"}</select></label></div>
      <p class="hint" style="margin:14px 0 8px">Template</p><div class="chips">${["Plain","Circles","Stripes"].map((t,i)=>`<button class="chip" aria-pressed="${D.tpl.poster===i}" onclick="act('tpl',{poster:${i}})">${t}</button>`).join("")}</div></div>
@@ -1709,7 +1896,7 @@ PG.docs=()=>{const sc=scope();const tabs=[["cert","Certificates"],["id","ID card
 PG.docs.after=()=>{if(UI.dt==="poster"&&UI._poster)drawPoster()};
 function printEl(id){const el=document.getElementById(id);if(!el)return;renderQRs();
   setTimeout(()=>{let pr=document.getElementById("printroot");if(!pr){pr=document.createElement("div");pr.id="printroot";document.body.appendChild(pr)}
-    const cl=el.cloneNode(true);cl.removeAttribute("id");const src=[...el.querySelectorAll(".qrx")],dst=[...cl.querySelectorAll(".qrx")];
+    const cl=el.cloneNode(true);cl.removeAttribute("id");cl.innerHTML=cl.innerHTML.replace(/(id="|url\(#)idg/g,"$1pidg");const src=[...el.querySelectorAll(".qrx")],dst=[...cl.querySelectorAll(".qrx")];
     src.forEach((q,i)=>{const cv=q.querySelector("canvas"),im=q.querySelector("img");let u="";try{u=cv?cv.toDataURL():im?im.src:""}catch(e){}if(dst[i])dst[i].innerHTML=u?`<img src="${u}" width="72" height="72" alt="">`:""});
     pr.innerHTML="";pr.appendChild(cl);document.body.classList.add("printing");
     const done=()=>{document.body.classList.remove("printing");pr.innerHTML="";window.removeEventListener("afterprint",done)};window.addEventListener("afterprint",done);
@@ -1763,7 +1950,7 @@ PG.site=()=>{const s=D.site;const url=SITE_URL()&&!DEMO?`${SITE_URL()}?f=${FID}`
   ${linksPanel()}
   <div class="panel"><h3>QR code and big screen</h3>${url?`<p class="hint">Print the QR code for the notice board, or open the big-screen view on a projector.</p>
     <div class="row" style="align-items:center"><code class="k" id="publink" style="flex:1;min-width:0">${esc(url)}</code><button class="btn ghost sm" onclick="copyText('${esc(url)}','publink')">Copy</button><a class="btn ghost sm" href="${esc(url)}" target="_blank" rel="noopener">Open</a></div>
-    <div class="row" style="margin-top:14px;align-items:center"><span class="qrx big" data-q="${esc(url)}"></span><div style="flex:1;min-width:200px"><b>Big-screen display</b><p class="hint" style="margin:4px 0 10px">For a projector or TV in the hall: shows the leaderboard and latest results, refreshing by itself.</p><a class="btn ghost sm" href="${esc(url)}&screen=1" target="_blank" rel="noopener">${ic("screen",16)} Open big-screen view</a></div></div>`
+    <div class="row" style="margin-top:14px;align-items:center"><span class="qrx big" data-q="${esc(url)}"></span><div style="flex:1;min-width:200px"><b>Big-screen display</b><p class="hint" style="margin:4px 0 10px">For a projector or TV in the hall: shows the leaderboard and latest results, refreshing by itself.</p>${isFree()?`<button class="btn ghost sm" onclick="go('plan')">${ic("lock",16)} Big screen comes with a paid plan</button>`:`<a class="btn ghost sm" href="${esc(url)}&screen=1" target="_blank" rel="noopener">${ic("screen",16)} Open big-screen view</a>`}</div></div>`
     :`<p class="hint" style="margin:0">${DEMO?"In the demo there's no public link. On the live site each fest gets its own link and QR code here.":"The share link appears here on the live site."}</p>`}</div>
   <div class="panel"><div class="row"><label class="f">Title<input id="ws_t" value="${esc(s.title)}" maxlength="80"></label><label class="f">Tagline<input id="ws_g" value="${esc(s.tag)}" maxlength="120"></label></div>
    <p class="hint" style="margin:16px 0 0">The site's colour and logo come from <a href="#" onclick="go('settings');return false" style="color:var(--brand);font-weight:600">Fest settings</a>.</p>
@@ -1956,9 +2143,9 @@ const FQKB=[
  {k:["what is mehfil","about mehfil","what can it do","what can mehfil","features","what does","എന്താണ് മെഹ്ഫിൽ","മെഹ്ഫിൽ എന്ത","സൗകര്യങ്ങൾ","എന്തൊക്കെ ചെയ്യ"],
   en:"Mehfil is a website for running arts fests and competitions in madrasas, schools and colleges. It covers everything from start to finish:\n• Team leaders register their own students; chest numbers come automatically\n• Programmes and a clash-free schedule\n• Judges enter marks on their phones\n• Ranks, grades and team points are worked out for you\n• Live leaderboard, a public results link and a big-screen view\n• Certificates with a QR check, ID cards and winner posters\n• Locks to control registration and results",
   ml:"മദ്രസ, സ്കൂൾ, കോളേജ് എന്നിവിടങ്ങളിലെ കലാമേളകളും മത്സരങ്ങളും നടത്താനുള്ള വെബ്സൈറ്റാണ് മെഹ്ഫിൽ. തുടക്കം മുതൽ അവസാനം വരെ എല്ലാം ഇതിലുണ്ട്:\n• ടീം ലീഡർമാർ സ്വന്തം കുട്ടികളെ ചേർക്കും; ചെസ്റ്റ് നമ്പർ തനിയെ വരും\n• പരിപാടികളും ക്ലാഷ് ഇല്ലാത്ത ഷെഡ്യൂളും\n• ജഡ്ജസ് ഫോണിൽ മാർക്ക് ഇടും\n• റാങ്കും ഗ്രേഡും ടീം പോയിന്റും തനിയെ കണക്കാക്കും\n• തത്സമയ പോയിന്റ് നില, പൊതു ഫല ലിങ്ക്, വലിയ സ്ക്രീൻ\n• ക്യൂആർ പരിശോധനയുള്ള സർട്ടിഫിക്കറ്റ്, ഐഡി കാർഡ്, വിജയി പോസ്റ്റർ\n• രജിസ്ട്രേഷനും ഫലവും നിയന്ത്രിക്കാൻ പൂട്ടുകൾ"},
- {k:["free","cost","price","pay","money","charge","rupee","paisa","cash","fee","subscription","സൗജന്യ","പണം","പൈസ","ഫീസ്","രൂപ","ചാർജ്","വില","ഫ്രീ","കാശ്"],
-  en:"Yes, Mehfil is completely free right now. Create a free account on the site and run as many fests as you like.",
-  ml:"അതെ, മെഹ്ഫിൽ ഇപ്പോൾ തികച്ചും സൗജന്യമാണ്. സൈറ്റിൽ ഒരു സൗജന്യ അക്കൗണ്ട് ഉണ്ടാക്കി എത്ര ഫെസ്റ്റ് വേണമെങ്കിലും നടത്താം."},
+ {k:["free","cost","price","pay","money","charge","rupee","paisa","cash","fee","subscription","plan","plans","trial","upgrade","renew","expired","coupon month","സൗജന്യ","പണം","പൈസ","ഫീസ്","രൂപ","ചാർജ്","വില","ഫ്രീ","കാശ്","പ്ലാൻ","കാലാവധി"],
+  en:"Every institution can try one fest free: 299 hours (about 12 days) from creating it, up to 40 students, with registration, schedule, judging and live results.\nPaid plans unlock everything (certificates, ID cards, winner posters, the big screen, your own logo and colour, any number of students and fests):\n• 1 month ₹499\n• 3 months ₹1199\n• 6 months ₹2199\n• 1 year ₹4199\nOrganisers: ☰ → 'Plan' to pay online or add a coupon. When a trial or plan ends, the fest becomes read-only; nothing is lost, and choosing a plan opens it again.",
+  ml:"ഓരോ സ്ഥാപനത്തിനും ഒരു ഫെസ്റ്റ് സൗജന്യമായി പരീക്ഷിക്കാം: ഫെസ്റ്റ് ഉണ്ടാക്കിയത് മുതൽ 299 മണിക്കൂർ (ഏകദേശം 12 ദിവസം), പരമാവധി 40 കുട്ടികൾ. രജിസ്ട്രേഷൻ, ഷെഡ്യൂൾ, ജഡ്ജിങ്, തത്സമയ ഫലം എന്നിവ ഉണ്ടാകും.\nപണമടച്ചുള്ള പ്ലാനിൽ എല്ലാം ലഭിക്കും (സർട്ടിഫിക്കറ്റ്, ഐഡി കാർഡ്, പോസ്റ്റർ, വലിയ സ്ക്രീൻ, സ്വന്തം ലോഗോയും നിറവും, എത്ര കുട്ടികളും ഫെസ്റ്റുകളും):\n• 1 മാസം ₹499\n• 3 മാസം ₹1199\n• 6 മാസം ₹2199\n• 1 വർഷം ₹4199\nഓർഗനൈസർമാർ ☰ → 'Plan' തുറന്ന് ഓൺലൈനായി പണമടയ്ക്കാം, അല്ലെങ്കിൽ കൂപ്പൺ ചേർക്കാം. കാലാവധി കഴിഞ്ഞാൽ ഫെസ്റ്റ് മാറ്റാൻ കഴിയില്ല, പക്ഷേ ഒന്നും നഷ്ടപ്പെടില്ല; പ്ലാൻ എടുത്താൽ വീണ്ടും തുറക്കും."},
  {k:["sign up","signup","create account","new account","free account","how to start","get started","how do i start","join","how to use","account","തുടങ്ങ","അക്കൗണ്ട്","സൈൻ അപ്പ്","എങ്ങനെ ഉപയോഗി"],
   en:"To start:\n1. Open the site and press 'Create a free account' (or 'Sign up free').\n2. Enter your name, institution, WhatsApp number, a username and a password.\n3. On 'My fests', type your fest's name and press 'Create fest'.\n4. In 'Fest settings', add your teams and check the categories and stages.\n5. On 'Logins', create usernames for your team leaders and judges.\n6. Share the two links from the Dashboard.",
   ml:"തുടങ്ങാൻ:\n1. സൈറ്റ് തുറന്ന് 'Create a free account' (അല്ലെങ്കിൽ 'Sign up free') അമർത്തുക.\n2. പേര്, സ്ഥാപനം, വാട്സാപ്പ് നമ്പർ, യൂസർനെയിം, പാസ്‌വേഡ് എന്നിവ നൽകുക.\n3. 'My fests' പേജിൽ ഫെസ്റ്റിന്റെ പേര് എഴുതി 'Create fest' അമർത്തുക.\n4. 'Fest settings'-ൽ ടീമുകൾ ചേർക്കുക; കാറ്റഗറിയും സ്റ്റേജും നോക്കുക.\n5. 'Logins' പേജിൽ ടീം ലീഡർമാർക്കും ജഡ്ജസിനും യൂസർനെയിം ഉണ്ടാക്കുക.\n6. ഡാഷ്ബോർഡിലെ രണ്ട് ലിങ്കുകൾ ഷെയർ ചെയ്യുക."},
@@ -1966,8 +2153,8 @@ const FQKB=[
   en:"After logging in as an organiser, go to 'My fests', type the fest's name and press 'Create fest'. One account can run any number of fests, and each fest has its own students, logins and links.",
   ml:"ഓർഗനൈസർ ആയി ലോഗിൻ ചെയ്ത ശേഷം 'My fests' പേജിൽ ഫെസ്റ്റിന്റെ പേര് എഴുതി 'Create fest' അമർത്തുക. ഒരു അക്കൗണ്ടിൽ എത്ര ഫെസ്റ്റും നടത്താം. ഓരോ ഫെസ്റ്റിനും വേറെ കുട്ടികളും ലോഗിനുകളും ലിങ്കുകളും ഉണ്ടാകും."},
  {k:["coupon","കൂപ്പൺ"],
-  en:"Coupon IDs are another way for organisers to log in; the Mehfil team gives them. You don't need one, because anyone can create a free account. If you have a coupon, choose the 'Coupon ID' tab on the login page.",
-  ml:"ഓർഗനൈസർമാർക്ക് ലോഗിൻ ചെയ്യാനുള്ള മറ്റൊരു വഴിയാണ് കൂപ്പൺ ഐഡി; മെഹ്ഫിൽ ടീമാണ് അത് നൽകുന്നത്. അത് നിർബന്ധമില്ല, ആർക്കും സൗജന്യ അക്കൗണ്ട് ഉണ്ടാക്കാം. കൂപ്പൺ ഉണ്ടെങ്കിൽ ലോഗിൻ പേജിലെ 'Coupon ID' ടാബ് തിരഞ്ഞെടുക്കുക."},
+  en:"Coupons come from the Mehfil team and give 1, 3, 6 or 12 months of the paid plan. Two ways to use one:\n• Already have an account: ☰ → 'Plan' → 'Have a coupon?', type it and press 'Add coupon'. Your fests and data stay.\n• Or log in with it directly: choose the 'Coupon ID' tab on the login page. The months start from the first login.",
+  ml:"മെഹ്ഫിൽ ടീം നൽകുന്ന കൂപ്പൺ 1, 3, 6 അല്ലെങ്കിൽ 12 മാസത്തെ പ്ലാൻ നൽകും. രണ്ട് വഴിയുണ്ട്:\n• അക്കൗണ്ട് ഉണ്ടെങ്കിൽ: ☰ → 'Plan' → 'Have a coupon?'-ൽ കൂപ്പൺ ടൈപ്പ് ചെയ്ത് 'Add coupon' അമർത്തുക. ഫെസ്റ്റും വിവരങ്ങളും അങ്ങനെ തന്നെ ഉണ്ടാകും.\n• അല്ലെങ്കിൽ ലോഗിൻ പേജിലെ 'Coupon ID' ടാബിൽ നേരിട്ട് കയറാം. ആദ്യം കയറിയ ദിവസം മുതൽ കാലാവധി തുടങ്ങും."},
  {k:["log in","login","sign in","can't enter","cannot enter","not able to login","forgot","ലോഗിൻ","കയറാൻ പറ്റ","മറന്നു","കയറാൻ കഴിയ"],
   en:"Organisers, team leaders and judges all log in on the same page with their username and password. Team leaders and judges get their login from the fest admin, usually through the fest's login link.\nForgot the password? Team leaders and judges: ask your convener, who can make a new one on the 'Logins' page. Organisers: contact the Mehfil team.",
   ml:"ഓർഗനൈസർ, ടീം ലീഡർ, ജഡ്ജ് എല്ലാവരും ഒരേ പേജിൽ യൂസർനെയിമും പാസ്‌വേഡും നൽകി ലോഗിൻ ചെയ്യുന്നു. ടീം ലീഡർമാർക്കും ജഡ്ജസിനും ലോഗിൻ നൽകുന്നത് ഫെസ്റ്റ് അഡ്മിനാണ്, സാധാരണ ഫെസ്റ്റിന്റെ ലോഗിൻ ലിങ്ക് വഴി.\nപാസ്‌വേഡ് മറന്നോ? ടീം ലീഡർമാരും ജഡ്ജസും കൺവീനറോട് ചോദിക്കുക; അവർക്ക് 'Logins' പേജിൽ പുതിയത് ഉണ്ടാക്കാം. ഓർഗനൈസർമാർ മെഹ്ഫിൽ ടീമിനെ ബന്ധപ്പെടുക."},
@@ -2079,9 +2266,9 @@ const FQKB=[
  {k:["language","malayalam","english","arabic","urdu","ഭാഷ","മലയാളം"],
   en:"The site itself is in English. You can ask me in Malayalam or English and I'll reply in the same language. Names, programme names and news can be typed in any language.",
   ml:"സൈറ്റ് ഇംഗ്ലീഷിലാണ്. എന്നോട് മലയാളത്തിലോ ഇംഗ്ലീഷിലോ ചോദിക്കാം, അതേ ഭാഷയിൽ മറുപടി തരാം. പേരുകൾ, പരിപാടിയുടെ പേര്, വാർത്ത എന്നിവ ഏത് ഭാഷയിലും ടൈപ്പ് ചെയ്യാം."},
- {k:["contact","support","help me","customer care","call","ബന്ധപ്പെ","സഹായം","സപ്പോർട്ട്"],
-  en:"Start with the 'Help' page in the ☰ menu, or just ask me. Team leaders and judges can contact their fest convener. Organisers can reach the Mehfil team for anything else.",
-  ml:"☰ മെനുവിലെ 'Help' പേജ് നോക്കാം, അല്ലെങ്കിൽ എന്നോട് ചോദിക്കാം. ടീം ലീഡർമാരും ജഡ്ജസും ഫെസ്റ്റ് കൺവീനറെ ബന്ധപ്പെടുക. മറ്റ് കാര്യങ്ങൾക്ക് ഓർഗനൈസർമാർക്ക് മെഹ്ഫിൽ ടീമിനെ ബന്ധപ്പെടാം."},
+ {k:["contact","contact us","support","help me","customer care","call","phone number","email","instagram","ഇൻസ്റ്റഗ്രാം","ബന്ധപ്പെ","സഹായം","സപ്പോർട്ട്","നമ്പർ"],
+  en:"To reach the Mehfil team, press 'Contact us' at the bottom of the home page (or in the home page ☰ menu). It opens Mehfil's Instagram page, mehfil.fest, where you can send a message.\nTeam leaders and judges can also ask their fest convener.",
+  ml:"മെഹ്ഫിൽ ടീമിനെ ബന്ധപ്പെടാൻ ഹോം പേജിന്റെ താഴെയുള്ള (അല്ലെങ്കിൽ ഹോം പേജിലെ ☰ മെനുവിലുള്ള) 'Contact us' അമർത്തുക. മെഹ്ഫിലിന്റെ ഇൻസ്റ്റഗ്രാം പേജ് (mehfil.fest) തുറക്കും, അവിടെ സന്ദേശം അയക്കാം.\nടീം ലീഡർമാർക്കും ജഡ്ജസിനും ഫെസ്റ്റ് കൺവീനറോടും ചോദിക്കാം."},
  {k:["who made","who built","who created","developer","owner","creator","company","made by","ആര് ഉണ്ടാക്കി","ആരാണ് ഉണ്ടാക്കിയ","ഉടമ","ആരുടേതാണ്"],
   en:"Mehfil is built and run by the Mehfil team.",
   ml:"മെഹ്ഫിൽ ടീമാണ് മെഹ്ഫിൽ നിർമിച്ചതും നടത്തുന്നതും."},
@@ -2103,11 +2290,11 @@ function fqLocal(q){const n=" "+String(q).toLowerCase().replace(/[?!.,;:()"'’`
   let best=null,bs=0;FQKB.forEach(e=>{let sc=0;e.k.forEach(k=>{if(n.includes(k.toLowerCase()))sc+=k.length});if(sc>bs){bs=sc;best=e}});
   if(best&&bs>=3)return ml?best.ml:best.en;
   return ml?"അതിന് എന്റെ കയ്യിൽ ഉത്തരമില്ല. മറ്റൊരു രീതിയിൽ ചോദിച്ചുനോക്കൂ, അല്ലെങ്കിൽ ☰ മെനുവിലെ Help നോക്കൂ.":"I don't have an answer for that yet. Try asking another way, or open Help in the ☰ menu."}
-function fqChips(){const r=ME&&ME.role;if(VIEW==="public")return ["How do I check a certificate?","How do points work?","Is Mehfil free?"];
+function fqChips(){const r=ME&&ME.role;if(VIEW==="public")return ["How do I check a certificate?","How do points work?","How much does Mehfil cost?"];
   if(r==="judge")return ["How do I enter marks?","I made a mistake in marks","What if the internet drops?"];
   if(r==="team")return ["How do I register students?","How do I choose programmes?","How do I file an appeal?"];
   if(r)return ["How do points work?","Can the admin enter marks?","How do I add my fest logo?","How do I hide results?"];
-  return ["Is Mehfil free?","How do I start?","What can Mehfil do?","എങ്ങനെ തുടങ്ങാം?"]}
+  return ["How much does Mehfil cost?","How do I start?","What can Mehfil do?","എങ്ങനെ തുടങ്ങാം?"]}
 const fqFmt=t=>esc(t).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
 function fqRender(){const box=document.getElementById("fqMsgs");if(!box)return;
   box.innerHTML=FQ.msgs.map(m=>`<div class="fq-m ${m.r}">${fqFmt(m.t)}</div>`).join("")+(FQ.busy?`<div class="fq-m a"><span class="fq-typing" aria-label="FESTIQ is typing"><i></i><i></i><i></i></span></div>`:"");
