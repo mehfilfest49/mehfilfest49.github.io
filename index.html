@@ -852,6 +852,10 @@ body.noFQ .fq-fab,body.noFQ .fq-panel{display:none!important}
 .paidstrip small{color:var(--muted);font-size:12.5px}
 .planpill{white-space:nowrap}
 @media (max-width:560px){.plansbtn{display:none}.planpill{padding:6px 10px}}
+
+button.plancard{font:inherit;color:inherit;text-align:left;cursor:pointer;transition:transform .15s,border-color .15s}
+button.plancard:hover,button.plancard:focus-visible{transform:translateY(-3px);border-color:var(--brand)}
+button.plancard .btn{margin-top:auto;pointer-events:none}
 </style>
 </head>
 <body>
@@ -1181,7 +1185,7 @@ async function doSignup(){const g=id=>(document.getElementById(id).value||"").tr
   try{const r=await api("signup",d);UI.otpFor="";TOKEN=r.token;ME=r.user;saveSession();toast("Welcome to Mehfil! Your free account is ready.");await enter()}
   catch(x){b.disabled=false;b.innerHTML=`Create my free account ${ic("arrow")}`;bad(x.message)}}
 async function enter(){VIEW="loading";LOADMSG="Opening your desk…";paint();
-  try{const r=await api("fests");ME=r.user;saveSession();FESTLIST=r.fests||[];DBURL=r.db||"";MYPLAN=r.plan||null;setTimeout(checkReturn,1200);hit("app");
+  try{const r=await api("fests");ME=r.user;saveSession();FESTLIST=r.fests||[];DBURL=r.db||"";MYPLAN=r.plan||null;setTimeout(checkReturn,1200);setTimeout(takePick,900);hit("app");
     const last=store.get("mf_last_"+ME.u)||{};
     if(isOrg()){if(last.fest&&FESTLIST.some(f=>f.id===last.fest)){await loadFest(last.fest);VIEW="app";PAGE=last.page||"dash";paint();return}FID=null;D=null;VIEW="app";PAGE="fests";paint();return}
     const f=FESTLIST[0];if(!f)throw new Error("The fest for this login was not found.");
@@ -1315,8 +1319,8 @@ function LANDING(){const nw=MOCKNOW[MOCK.i%3],ev=MOCKEV[MOCK.i%4];
  <section class="sec alt" id="pricing"><div class="gut wrap">
   <div class="sec-h"><div class="k">PLANS</div><h2>Try free. Pay when you're ready.</h2></div>
   <div class="plans land">
-   <div class="plancard"><span class="pill wait">Free trial</span><b>One fest</b><div class="price">₹0</div><small class="hint">299 hours · up to 40 students · registration, schedule, judging and live results</small></div>
-   ${[["1 month",499,""],["3 months",1199,"Popular"],["6 months",2199,""],["1 year",4199,"Best value"]].map(([n,p,t])=>`<div class="plancard${t==="Best value"?" best":""}">${t?`<span class="pill ${t==="Best value"?"ok":""}">${t}</span>`:""}<b>${n}</b><div class="price">₹${p.toLocaleString("en-IN")}</div><small class="hint">Every feature · any number of fests and students</small></div>`).join("")}
+   <button class="plancard" onclick="pickPlan('')"><span class="pill wait">Free trial</span><b>One fest</b><div class="price">₹0</div><small class="hint">299 hours · up to 40 students · registration, schedule, judging and live results</small><span class="btn ghost sm">Start free</span></button>
+   ${[["1 month",499,"","m1"],["3 months",1199,"Popular","m3"],["6 months",2199,"","m6"],["1 year",4199,"Best value","m12"]].map(([n,p,t,k])=>`<button class="plancard${t==="Best value"?" best":""}" onclick="pickPlan('${k}')">${t?`<span class="pill ${t==="Best value"?"ok":""}">${t}</span>`:""}<b>${n}</b><div class="price">₹${p.toLocaleString("en-IN")}</div><small class="hint">Every feature · any number of fests and students</small><span class="btn sm">Choose</span></button>`).join("")}
   </div>
   <p class="hint" style="text-align:center;margin-top:14px">Paid plans add certificates, ID cards, winner posters, the big screen and your own logo and colour. Moving from the trial keeps all your data.</p>
  </div></section>
@@ -1543,6 +1547,11 @@ function upiBox(P){const k=UI.upk,v=P.plans[k];const url=`upi://pay?pa=${encodeU
    <button class="btn ghost sm" style="margin-top:10px" onclick="UI.upk='';paint()">Choose a different plan</button></div>`}
 async function claimPay(){const u=(document.getElementById("up_utr").value||"").replace(/\s/g,"");if(u.length<10)return toast("Type the transaction ID from your UPI app");const b=document.getElementById("up_b");b.disabled=true;
   try{UI.myplan=await api("claimPay",{plan:UI.upk,utr:u});MYPLAN=UI.myplan.plan;UI.upk="";if(FID){try{const r=await api("pull",{fest:FID,since:SY.seq,plan:true});PLAN=r.plan||PLAN}catch(e){}}toast("Thank you! Your plan is active. We'll confirm the payment soon.");paint()}catch(e){b.disabled=false;toast(e.message)}}
+function pickPlan(k){try{sessionStorage.setItem("mf_pick",k)}catch(e){}
+  if(ME&&ME.role==="org"){UI.upk=k;UI.myplan=null;VIEW="app";go("plan");return}
+  if(ME){VIEW="app";paint();return}
+  VIEW="signup";paint();window.scrollTo({top:0});if(k)toast("Create your account (or log in), then pay on the Plan page.")}
+function takePick(){let k=null;try{k=sessionStorage.getItem("mf_pick");sessionStorage.removeItem("mf_pick")}catch(e){}if(k&&ME&&ME.role==="org"){UI.upk=k;UI.myplan=null;go("plan")}}
 async function loadMyPlan(){try{UI.myplan=await api("myPlan");MYPLAN=UI.myplan.plan;softPaint()}catch(e){toast(e.message)}}
 async function redeem(){const c=(document.getElementById("rd_c").value||"").trim().toLowerCase();if(!c)return toast("Type the coupon ID");
   try{UI.myplan=await api("redeem",{code:c});MYPLAN=UI.myplan.plan;PLAN=null;if(FID&&!DEMO){try{const r=await api("pull",{fest:FID,since:SY.seq,plan:true});PLAN=r.plan||PLAN}catch(e){}}toast(`Coupon added. Your plan runs until ${fmtD(MYPLAN.paidUntil)}.`);paint()}catch(e){toast(e.message)}}
