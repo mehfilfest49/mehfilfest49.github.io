@@ -856,6 +856,18 @@ body.noFQ .fq-fab,body.noFQ .fq-panel{display:none!important}
 button.plancard{font:inherit;color:inherit;text-align:left;cursor:pointer;transition:transform .15s,border-color .15s}
 button.plancard:hover,button.plancard:focus-visible{transform:translateY(-3px);border-color:var(--brand)}
 button.plancard .btn{margin-top:auto;pointer-events:none}
+
+.sc-fs{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:12px;width:44px;height:44px;display:grid;place-items:center;cursor:pointer;opacity:.75}
+.sc-fs:hover{opacity:1}
+body.scfs .sc-fs{opacity:0}body.scfs .sc-fs:hover{opacity:.8}
+.sc-ind{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:24px;padding:clamp(16px,2vw,28px);min-width:0}
+.sc-irow{display:grid;grid-template-columns:44px minmax(0,1fr) 60px;gap:12px;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.1);font-size:clamp(16px,1.8vw,26px)}
+.sc-irow:last-child{border-bottom:0}.sc-irow b{font-family:var(--display);text-align:right}
+.sc-irow small{opacity:.75;font-weight:500;font-size:.65em;margin-left:6px;white-space:nowrap}.sc-irow small i{display:inline-block;width:.7em;height:.7em;border-radius:50%;margin-right:4px}
+.sc-row,.sc-irow{will-change:transform;position:relative}
+.sc-up{animation:scUp 1.6s ease}@keyframes scUp{0%,40%{background:rgba(255,215,90,.18)}100%{background:transparent}}
+.sc-row{border-radius:14px}
+@media(min-width:900px){.sc-grid{grid-template-columns:1fr 1fr}.sc-board{grid-column:1/-1}}
 </style>
 </head>
 <body>
@@ -918,7 +930,8 @@ const IC={
  plus:'<path d="M12 5v14M5 12h14"/>',
  trash:'<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/>',
  share:'<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/>',
- screen:'<rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/>'
+ screen:'<rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/>',
+ shrink:'<path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/>'
 };
 const ic=(k,sz)=>`<svg class="i" viewBox="0 0 24 24" ${sz?`style="width:${sz}px;height:${sz}px"`:""} aria-hidden="true">${IC[k]||""}</svg>`;
 const mark=(sz,col)=>`<span class="mark" aria-hidden="true" style="${sz?`width:${sz}px;height:${sz}px;`:""}${col?`background:${col}`:""}"></span>`;
@@ -1393,7 +1406,7 @@ const FBRAND=()=>`<div style="display:flex;align-items:center;gap:10px;min-width
 
 function paint(){NEEDPAINT=false;applyTheme(curBrand());document.body.classList.toggle("noFQ",VIEW==="screen");const app=document.getElementById("app");const y=window.scrollY;const ae=document.activeElement;const fid=ae&&ae.id;let ss=null,se=null;try{ss=ae.selectionStart;se=ae.selectionEnd}catch(e){}
   if(VIEW==="public"){app.innerHTML=PUBLIC_VIEW();afterPub();if(PUBV&&!PUBV.preview)hit("public");return}
-  if(VIEW==="screen"){app.innerHTML=SCREEN_VIEW();return}
+  if(VIEW==="screen"){scFlip(app,()=>{app.innerHTML=SCREEN_VIEW()});return}
   if(VIEW==="loading"){app.innerHTML=`<div class="loading">${LOADER()}<p>${esc(LOADMSG||"Loading…")}</p></div>`;return}
   if(VIEW==="landing"){app.innerHTML=LANDING();startMock();hit("home");return}
   if(VIEW==="signup"&&!ME){const keep={};["su_n","su_i","su_ph","su_pl","su_e","su_o","su_u","su_p"].forEach(id=>{const el=document.getElementById(id);if(el)keep[id]=el.value});app.innerHTML=SIGNUP();
@@ -2129,11 +2142,20 @@ function pubUnlock(){const v=document.getElementById("pc").value.trim();if(!v)re
 function verifyCode(){const S=pubS();const v=(document.getElementById("vc").value||"").trim().toUpperCase().replace(/\s/g,"");const m=v.match(/^(\d+)-([A-Z0-9]{1,5})$/);const out=document.getElementById("vres");
   let ok=null;if(m&&S){const c=S.cands.find(x=>x.chest===+m[1]);const p=S.progs.find(x=>x.id.slice(0,5).toUpperCase()===m[2]);if(c&&p&&p.status==="published"){const r=calcS(S,p).find(x=>x.cid===c.id);if(r)ok={c,p,r}}}
   out.innerHTML=ok?`<div class="msg ok">✓ <b>Genuine certificate.</b> ${esc(ok.c.name)} (chest ${ok.c.chest}), ${esc(ok.p.n)}: ${ok.r.rank<=3?ordn(ok.r.rank)+" place, ":""}grade ${ok.r.grade}.</div>`:`<div class="msg bad">No certificate matches this code. Check the letters and numbers and try again.</div>`}
+function scFlip(app,render){const old={},ow={};app.querySelectorAll("[data-k]").forEach(e=>old[e.dataset.k]=e.getBoundingClientRect().top);app.querySelectorAll("[data-w]").forEach(e=>ow[e.dataset.w]=e.style.width);render();
+  const moved=[];app.querySelectorAll("[data-k]").forEach(e=>{const o=old[e.dataset.k];if(o==null)return;const dy=o-e.getBoundingClientRect().top;if(Math.abs(dy)>2){e.style.transition="none";e.style.transform=`translateY(${dy}px)`;moved.push([e,dy<0])}});
+  app.querySelectorAll("[data-w]").forEach(e=>{const w=ow[e.dataset.w];if(w&&w!==e.style.width){const nw=e.style.width;e.style.transition="none";e.style.width=w;e.dataset.nw=nw}});
+  void app.offsetHeight;moved.forEach(([e,up])=>{e.style.transition="transform .9s cubic-bezier(.2,.8,.2,1)";e.style.transform="";if(!up)e.classList.add("sc-up")});
+  app.querySelectorAll("[data-nw]").forEach(e=>{e.style.transition="";e.style.width=e.dataset.nw})}
+let WAKE=null;function scFull(){try{if(document.fullscreenElement){document.exitFullscreen()}else{(document.documentElement.requestFullscreen||document.documentElement.webkitRequestFullscreen).call(document.documentElement);try{navigator.wakeLock&&navigator.wakeLock.request("screen").then(w=>WAKE=w).catch(()=>{})}catch(e){}}}catch(e){toast("Full screen is not available on this device")}}
+document.addEventListener("fullscreenchange",()=>{document.body.classList.toggle("scfs",!!document.fullscreenElement);if(VIEW==="screen")paint()});
 function SCREEN_VIEW(){const pv=PUBV||{};if(pv.need||pv.closed)return PUBLIC_VIEW();const S=pv.S;if(!S)return `<div class="loading">${LOADER()}<p>${esc(pv.err||"Loading…")}</p></div>`;
   const hide=(pv.pub||S.locks.pub)==="results";const tp=teamPtsS(S);const ord=Object.entries(tp).sort((a,b)=>b[1]-a[1]);const mx=Math.max(1,...ord.map(x=>x[1]));
   const pubs=S.progs.filter(p=>p.status==="published").sort((a,b)=>(b.pubT||0)-(a.pubT||0)).slice(0,4);
-  return `<div class="screen"><div class="sc-head">${S.brand&&safeLogo(S.brand.logo)?festLogo(S.brand,72,"pubimg"):mark(56,"#fff")}<div><div class="sc-t">${esc(S.site.title)}</div><div class="sc-s">${esc(S.site.tag)}</div></div><div class="sc-live">LIVE</div></div>
-  ${hide?`<div class="sc-soon">Results coming soon</div>`:`<div class="sc-grid"><div class="sc-board"><h2>Leaderboard</h2>${ord.map(([t,p],i)=>`<div class="sc-row"><span class="sc-rank">${i+1}</span><span class="sc-name">${esc(tOf(S,t).name)}</span><div class="sc-track"><div style="width:${p/mx*100}%;background:${tOf(S,t).color}"></div></div><b>${p}</b></div>`).join("")||"<p>No teams yet</p>"}</div>
+  const im={};S.progs.filter(p=>p.status==="published").forEach(p=>calcS(S,p).forEach(r=>{if(r.pts>0)im[r.cid]=(im[r.cid]||0)+r.pts}));const ind=Object.entries(im).sort((a,b)=>b[1]-a[1]).slice(0,8);
+  return `<div class="screen"><div class="sc-head">${S.brand&&safeLogo(S.brand.logo)?festLogo(S.brand,72,"pubimg"):mark(56,"#fff")}<div><div class="sc-t">${esc(S.site.title)}</div><div class="sc-s">${esc(S.site.tag)}</div></div><div class="sc-live">LIVE</div><button class="sc-fs" onclick="scFull()" title="Full screen" aria-label="Full screen">${ic(document.fullscreenElement?"shrink":"screen",22)}</button></div>
+  ${hide?`<div class="sc-soon">Results coming soon</div>`:`<div class="sc-grid"><div class="sc-board"><h2>Leaderboard</h2>${ord.map(([t,p],i)=>`<div class="sc-row" data-k="t_${esc(t)}"><span class="sc-rank">${i+1}</span><span class="sc-name">${esc(tOf(S,t).name)}</span><div class="sc-track"><div data-w="t_${esc(t)}" style="width:${p/mx*100}%;background:${tOf(S,t).color}"></div></div><b>${p}</b></div>`).join("")||"<p>No teams yet</p>"}</div>
+   <div class="sc-ind"><h2>Individual points</h2>${ind.map(([id,v],i)=>{const c=cOf(S,id);return c?`<div class="sc-irow" data-k="i_${esc(id)}"><span class="sc-rank">${i+1}</span><span class="sc-name">${esc(c.name)} <small><i style="background:${tOf(S,c.team).color}"></i>${esc(tOf(S,c.team).name)}</small></span><b>${v}</b></div>`:""}).join("")||"<p>Waiting for the first result…</p>"}</div>
    <div class="sc-latest"><h2>Latest results</h2>${pubs.map(p=>`<div class="sc-res"><div class="sc-pn">${esc(p.n)} <small>${esc(catName(S,p.cat))}</small></div>${calcS(S,p).filter(r=>r.rank<=3).map(r=>{const c=cOf(S,r.cid);return c?`<div class="sc-w">${["🥇","🥈","🥉"][r.rank-1]} ${esc(c.name)} <small>${esc(tOf(S,c.team).name)}</small></div>`:""}).join("")}</div>`).join("")||"<p>Waiting for the first result…</p>"}</div></div>`}
   <div class="sc-foot">${mark(20,"rgba(255,255,255,.8)")} Powered by Mehfil</div></div>`}
 
