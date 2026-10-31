@@ -1852,11 +1852,11 @@ PG.verify=()=>{const list=D.progs.filter(p=>p.status!=="published"&&p.judges.len
 
 /* ---- results ---- */
 PG.results=()=>{const tp=teamPts();const ord=Object.entries(tp).sort((a,b)=>b[1]-a[1]);const ind={};
-  D.progs.filter(p=>p.status==="published").forEach(p=>calc(p).forEach(r=>ind[r.cid]=(ind[r.cid]||0)+r.pts));const top=Object.entries(ind).sort((a,b)=>b[1]-a[1]).slice(0,10);
+  D.progs.filter(p=>p.status==="published").forEach(p=>calc(p).forEach(r=>ind[r.cid]=(ind[r.cid]||0)+r.pts));const top=Object.entries(ind).filter(x=>x[1]>0).sort((a,b)=>b[1]-a[1]);
   const ver=D.progs.filter(p=>p.status==="verified");
   return `${head("Results and points",ptsText(D),ver.length?`<button class="btn alt" onclick="act('publish',{pids:${esc(JSON.stringify(ver.map(p=>p.id)))}})&&toast('All verified results published')">Publish all ${ver.length} verified</button>`:"")}
   <div class="panel"><h3>Live leaderboard</h3>${ord.length?bars(Object.fromEntries(ord),k=>teamOf(k).color,k=>teamOf(k).name):`<p class="hint">Add teams in Fest settings.</p>`}</div>
-  <div class="two" style="margin-top:16px"><div class="panel"><h3>Top individuals</h3>${top.length?`<div class="tbl"><table><tr><th>Chest</th><th>Name</th><th>Team</th><th class="num">Points</th></tr>${top.map(([id,p])=>{const c=C(id);return c?`<tr><td><span class="chest">${c.chest}</span></td><td>${esc(c.name)}</td><td>${teamBadge(c.team)}</td><td class="num">${p}</td></tr>`:""}).join("")}</table></div>`:`<p class="hint" style="margin:0">None yet</p>`}</div>
+  <div class="two" style="margin-top:16px"><div class="panel"><h3>Individual points (${top.length})</h3>${top.length?`<div class="tbl"><table><tr><th>Chest</th><th>Name</th><th>Team</th><th class="num">Points</th></tr>${top.map(([id,p])=>{const c=C(id);return c?`<tr><td><span class="chest">${c.chest}</span></td><td>${esc(c.name)}</td><td>${teamBadge(c.team)}</td><td class="num">${p}</td></tr>`:""}).join("")}</table></div>`:`<p class="hint" style="margin:0">None yet</p>`}</div>
   <div class="panel"><h3>Published results</h3><div class="news">${D.progs.filter(p=>p.status==="published").map(p=>`<p><button class="btn ghost sm" style="float:right;margin-left:8px" ${D.locks.results?"disabled title='Result lock is on'":""} onclick="act('unpublish',{pid:'${p.id}'})&&toast('Withdrawn. Find it on the Score verification page.')">${ic(D.locks.results?"lock":"back",14)} Withdraw</button><b>${esc(p.n)}</b> <small style="color:var(--muted)">${esc(catName(D,p.cat))}</small><br>${calc(p).filter(r=>r.rank<=3).map(r=>`${["🥇","🥈","🥉"][r.rank-1]} ${esc((C(r.cid)||{}).name||"")}`).join(" · ")}</p>`).join("")||"<p>None yet</p>"}</div></div></div>`};
 
 /* ---- appeals ---- */
