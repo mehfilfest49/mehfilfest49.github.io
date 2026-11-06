@@ -868,6 +868,8 @@ body.scfs .sc-fs{opacity:0}body.scfs .sc-fs:hover{opacity:.8}
 .sc-up{animation:scUp 1.6s ease}@keyframes scUp{0%,40%{background:rgba(255,215,90,.18)}100%{background:transparent}}
 .sc-row{border-radius:14px}
 @media(min-width:900px){.sc-grid{grid-template-columns:1fr 1fr}.sc-board{grid-column:1/-1}}
+
+tr.kala1 td{background:color-mix(in srgb,#F5C542 18%,transparent)}
 </style>
 </head>
 <body>
@@ -978,7 +980,10 @@ const canReg=(S,m,team)=>ADM(m)||(m.role==="team"&&m.team===team&&!regClosedAt(S
 const marked=p=>Object.keys(p.subm||{}).length>0;
 function addLog(S,m,txt){S.log.unshift({t:m.t,txt});if(S.log.length>150)S.log.length=150}
 function addNote(S,m,id,txt,to){S.notifs.unshift({id:sid(id),t:m.t,txt,to:to||"all"});if(S.notifs.length>150)S.notifs.length=150}
-function nextChest(S,cat){const c=S.cfg.cats.find(x=>x.id===cat);const base=+c.base||0;let n=Math.max(base,...S.cands.filter(x=>x.cat===cat).map(x=>x.chest))+1;while(S.cands.some(x=>x.chest===n))n++;return n}
+const catLim=(S,cat)=>{const c=S.cfg.cats.find(x=>x.id===cat);return c&&+c.lim>0?+c.lim:S.cfg.limit};
+const teamBase=(S,team)=>{const i=S.cfg.teams.findIndex(x=>x.id===team);const t=S.cfg.teams[i];return t&&t.base>=0&&t.base!==""&&t.base!=null?+t.base:(i+1)*100};
+function nextChest(S,cat,team){const byT=S.cfg.chestBy==="team";const base=byT?teamBase(S,team):(+(S.cfg.cats.find(x=>x.id===cat)||{}).base||0);let n=Math.max(base,...S.cands.filter(x=>byT?x.team===team:x.cat===cat).map(x=>x.chest))+1;while(S.cands.some(x=>x.chest===n))n++;return n}
+function renumberS(S){const old=S.cands.slice().sort((a,b)=>a.chest-b.chest);S.cands.forEach(c=>c.chest=-1);old.forEach(c=>{c.chest=nextChest(S,c.cat,c.team)})}
 
 /* schedule slots */
 const perDay=S=>Math.max(1,Math.floor((S.cfg.end-S.cfg.start)/S.cfg.slot));
@@ -996,7 +1001,7 @@ function conflictsS(S){const out=[];const by={};S.sched.forEach(s=>{(by[skey(s)]
     pa.parts.filter(c=>pb.parts.includes(c)).forEach(c=>{const cd=cOf(S,c);out.push({a:pa.id,b:pb.id,s:a,why:`${cd?cd.name+" ("+cd.chest+")":"a student"} is in both`})})}});return out}
 function enrollError(S,c,pids){const editable=p=>p.cat===c.cat&&p.status==="pending"&&!marked(p);
   const fixed=S.progs.filter(p=>p.parts.includes(c.id)&&!editable(p));const want=S.progs.filter(p=>editable(p)&&pids.includes(p.id));const all=[...fixed,...want];
-  if(all.length>S.cfg.limit)return `Too many programmes: ${all.length} chosen, the limit is ${S.cfg.limit}.`;
+  {const lim=catLim(S,c.cat);if(all.length>lim)return `Too many programmes: ${all.length} chosen, the limit in ${catName(S,c.cat)} is ${lim}.`}
   const seen={};for(const p of all){const s=slotOfS(S,p.id);if(!s)continue;const k=skey(s);if(seen[k])return `Clash: "${seen[k].n}" and "${p.n}" are both at ${S.cfg.days>1?"Day "+s.day+", ":""}${fmtMin(s.t)}. Remove one.`;seen[k]=p}
   return null}
 
@@ -1007,6 +1012,11 @@ function calcS(S,p){const js=p.judges.filter(j=>p.subm[j]);if(!js.length||!p.par
 const DEFPTS={p:[5,3,1],g:{A:2,B:1,C:0},cut:{A:80,B:65,C:50}};
 const ptsText=S=>{const p=S.cfg.pts||DEFPTS;return `1st place ${p.p[0]} points, 2nd ${p.p[1]}, 3rd ${p.p[2]}. Grade A (${p.cut.A}+) adds ${p.g.A}, grade B (${p.cut.B}+) adds ${p.g.B}, grade C (${p.cut.C}+) adds ${p.g.C}. Equal averages share a place. Only published results count.`};
 const safeLogo=l=>/^data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+\/=]+$/.test(l||"")&&l.length<=46000?l:"";
+function kalaS(S){const pt=S.cfg.pts||DEFPTS,mx=(pt.p[0]||0)+(pt.g.A||0),m={};if(!mx)return[];
+  S.progs.filter(p=>p.status==="published").forEach(p=>calcS(S,p).forEach(r=>{if(!cOf(S,r.cid))return;const o=m[r.cid]||(m[r.cid]={cid:r.cid,n:0,pts:0});o.n++;o.pts+=r.pts}));
+  return Object.values(m).map(o=>{const c=cOf(S,o.cid);o.max=Math.max(o.n,catLim(S,c.cat))*mx;o.pct=Math.round(o.pts/o.max*1000)/10;return o}).sort((a,b)=>b.pct-a.pct||b.pts-a.pts||b.n-a.n)}
+const KALA_HINT="Points won ÷ the most points possible for the student's category (the category's programme limit × the top points for one programme).";
+function kalaTable(S,list,teamFn){return list.length?`<div class="tbl"><table><tr><th>#</th><th>Chest</th><th>Name</th><th>Team</th><th class="num">Items</th><th class="num">Points</th><th class="num">%</th></tr>${list.map((o,i)=>{const c=cOf(S,o.cid);return `<tr${i===0?' class="kala1"':""}><td>${i===0?"👑":i+1}</td><td><span class="chest">${esc(c.chest)}</span></td><td><b>${esc(c.name)}</b></td><td>${teamFn(c.team)}</td><td class="num">${o.n}</td><td class="num">${o.pts}/${o.max}</td><td class="num"><b>${o.pct}%</b></td></tr>`}).join("")}</table></div>`:`<p class="hint" style="margin:0">None yet</p>`}
 function teamPtsS(S){const t={};S.cfg.teams.forEach(x=>t[x.id]=0);S.progs.filter(p=>p.status==="published").forEach(p=>calcS(S,p).forEach(r=>{const c=cOf(S,r.cid);if(c&&t[c.team]!=null)t[c.team]+=r.pts}));return t}
 
 const R={
@@ -1018,18 +1028,19 @@ const R={
       if(k==="cats"&&(S.cands.some(c=>!ids.has(c.cat))||S.progs.some(p=>!ids.has(p.cat))))return;
       if(k==="stages"&&S.progs.some(p=>!ids.has(p.stage)))return;
       if(k==="subs"&&S.progs.some(p=>!ids.has(p.sf)))return;
-      S.cfg[k]=v.map(x=>{const o={id:sid(x.id).slice(0,12)||"x",name:String(x.name).trim().slice(0,40)};if(k==="teams")o.color=/^#[0-9a-fA-F]{6}$/.test(x.color)?x.color:TEAMCOL[0];if(k==="cats")o.base=Math.max(0,Math.min(99000,Math.round(+x.base||0)));return o});
+      S.cfg[k]=v.map(x=>{const o={id:sid(x.id).slice(0,12)||"x",name:String(x.name).trim().slice(0,40)};if(k==="teams")o.color=/^#[0-9a-fA-F]{6}$/.test(x.color)?x.color:TEAMCOL[0];if(k==="cats"){o.base=Math.max(0,Math.min(99000,Math.round(+x.base||0)));const l=Math.round(+x.lim||0);if(l>=1&&l<=20)o.lim=l}if(k==="teams"&&x.base!=null&&x.base!==""&&+x.base>=0)o.base=Math.min(99000,Math.round(+x.base));return o});
       addLog(S,m,`Settings updated: ${({teams:"teams",cats:"categories",stages:"stages",subs:"sub-fests"})[k]}`)}
     else if(k==="sched"){const d=+v.days,st=+v.start,en=+v.end,sl=+v.slot;if(!(d>=1&&d<=7&&st>=0&&en>st&&en<=1440&&[10,15,20,30,45,60,90].includes(sl)))return;Object.assign(S.cfg,{days:d,start:st,end:en,slot:sl});S.sched.forEach(s=>{if(s.day>d)s.day=d});addLog(S,m,"Schedule settings updated")}
     else if(k==="pts"){const n=x=>Math.round(+x);const p=Array.isArray(v.p)?v.p.slice(0,3).map(n):[];const g={A:n(v.g&&v.g.A),B:n(v.g&&v.g.B),C:n(v.g&&v.g.C)};const c={A:+(v.cut&&v.cut.A),B:+(v.cut&&v.cut.B),C:+(v.cut&&v.cut.C)};
       if(p.length!==3||![...p,g.A,g.B,g.C].every(x=>x>=0&&x<=100)||!(c.A<=100&&c.A>c.B&&c.B>c.C&&c.C>=0))return;S.cfg.pts={p,g,cut:c};addLog(S,m,"Points and grades updated")}
-    else if(k==="limit"){const n=Math.round(+v);if(n>=1&&n<=20){S.cfg.limit=n;addLog(S,m,`Programme limit set to ${n}`)}}},
+    else if(k==="limit"){const n=Math.round(+v);if(n>=1&&n<=20){S.cfg.limit=n;addLog(S,m,`Programme limit set to ${n}`)}}
+    else if(k==="chestBy"){if(!["cat","team"].includes(v&&v.mode))return;S.cfg.chestBy=v.mode;if(v.renumber)renumberS(S);addLog(S,m,`Chest numbers: by ${v.mode==="team"?"team":"category"}${v.renumber?", everyone renumbered":""}`)}},
   reg(S,a,m){a.id=sid(a.id);const name=String(a.name||"").trim().slice(0,60);if(!name||!a.id||cOf(S,a.id))return;
     const team=m.role==="team"?m.team:a.team;if(!S.cfg.teams.some(t=>t.id===team)||!S.cfg.cats.some(c=>c.id===a.cat)||!canReg(S,m,team))return;
-    const c={id:a.id,name,team,cat:a.cat,skills:(a.skills||[]).map(String).slice(0,8),chest:nextChest(S,a.cat)};S.cands.push(c);
+    const c={id:a.id,name,team,cat:a.cat,skills:(a.skills||[]).map(String).slice(0,8),chest:nextChest(S,a.cat,team)};S.cands.push(c);
     addLog(S,m,`${name} registered (${c.chest})`);if(m.role==="team")addNote(S,m,a.id+"n",`${teamName(S,team)}: ${name} registered`,"admin")},
   bulk(S,a,m){if(!ADM(m))return;let k=0;(a.rows||[]).forEach(r=>{r.id=sid(r.id);const name=String(r.name||"").trim().slice(0,60);if(!name||!r.id||cOf(S,r.id))return;
-    if(!S.cfg.teams.some(t=>t.id===r.team)||!S.cfg.cats.some(c=>c.id===r.cat))return;S.cands.push({id:r.id,name,team:r.team,cat:r.cat,skills:[],chest:nextChest(S,r.cat)});k++});
+    if(!S.cfg.teams.some(t=>t.id===r.team)||!S.cfg.cats.some(c=>c.id===r.cat))return;S.cands.push({id:r.id,name,team:r.team,cat:r.cat,skills:[],chest:nextChest(S,r.cat,r.team)});k++});
     if(k)addLog(S,m,`${k} candidates added in bulk`)},
   editCand(S,a,m){const c=cOf(S,a.id);if(!c||!canReg(S,m,c.team))return;const name=String(a.name||"").trim().slice(0,60);if(name)c.name=name;if(Array.isArray(a.skills))c.skills=a.skills.map(String).slice(0,8);addLog(S,m,`${c.name}: details updated`)},
   delCand(S,a,m){const c=cOf(S,a.id);if(!c||!canReg(S,m,c.team))return;if(S.progs.some(p=>p.parts.includes(c.id)&&(p.status!=="pending"||marked(p))))return;
@@ -1653,27 +1664,36 @@ function draftInit(){if(!D)return;UI.dr={teams:clone(D.cfg.teams),cats:clone(D.c
 function usage(kind,id){if(kind==="teams")return D.cands.filter(c=>c.team===id).length;if(kind==="cats")return D.cands.filter(c=>c.cat===id).length+D.progs.filter(p=>p.cat===id).length;if(kind==="stages")return D.progs.filter(p=>p.stage===id).length;return D.progs.filter(p=>p.sf===id).length}
 function drAdd(kind){const i=document.getElementById("add_"+kind);const v=(i.value||"").trim();if(!v){toast("Type a name first");i.focus();return}
   const L=UI.dr[kind];if(L.some(x=>x.name.trim().toLowerCase()===v.toLowerCase())){toast("That name is already in the list");return}
-  const o={id:rid(6),name:v};if(kind==="teams")o.color=TEAMCOL.find(c=>!L.some(t=>t.color===c))||TEAMCOL[L.length%TEAMCOL.length];if(kind==="cats")o.base=(Math.max(0,...L.map(c=>+c.base||0))+100);
+  const o={id:rid(6),name:v};if(kind==="teams")o.color=TEAMCOL.find(c=>!L.some(t=>t.color===c))||TEAMCOL[L.length%TEAMCOL.length];if(kind==="cats")o.base=(Math.max(0,...L.map(c=>+c.base||0))+100);if(kind==="teams")o.base=(L.length+1)*100;
   L.push(o);delete DIRTY["add_"+kind];paint();setTimeout(()=>{const n=document.getElementById("add_"+kind);if(n)n.focus()},30)}
 function drDel(kind,i){const x=UI.dr[kind][i];const n=usage(kind,x.id);if(n){toast(`"${x.name}" is in use (${n}). Move or remove those first.`);return}if(kind!=="teams"&&UI.dr[kind].length<2){toast("Keep at least one");return}UI.dr[kind].splice(i,1);paint()}
 function drColor(i){const t=UI.dr.teams[i];const k=TEAMCOL.indexOf(t.color);t.color=TEAMCOL[(k+1)%TEAMCOL.length];paint()}
 function drSave(kind){const L=UI.dr[kind].map(x=>({...x,name:String(x.name).trim()}));if(L.some(x=>!x.name)){toast("Every item needs a name");return}
   if(new Set(L.map(x=>x.name.toLowerCase())).size!==L.length){toast("Two items have the same name");return}
-  if(kind==="cats"&&L.some(c=>!(c.base>=0)))return toast("Chest numbers must be numbers");
+  if(kind==="cats"&&L.some(c=>!(c.base>=0)))return toast("Chest numbers must be numbers");if(kind==="cats"&&L.some(c=>c.lim&&!(c.lim>=1&&c.lim<=20)))return toast("Max programmes must be 1 to 20");
   for(const x of D.cfg[kind])if(!L.some(y=>y.id===x.id)&&usage(kind,x.id)){toast(`"${x.name}" is still in use`);return}
   if(act("cfg",{key:kind,val:L})){toast("Saved");draftInit();paint()}}
 function listEditor(kind,title,hint,extra){const L=UI.dr[kind];return `<div class="panel"><h3>${title}</h3><p class="hint">${hint}</p>
   <div class="lst">${L.map((x,i)=>`<div class="lrow">${kind==="teams"?`<button class="swatch sm" style="background:${x.color}" title="Change colour" aria-label="Change colour of ${esc(x.name)}" onclick="drColor(${i})"></button>`:""}
     <input value="${esc(x.name)}" aria-label="Name" maxlength="40" oninput="UI.dr.${kind}[${i}].name=this.value">
-    ${kind==="cats"?`<label class="mini-l">Chest no. from<input type="number" min="0" step="1" value="${x.base}" aria-label="Chest numbers start after" oninput="UI.dr.cats[${i}].base=+this.value"></label>`:""}
+    ${kind==="cats"?`${D.cfg.chestBy==="team"?"":`<label class="mini-l">Chest no. from<input type="number" min="0" step="1" value="${x.base}" aria-label="Chest numbers start after" oninput="UI.dr.cats[${i}].base=+this.value"></label>`}<label class="mini-l">Max programmes<input type="number" min="1" max="20" step="1" value="${x.lim||""}" placeholder="${UI.dr.limit}" aria-label="Most programmes per student in this category" oninput="UI.dr.cats[${i}].lim=+this.value||0"></label>`:""}
+    ${kind==="teams"&&D.cfg.chestBy==="team"?`<label class="mini-l">Chest no. from<input type="number" min="0" step="1" value="${x.base!=null?x.base:(i+1)*100}" aria-label="Chest numbers start after" oninput="UI.dr.teams[${i}].base=+this.value"></label>`:""}
     <span class="hint" style="margin:0;white-space:nowrap">${usage(kind,x.id)||""}${usage(kind,x.id)?" in use":""}</span>
     <button class="btn ghost sm" onclick="drDel('${kind}',${i})" aria-label="Remove">${ic("trash",14)}</button></div>`).join("")||`<p class="hint" style="margin:0">${kind==="teams"?"No teams yet. Add your first one below.":"Nothing here yet."}</p>`}</div>
   <div class="row" style="margin-top:12px"><label class="f">Add ${extra}<input id="add_${kind}" maxlength="40" placeholder="Name" onkeydown="if(event.key==='Enter')drAdd('${kind}')"></label><button class="btn ghost" onclick="drAdd('${kind}')">${ic("plus",16)} Add</button><button class="btn" onclick="drSave('${kind}')">Save ${title.toLowerCase()}</button></div></div>`}
+function chestPanel(){const m=D.cfg.chestBy==="team"?"team":"cat";UI.cm=UI.cm||m;
+  return `<div class="panel"><h3>Chest numbers</h3><p class="hint">By category: Kids 101, 102… Senior 401, 402… By team: Team A 101, 102… Team B 201, 202… Set where each starts in the Teams or Categories list.</p>
+  <div class="row" style="align-items:flex-end"><label class="f" style="max-width:240px">Give chest numbers<select onchange="UI.cm=this.value;paint()"><option value="cat" ${UI.cm==="cat"?"selected":""}>By category</option><option value="team" ${UI.cm==="team"?"selected":""}>By team</option></select></label>
+  <button class="btn" onclick="if(act('cfg',{key:'chestBy',val:{mode:UI.cm,renumber:false}})){toast('Saved. New students get the new numbers.');draftInit();paint()}">Save</button>
+  ${D.cands.length?`<button class="btn alt" onclick="if(confirmTap(this))return;if(act('cfg',{key:'chestBy',val:{mode:UI.cm,renumber:true}})){toast('Everyone has a new chest number. Print ID cards again.');draftInit();paint()}">Save and renumber all ${D.cands.length}</button>`:""}</div>
+  ${D.cands.length?`<p class="hint" style="margin:10px 0 0">Renumbering changes every student's chest number. Marks and results stay safe, but printed ID cards and lists will be out of date.</p>`:""}</div>`}
+function confirmTap(b){if(b.dataset.ok)return false;b.dataset.ok=1;b.textContent="Tap again to renumber";setTimeout(()=>{if(b.isConnected){delete b.dataset.ok;paint()}},4000);return true}
 PG.settings=()=>{if(!UI.dr)draftInit();const s=UI.dr.sched;const slots=[10,15,20,30,45,60,90];
   return `${head("Fest settings","Set up the teams, categories, stages and timing for this fest.")}
   ${brandPanel()}
   ${listEditor("teams","Teams","Houses, groups or institutions that compete for points. Tap the colour to change it.","a team")}
-  ${listEditor("cats","Categories","Age or class groups. Chest numbers in each category start after the number you set (for example 100 gives 101, 102…).","a category")}
+  ${chestPanel()}
+  ${listEditor("cats","Categories",`Age or class groups. ${D.cfg.chestBy==="team"?"":"Chest numbers in each category start after the number you set (for example 100 gives 101, 102…). "}Max programmes is the most one student in that category can join. Left empty, the general limit (${UI.dr.limit}) is used.`,"a category")}
   ${listEditor("stages","Stages","Places where programmes happen at the same time.","a stage")}
   ${ptsPanel()}
   ${listEditor("subs","Sub-fests","Groups of programmes, for example stage and off-stage events.","a sub-fest")}
@@ -1683,7 +1703,7 @@ PG.settings=()=>{if(!UI.dr)draftInit();const s=UI.dr.sched;const slots=[10,15,20
     <label class="f">Ends at<input type="time" value="${toHM(s.end)}" onchange="UI.dr.sched.end=fromHM(this.value)"></label>
     <label class="f">Each slot<select onchange="UI.dr.sched.slot=+this.value">${slots.map(x=>`<option value="${x}" ${x===s.slot?"selected":""}>${x} minutes</option>`).join("")}</select></label>
     <button class="btn" onclick="if(!(UI.dr.sched.end>UI.dr.sched.start))return toast('The end time must be after the start time');if(act('cfg',{key:'sched',val:UI.dr.sched}))toast('Saved. Press Build automatically on the Schedule page to rearrange.')">Save schedule</button></div></div>
-  <div class="panel"><h3>Programmes per student</h3><p class="hint">The most programmes one student can take part in.</p>
+  <div class="panel"><h3>Programmes per student</h3><p class="hint">The most programmes one student can take part in, for categories without their own Max programmes.</p>
    <div class="row"><label class="f" style="max-width:200px">Limit<input type="number" min="1" max="20" value="${UI.dr.limit}" oninput="UI.dr.limit=+this.value"></label><button class="btn" onclick="if(act('cfg',{key:'limit',val:UI.dr.limit}))toast('Saved')">Save limit</button></div></div>`};
 
 /* ---- candidates ---- */
@@ -1693,7 +1713,7 @@ function candRows(){const sc=scope(),f=UI.cf;const q=f.q.toLowerCase();
     <td style="white-space:nowrap"><button class="btn ghost sm" onclick="UI.enroll='${c.id}';UI.edit=null;paint();document.getElementById('enroll').scrollIntoView({behavior:'smooth'})">Programmes</button> <button class="btn ghost sm" onclick="UI.edit='${c.id}';UI.enroll=null;paint();document.getElementById('enroll').scrollIntoView({behavior:'smooth'})">Edit</button>${isFree()?"":` <label class="btn ghost sm" style="cursor:pointer" title="${c.photo?"Change photo":"Add photo"}">${c.photo?`<img src="${c.photo}" alt="" style="width:20px;height:25px;object-fit:cover;border-radius:4px">`:ic("plus",14)} Photo<input type="file" accept="image/*" hidden onchange="pickPhoto('${c.id}',this)"></label>${c.photo?` <button class="btn ghost sm" aria-label="Remove photo of ${esc(c.name)}" onclick="act('candPhoto',{id:'${c.id}',img:''})">✕</button>`:""}`}</td></tr>`).join("")||`<tr><td colspan="7">No one found</td></tr>`}</table><p class="hint" style="margin:10px 0 0">${list.length} shown</p>`}
 function enrollPanel(){const c=C(UI.enroll);if(!c)return "";const opts=D.progs.filter(p=>p.cat===c.cat);
   return `<div class="panel" style="border-color:var(--brand)"><div class="row" style="justify-content:space-between;align-items:center"><h3 style="margin:0">${esc(c.name)} <span class="chest">${c.chest}</span> · Programmes</h3><button class="btn ghost sm" onclick="UI.enroll=null;paint()">Close</button></div>
-   <p class="hint">Up to ${D.cfg.limit} programmes per student. Two programmes at the same time can't both be chosen.</p>
+   <p class="hint">Up to ${catLim(D,c.cat)} programmes per student in ${esc(catName(D,c.cat))}. Two programmes at the same time can't both be chosen.</p>
    <div class="chips">${opts.map(p=>{const s=slotOf(p.id),lockd=p.status!=="pending"||marked(p);return `<label class="chk"><input type="checkbox" id="en_${p.id}" ${p.parts.includes(c.id)?"checked":""} ${lockd?"disabled":""}>${esc(p.n)} <small style="color:var(--muted)">${slotLabel(s)}</small></label>`}).join("")||`<span class="hint" style="margin:0">No programmes in ${esc(catName(D,c.cat))} yet.</span>`}</div>
    <div id="enmsg"></div><div class="row" style="margin-top:14px"><button class="btn" onclick="saveEnroll('${c.id}')">Check and save</button></div></div>`}
 function saveEnroll(cid){const c=C(cid);const pids=D.progs.filter(p=>{const el=document.getElementById("en_"+p.id);return el&&el.checked}).map(p=>p.id);
@@ -1869,6 +1889,7 @@ PG.results=()=>{const tp=teamPts();const ord=Object.entries(tp).sort((a,b)=>b[1]
   const ver=D.progs.filter(p=>p.status==="verified");
   return `${head("Results and points",ptsText(D),ver.length?`<button class="btn alt" onclick="act('publish',{pids:${esc(JSON.stringify(ver.map(p=>p.id)))}})&&toast('All verified results published')">Publish all ${ver.length} verified</button>`:"")}
   <div class="panel"><h3>Live leaderboard</h3>${ord.length?bars(Object.fromEntries(ord),k=>teamOf(k).color,k=>teamOf(k).name):`<p class="hint">Add teams in Fest settings.</p>`}</div>
+  <div class="panel" style="margin-top:16px"><h3>🏆 Kalaprathibha</h3><p class="hint" style="margin-top:0">${KALA_HINT}</p>${kalaTable(D,kalaS(D).slice(0,20),teamBadge)}</div>
   <div class="two" style="margin-top:16px"><div class="panel"><h3>Individual points (${top.length})</h3>${top.length?`<div class="tbl"><table><tr><th>Chest</th><th>Name</th><th>Team</th><th class="num">Points</th></tr>${top.map(([id,p])=>{const c=C(id);return c?`<tr><td><span class="chest">${c.chest}</span></td><td>${esc(c.name)}</td><td>${teamBadge(c.team)}</td><td class="num">${p}</td></tr>`:""}).join("")}</table></div>`:`<p class="hint" style="margin:0">None yet</p>`}</div>
   <div class="panel"><h3>Published results</h3><div class="news">${D.progs.filter(p=>p.status==="published").map(p=>`<p><button class="btn ghost sm" style="float:right;margin-left:8px" ${D.locks.results?"disabled title='Result lock is on'":""} onclick="act('unpublish',{pid:'${p.id}'})&&toast('Withdrawn. Find it on the Score verification page.')">${ic(D.locks.results?"lock":"back",14)} Withdraw</button><b>${esc(p.n)}</b> <small style="color:var(--muted)">${esc(catName(D,p.cat))}</small><br>${calc(p).filter(r=>r.rank<=3).map(r=>`${["🥇","🥈","🥉"][r.rank-1]} ${esc((C(r.cid)||{}).name||"")}`).join(" · ")}</p>`).join("")||"<p>None yet</p>"}</div></div></div>`};
 
@@ -2127,7 +2148,7 @@ function PUBLIC_VIEW(){const pv=PUBV||{};
   const tN=id=>tOf(S,id).name,tC=id=>tOf(S,id).color,tB=id=>`<span class="team"><span class="dot" style="background:${tC(id)}"></span>${esc(tN(id))}</span>`;
   if((pv.tab==="results"||pv.tab==="board"||pv.tab==="verify")&&hideRes)b=soonPanel();
   else if(pv.tab==="results")b=pubs.length?`<div class="two" style="margin-top:20px">${pubs.map(p=>`<div class="panel"><h3>${esc(p.n)} <small style="color:var(--muted);font:500 13px var(--body)">${esc(catName(S,p.cat))}</small></h3>${calcS(S,p).filter(r=>r.rank<=3).map(r=>{const c=cOf(S,r.cid);return c?`<div class="slot"><span style="font-size:22px">${["🥇","🥈","🥉"][r.rank-1]}</span><div><b>${esc(c.name)}</b> <span class="chest">${c.chest}</span><br><small>${tB(c.team)} · Grade ${r.grade}</small></div></div>`:""}).join("")}</div>`).join("")}</div>`:`<div class="panel" style="margin-top:20px">Results will appear here as soon as they're published.</div>`;
-  else if(pv.tab==="board"){const tp=teamPtsS(S);b=`<div class="panel" style="margin-top:20px"><h3>Live leaderboard</h3>${S.cfg.teams.length?bars(Object.fromEntries(Object.entries(tp).sort((a,b)=>b[1]-a[1])),tC,tN):"<p class='hint'>No teams yet.</p>"}<p class="hint" style="margin-top:14px">Results in for ${pubs.length} of ${S.progs.length} programmes</p></div>`}
+  else if(pv.tab==="board"){const tp=teamPtsS(S);b=`<div class="panel" style="margin-top:20px"><h3>Live leaderboard</h3>${S.cfg.teams.length?bars(Object.fromEntries(Object.entries(tp).sort((a,b)=>b[1]-a[1])),tC,tN):"<p class='hint'>No teams yet.</p>"}<p class="hint" style="margin-top:14px">Results in for ${pubs.length} of ${S.progs.length} programmes</p></div><div class="panel" style="margin-top:16px"><h3>🏆 Kalaprathibha</h3><p class="hint" style="margin-top:0">${KALA_HINT}</p>${kalaTable(S,kalaS(S).slice(0,10),t=>`<span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:${tC(t)};margin-right:6px"></span>${esc(tN(t))}`)}</div>`}
   else if(pv.tab==="sched"){b=[...Array(S.cfg.days)].map((_,i)=>i+1).map(d=>{const it=S.sched.filter(x=>x.day===d);if(!it.length)return "";return `${S.cfg.days>1?`<h3 style="margin:22px 0 0">Day ${d}</h3>`:""}<div class="stages" style="margin-top:16px">${S.cfg.stages.map(st=>{const a=it.filter(x=>x.stage===st.id).sort((x,y)=>x.t-y.t);if(!a.length)return "";return `<div class="panel" style="margin:0"><h3>${esc(st.name)}</h3>${a.map(x=>{const p=pOf(S,x.pid);return p?`<div class="slot"><span class="chest">${fmtMin(x.t)}</span><div><b>${esc(p.n)}</b><br><small style="color:var(--muted)">${esc(catName(S,p.cat))}</small></div></div>`:""}).join("")}</div>`}).join("")}</div>`}).join("")||`<div class="panel" style="margin-top:20px">The schedule will appear here.</div>`}
   else if(pv.tab==="news")b=`<div class="two" style="margin-top:20px"><div class="panel"><h3>News</h3><div class="news">${S.news.map(n=>`<p>${esc(n.txt)} <small style="color:var(--muted)">${fmtTs(n.t)}</small></p>`).join("")||"<p>No news yet</p>"}</div></div><div class="panel"><h3>Links and downloads</h3><div class="news">${S.links.map(l=>`<p>📄 <a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.t)}</a></p>`).join("")||"<p>Nothing yet</p>"}</div></div></div>`;
   else if(pv.tab==="gallery")b=`<div class="panel" style="margin-top:20px"><div class="gal">${S.gallery.map(g=>`<figure><img src="${g.src}" alt="${esc(g.cap)}" loading="lazy"><figcaption>${esc(g.cap)}</figcaption></figure>`).join("")||"No photos yet"}</div></div>`;
@@ -2152,10 +2173,10 @@ document.addEventListener("fullscreenchange",()=>{document.body.classList.toggle
 function SCREEN_VIEW(){const pv=PUBV||{};if(pv.need||pv.closed)return PUBLIC_VIEW();const S=pv.S;if(!S)return `<div class="loading">${LOADER()}<p>${esc(pv.err||"Loading…")}</p></div>`;
   const hide=(pv.pub||S.locks.pub)==="results";const tp=teamPtsS(S);const ord=Object.entries(tp).sort((a,b)=>b[1]-a[1]);const mx=Math.max(1,...ord.map(x=>x[1]));
   const pubs=S.progs.filter(p=>p.status==="published").sort((a,b)=>(b.pubT||0)-(a.pubT||0)).slice(0,4);
-  const im={};S.progs.filter(p=>p.status==="published").forEach(p=>calcS(S,p).forEach(r=>{if(r.pts>0)im[r.cid]=(im[r.cid]||0)+r.pts}));const ind=Object.entries(im).sort((a,b)=>b[1]-a[1]).slice(0,8);
+  const ind=kalaS(S).slice(0,8).map(o=>[o.cid,o.pct+"%"]);
   return `<div class="screen"><div class="sc-head">${S.brand&&safeLogo(S.brand.logo)?festLogo(S.brand,72,"pubimg"):mark(56,"#fff")}<div><div class="sc-t">${esc(S.site.title)}</div><div class="sc-s">${esc(S.site.tag)}</div></div><div class="sc-live">LIVE</div><button class="sc-fs" onclick="scFull()" title="Full screen" aria-label="Full screen">${ic(document.fullscreenElement?"shrink":"screen",22)}</button></div>
   ${hide?`<div class="sc-soon">Results coming soon</div>`:`<div class="sc-grid"><div class="sc-board"><h2>Leaderboard</h2>${ord.map(([t,p],i)=>`<div class="sc-row" data-k="t_${esc(t)}"><span class="sc-rank">${i+1}</span><span class="sc-name">${esc(tOf(S,t).name)}</span><div class="sc-track"><div data-w="t_${esc(t)}" style="width:${p/mx*100}%;background:${tOf(S,t).color}"></div></div><b>${p}</b></div>`).join("")||"<p>No teams yet</p>"}</div>
-   <div class="sc-ind"><h2>Individual points</h2>${ind.map(([id,v],i)=>{const c=cOf(S,id);return c?`<div class="sc-irow" data-k="i_${esc(id)}"><span class="sc-rank">${i+1}</span><span class="sc-name">${esc(c.name)} <small><i style="background:${tOf(S,c.team).color}"></i>${esc(tOf(S,c.team).name)}</small></span><b>${v}</b></div>`:""}).join("")||"<p>Waiting for the first result…</p>"}</div>
+   <div class="sc-ind"><h2>🏆 Kalaprathibha</h2>${ind.map(([id,v],i)=>{const c=cOf(S,id);return c?`<div class="sc-irow" data-k="i_${esc(id)}"><span class="sc-rank">${i+1}</span><span class="sc-name">${esc(c.name)} <small><i style="background:${tOf(S,c.team).color}"></i>${esc(tOf(S,c.team).name)}</small></span><b>${v}</b></div>`:""}).join("")||"<p>Waiting for the first result…</p>"}</div>
    <div class="sc-latest"><h2>Latest results</h2>${pubs.map(p=>`<div class="sc-res"><div class="sc-pn">${esc(p.n)} <small>${esc(catName(S,p.cat))}</small></div>${calcS(S,p).filter(r=>r.rank<=3).map(r=>{const c=cOf(S,r.cid);return c?`<div class="sc-w">${["🥇","🥈","🥉"][r.rank-1]} ${esc(c.name)} <small>${esc(tOf(S,c.team).name)}</small></div>`:""}).join("")}</div>`).join("")||"<p>Waiting for the first result…</p>"}</div></div>`}
   <div class="sc-foot">${mark(20,"rgba(255,255,255,.8)")} Powered by Mehfil</div></div>`}
 
