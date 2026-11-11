@@ -847,7 +847,8 @@ body.noFQ .fq-fab,body.noFQ .fq-panel{display:none!important}
 .idcat{margin-top:2.4cqw;padding:1.3cqw 5cqw;border-radius:2.6cqw;background:color-mix(in srgb,var(--ida) 12%,#fff);color:var(--ida);font-size:5cqw;font-weight:800;text-transform:uppercase}
 .idbc{margin-top:auto;margin-bottom:15cqw;width:60cqw;height:10cqw;background:#fff;padding:1cqw 2cqw;border-radius:1.5cqw}
 .idbc .bc{display:block;width:100%;height:100%}
-@media print{#printroot .idgrid2{display:grid;grid-template-columns:repeat(3,54mm);gap:5mm;justify-content:center}#printroot .idc2{width:54mm;break-inside:avoid;box-shadow:none;border-radius:3mm}}
+@page idland{size:A4 landscape;margin:8mm 6mm}
+@media print{#printroot:has(.idgrid2),#printroot:has(.idgrid2) .idgrid2{page:idland}#printroot .idgrid2{display:grid;grid-template-columns:repeat(5,54mm);grid-auto-rows:85.6mm;gap:4mm 3mm;justify-content:center;align-content:start}#printroot .idc2{width:54mm;height:85.6mm;break-inside:avoid;page-break-inside:avoid;box-shadow:none;border-radius:3mm}#printroot .idgrid2>:nth-child(10n){break-after:page;page-break-after:always}}
 /* certificate code (no QR) */
 .c3qr{flex-direction:column!important;gap:.2cqw!important;width:auto!important}
 .c3qr span{font-size:.9cqw}
@@ -1044,6 +1045,19 @@ body.scfs .sc-ilist{max-height:70vh}
 .cert.t3 .c3sigs .sgi{display:block;height:2.8cqw;max-width:100%;object-fit:contain;margin-bottom:-.4cqw}
 .cert.t3 .c3sigs .sg i{display:block;width:100%;border-top:.18cqw solid #B9974A;margin-bottom:.4cqw}
 .cert.t3 .c3sigs .sgn{font:700 1.15cqw/1.2 var(--body),sans-serif}.cert.t3 .c3sigs .sgp{font:800 1cqw/1.3 var(--display),sans-serif;letter-spacing:.14em;text-transform:uppercase;opacity:.85}
+
+.sgpad{position:fixed;inset:0;z-index:300;background:rgba(10,16,30,.55);display:grid;place-items:center;padding:16px}
+.sgpad-box{background:var(--card,#fff);color:var(--ink,#111);border-radius:18px;padding:16px;box-shadow:0 20px 60px rgba(0,0,0,.35);max-width:100%}
+.sgpad canvas{display:block;background:#fff;border:2px dashed #cbd5e1;border-radius:12px;touch-action:none;cursor:crosshair}
+
+@media print{#printroot:has(.cert.t3) .docs{display:block!important}#printroot .cert.t3{width:297mm!important;height:209.5mm!important;aspect-ratio:auto!important;max-width:none;break-after:page;page-break-after:always;break-inside:avoid;margin:0!important}#printroot .cert.t3:last-child{break-after:auto;page-break-after:auto}}
+/* logos: keep inside their circles */
+.tm6 .s6logo,.tm5 .m5logo,.tm10 .p10logo{overflow:hidden}
+.tm6 .s6logo img,.tm5 .m5logo img,.tm10 .p10logo img{width:72%!important;height:72%!important;object-fit:contain}
+.tm8 .v8logo,.tm9 .b9logo{padding:.5cqw;box-sizing:border-box}
+@media print{html:has(#printroot .cert.t3),html:has(#printroot .cert.t3) body{page:c3land;margin:0!important;padding:0!important}html:has(#printroot .idgrid2),html:has(#printroot .idgrid2) body{page:idland;margin:0!important;padding:0!important}#printroot:has(.cert.t3){padding:0!important;margin:0!important}}
+@media print{body.printing #printroot:has(.cert.t3),body.printing #printroot:has(.idgrid2){position:absolute;top:0;left:0;right:0;margin:0!important}}
+@media print{#printroot:has(.cert.t3) .docs{padding:0!important;margin:0!important;gap:0!important}#printroot:has(.cert.t3) .docs::before,#printroot:has(.cert.t3) .docs::after{display:none!important}}
 </style>
 </head>
 <body>
@@ -1198,7 +1212,8 @@ const IC={
  share:'<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/>',
  screen:'<rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/>',
  shrink:'<path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/>',
- pay:'<rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/>'
+ pay:'<rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/>',
+ pen:'<path d="M4 20l4-1 11-11-3-3L5 16z"/><path d="M14 6l3 3"/>'
 };
 const ic=(k,sz)=>`<svg class="i" viewBox="0 0 24 24" ${sz?`style="width:${sz}px;height:${sz}px"`:""} aria-hidden="true">${IC[k]||""}</svg>`;
 const mark=(sz,col)=>`<span class="mark" aria-hidden="true" style="${sz?`width:${sz}px;height:${sz}px;`:""}${col?`background:${col}`:""}"></span>`;
@@ -2298,11 +2313,28 @@ function pickSign(i,inp){const f=inp.files&&inp.files[0];inp.value="";if(!f)retu
     const pw=x1-x0+1,ph=y1-y0+1;let out="";for(const H of [110,90,72,60]){const W=Math.round(pw*H/ph);const c2=document.createElement("canvas");c2.width=Math.min(W,420);c2.height=Math.round(c2.width*ph/pw);c2.getContext("2d").drawImage(cv,x0,y0,pw,ph,0,0,c2.width,c2.height);
       for(const t of ["image/webp","image/png"]){const u=c2.toDataURL(t,.9);if(u.startsWith("data:"+t)&&u.length<=24000){out=u;break}}if(out)break}
     if(!out)return toast("This photo is too detailed. Try a clearer photo.");UI.sg=UI.sg||signDraft();UI.sg[i].img=out;paint()};im.onerror=()=>toast("Couldn't read this photo");im.src=rd.result};rd.readAsDataURL(f)}
+function openSignPad(i){const old=document.getElementById("sgpad");if(old)old.remove();const o=document.createElement("div");o.id="sgpad";o.className="sgpad";
+  o.innerHTML=`<div class="sgpad-box" role="dialog" aria-label="Sign here"><b>Sign inside the box</b><p class="hint" style="margin:4px 0 10px">Use your finger, a stylus or the mouse.</p><canvas></canvas>
+   <div class="row" style="margin-top:12px;justify-content:space-between"><button class="btn ghost sm" data-a="clear">Clear</button><span style="display:flex;gap:8px"><button class="btn ghost sm" data-a="cancel">Cancel</button><button class="btn sm" data-a="use">Use this signature</button></span></div></div>`;
+  document.body.appendChild(o);const cv=o.querySelector("canvas"),dpr=Math.max(1,Math.min(3,window.devicePixelRatio||1)),W=Math.min(600,innerWidth-56),H=Math.round(W*.36);
+  cv.style.width=W+"px";cv.style.height=H+"px";cv.width=W*dpr;cv.height=H*dpr;const x=cv.getContext("2d");x.scale(dpr,dpr);x.lineCap=x.lineJoin="round";x.strokeStyle="#111";
+  let pts=[],down=false,inked=false;const pos=e=>{const r=cv.getBoundingClientRect();return [e.clientX-r.left,e.clientY-r.top,e.pressure||.5]};
+  cv.addEventListener("pointerdown",e=>{e.preventDefault();cv.setPointerCapture(e.pointerId);down=true;pts=[pos(e)];const [a,b]=pts[0];x.beginPath();x.arc(a,b,1.3,0,7);x.fillStyle="#111";x.fill();inked=true});
+  cv.addEventListener("pointermove",e=>{if(!down)return;e.preventDefault();const p=pos(e);pts.push(p);if(pts.length<3)return;const [a,b,c]=pts.slice(-3);
+    x.lineWidth=2+ (p[2]||.5)*2.2;x.beginPath();x.moveTo((a[0]+b[0])/2,(a[1]+b[1])/2);x.quadraticCurveTo(b[0],b[1],(b[0]+c[0])/2,(b[1]+c[1])/2);x.stroke()});
+  const up=()=>{down=false};cv.addEventListener("pointerup",up);cv.addEventListener("pointercancel",up);
+  o.addEventListener("click",e=>{const a=e.target.dataset&&e.target.dataset.a;if(e.target===o||a==="cancel")o.remove();
+    else if(a==="clear"){x.clearRect(0,0,W,H);inked=false}
+    else if(a==="use"){if(!inked)return toast("Please sign first");const out=signFromCanvas(cv);if(!out)return toast("Please sign a little bigger");UI.sg=UI.sg||signDraft();UI.sg[i].img=out;o.remove();paint();toast("Signature added. Press Save signatures.")}})}
+function signFromCanvas(cv){const w=cv.width,h=cv.height,d=cv.getContext("2d").getImageData(0,0,w,h).data;let x0=w,y0=h,x1=0,y1=0;
+  for(let y=0;y<h;y++)for(let xx=0;xx<w;xx++)if(d[(y*w+xx)*4+3]>30){if(xx<x0)x0=xx;if(xx>x1)x1=xx;if(y<y0)y0=y;if(y>y1)y1=y}
+  if(x1-x0<8||y1-y0<4)return "";const pw=x1-x0+1,ph=y1-y0+1;for(const H of [110,90,72,60]){const c2=document.createElement("canvas");c2.width=Math.min(420,Math.round(pw*H/ph));c2.height=Math.max(1,Math.round(c2.width*ph/pw));
+    c2.getContext("2d").drawImage(cv,x0,y0,pw,ph,0,0,c2.width,c2.height);for(const t of ["image/webp","image/png"]){const u=c2.toDataURL(t,.9);if(u.startsWith("data:"+t)&&u.length<=24000)return u}}return ""}
 const signDraft=()=>[0,1].map(i=>Object.assign({pos:"",name:"",img:""},(D.cfg.signs||[])[i]||{}));
 function signsPanel(){const S=UI.sg||(UI.sg=signDraft());return `<div class="panel"><h3>Certificate signatures</h3><p class="hint">Up to two people sign the certificates. Their signature, name and position print on every certificate design. Sign with a dark pen on white paper and take a clear photo. The white background is removed for you.</p>
   ${S.map((s,i)=>`<div class="sgrow"><div class="row" style="align-items:flex-end"><label class="f">Position<input value="${esc(s.pos)}" maxlength="40" placeholder="${i?"Chairman":"Convener"}" oninput="UI.sg[${i}].pos=this.value"></label><label class="f">Name<input value="${esc(s.name)}" maxlength="40" placeholder="Optional" oninput="UI.sg[${i}].name=this.value"></label></div>
    <div class="row" style="align-items:center;margin-top:8px"><div class="sgprev">${s.img?`<img src="${s.img}" alt="Signature ${i+1}">`:`<span>No signature yet</span>`}</div>
-   <label class="btn ghost sm">${ic("plus",14)} ${s.img?"Change":"Add"} signature<input type="file" accept="image/*" hidden onchange="pickSign(${i},this)"></label>${s.img?`<button class="btn ghost sm" onclick="UI.sg[${i}].img='';paint()">Remove</button>`:""}</div></div>`).join("")}
+   <label class="btn ghost sm">${ic("plus",14)} ${s.img?"Change":"Add"} signature<input type="file" accept="image/*" hidden onchange="pickSign(${i},this)"></label><button class="btn ghost sm" onclick="openSignPad(${i})">${ic("pen",14)} Sign here</button>${s.img?`<button class="btn ghost sm" onclick="UI.sg[${i}].img='';paint()">Remove</button>`:""}</div></div>`).join("")}
   <button class="btn" style="margin-top:12px" onclick="saveSigns()">Save signatures</button></div>`}
 function saveSigns(){const S=UI.sg||signDraft();let ok=true;S.forEach((s,i)=>{ok=act("cfg",{key:"sign",val:{i,pos:s.pos.trim(),name:s.name.trim(),img:s.img||""}})&&ok});if(ok){toast("Signatures saved");UI.sg=null;paint()}}
 
@@ -2338,7 +2370,8 @@ function printEl(id){const el=document.getElementById(id);if(!el)return;renderQR
     const cl=el.cloneNode(true);cl.removeAttribute("id");cl.innerHTML=cl.innerHTML.replace(/(id="|url\(#)idg/g,"$1pidg");const src=[...el.querySelectorAll(".qrx")],dst=[...cl.querySelectorAll(".qrx")];
     src.forEach((q,i)=>{const cv=q.querySelector("canvas"),im=q.querySelector("img");let u="";try{u=cv?cv.toDataURL():im?im.src:""}catch(e){}if(dst[i])dst[i].innerHTML=u?`<img src="${u}" width="72" height="72" alt="">`:""});
     pr.innerHTML="";pr.appendChild(cl);document.body.classList.add("printing");
-    const done=()=>{document.body.classList.remove("printing");pr.innerHTML="";window.removeEventListener("afterprint",done)};window.addEventListener("afterprint",done);
+    const pg=cl.querySelector(".cert.t3")?"@page{size:A4 landscape;margin:0}":cl.classList.contains("idgrid2")||cl.querySelector(".idc2")?"@page{size:A4 landscape;margin:8mm 6mm}":"";let ps=null;if(pg){ps=document.createElement("style");ps.id="pgfix";ps.textContent=pg;document.head.appendChild(ps)}
+    const done=()=>{document.body.classList.remove("printing");pr.innerHTML="";if(ps)ps.remove();window.removeEventListener("afterprint",done)};window.addEventListener("afterprint",done);
     try{window.print()}catch(e){done();toast("Printing isn't available here.")}},350)}
 let LOGO_IMG=null;let FLOGO=null;function festLogoImg(){const src=D&&D.brand&&safeLogo(D.brand.logo);if(!src)return null;if(FLOGO&&FLOGO.src===src)return FLOGO;FLOGO=new Image();FLOGO.onload=()=>{if(UI.dt==="poster")drawPoster()};FLOGO.src=src;return FLOGO}
 function logoImg(){if(LOGO_IMG)return LOGO_IMG;const m=getComputedStyle(document.documentElement).getPropertyValue("--logo-url").trim().match(/url\("?(.*?)"?\)$/);if(!m)return null;LOGO_IMG=new Image();LOGO_IMG.src=m[1];LOGO_IMG.onload=()=>{if(UI.dt==="poster")drawPoster()};return LOGO_IMG}
