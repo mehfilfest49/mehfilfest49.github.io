@@ -1166,7 +1166,7 @@ html.aurland .final{background:linear-gradient(135deg,#4F46E5,#0891B2)}
 .tm15 .p15seal{left:50%;top:69%;width:10cqw;transform:translateX(-50%)}
 .tm15 .tmcode{right:6%;bottom:6.5%;color:#888}
 /* template picker with previews */
-.tplpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.tplpick{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
 .tplc{border:2px solid var(--line);border-radius:14px;padding:6px;background:var(--surface);cursor:pointer;text-align:center;font:700 13px var(--display);color:var(--ink)}
 .tplc[aria-pressed="true"]{border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-soft)}
 .tplc .tplv{pointer-events:none;border-radius:8px;overflow:hidden;margin-bottom:6px}.tplc .tplv .cert{box-shadow:none;margin:0;border-radius:6px}
@@ -1492,7 +1492,7 @@ const R={
   candPhoto(S,a,m){const c=cOf(S,a.id);if(!c||!canReg(S,m,c.team))return;const img=String(a.img||"");if(img&&!(/^data:image\/jpeg;base64,[A-Za-z0-9+\/=]+$/.test(img)&&img.length<=60000))return;c.photo=img;addLog(S,m,`${c.name}: photo ${img?"added":"removed"}`)},
   brand(S,a,m){if(!ADM(m))return;if(!S.brand)S.brand={color:"",logo:""};if(a.inst!=null)S.brand.inst=String(a.inst).trim().slice(0,80);if(a.color!=null){const c=String(a.color);if(c===""||/^#[0-9a-fA-F]{6}$/.test(c))S.brand.color=c.toUpperCase()}
     if(a.logo!=null){const l=String(a.logo);if(l===""||safeLogo(l))S.brand.logo=l}addLog(S,m,"Fest logo and colour updated")},
-  tpl(S,a,m){if(!ADM(m))return;if(a.cert!=null)S.tpl.cert=Math.abs(+a.cert)%16;if(a.poster!=null)S.tpl.poster=Math.abs(+a.poster)%3}
+  tpl(S,a,m){if(!ADM(m))return;if(a.cert!=null)S.tpl.cert=Math.abs(+a.cert)%16;if(a.poster!=null)S.tpl.poster=Math.abs(+a.poster)%5}
 };
 function apply(S,op){const f=R[op.type];if(!f)return;if(S.locks.fest&&!(op.type==="lock"&&op.a&&op.a.k==="fest"))return;try{f(S,op.a||{},op.m||{},op)}catch(e){console.warn("Mehfil: op failed",op.type,e)}}
 
@@ -1817,6 +1817,7 @@ function paint(){NEEDPAINT=false;applyTheme(curBrand());document.body.classList.
       <span class="sync ${DEMO?"demo":SY.status}" id="sync">${syncLabel()}</span>${ME&&ME.role==="org"&&!DEMO?`<button class="btn sm planpill" onclick="go('plan')">${ic("card",14)} Plan</button>`:""}
       ${D&&ME.role!=="judge"?`<button class="ib" onclick="UI.bell=!UI.bell;if(!UI.bell)store.set(readKey(),Date.now());paint()" aria-label="Notifications">${ic("bell")}${unread?`<span class="badge">${unread}</span>`:""}</button>`:""}
       <div class="avatar"><i>${esc((ME.name||ME.u).trim()[0]||"?")}</i><div><b>${esc(ME.name)}</b><br><small>${ROLE[ME.role]}</small></div></div>
+      <button class="ib outb" onclick="${DEMO?"exitDemo()":"logout()"}" aria-label="${DEMO?"Exit demo":"Log out"}" title="${DEMO?"Exit demo":"Log out"}">${ic("out")}</button>
     </div></div>
     ${UI.bell&&D?`<div class="bellbox" id="bellbox"><div class="h">Notifications <button class="btn ghost sm" onclick="store.set(readKey(),Date.now());UI.bell=false;paint()">Mark all read</button></div>${notifs.slice(0,40).map(n=>`<p class="${n.t>lr?"u":""}">${esc(n.txt)}<br><small>${fmtTs(n.t)}</small></p>`).join("")||"<p>No notifications</p>"}</div>`:""}
   </div>
@@ -2500,8 +2501,13 @@ PG.docs=()=>{if(isFree())return `${head("Certificates and cards","Ready the mome
      <div class="idgrid2" id="idcards">${list.map(idCard).join("")}</div>`}
   if(UI.dt==="poster"){const winners=[];pubs.forEach(p=>calc(p).filter(r=>r.rank<=3).forEach(r=>{const c=C(r.cid);if(c)winners.push({p,r,c})}));const k=Math.min(UI.pe||0,Math.max(0,winners.length-1));
     body=`<div class="panel"><div class="row"><label class="f">Winner<select onchange="UI.pe=+this.value;paint()">${winners.map((e,i)=>`<option value="${i}" ${i===k?"selected":""}>${esc(e.c.name)} · ${esc(e.p.n)} · ${ordn(e.r.rank)} place</option>`).join("")||"<option>No winners yet</option>"}</select></label></div>
-     <p class="hint" style="margin:14px 0 8px">Template</p><div class="chips">${["Plain","Circles","Stripes"].map((t,i)=>`<button class="chip" aria-pressed="${D.tpl.poster===i}" onclick="act('tpl',{poster:${i}})">${t}</button>`).join("")}</div></div>
-     ${winners.length?`<div class="docs"><div><canvas id="poster" width="1080" height="1080" class="postercv" aria-label="Congratulation poster"></canvas>
+     <p class="hint" style="margin:14px 0 8px">Design</p><div class="chips">${POSTER_TPLS.map(([t,i])=>`<button class="chip" aria-pressed="${(D.tpl.poster||0)===i}" ${sc?"disabled":""} onclick="act('tpl',{poster:${i}})">${t}</button>`).join("")}</div>
+     <p class="hint" style="margin:10px 0 0">Gold and Ribbon use the student's photo from their ID card. Add photos on the Candidates page.</p></div>
+     <div class="panel"><h3>Download many at once</h3><div class="row" style="align-items:flex-end"><label class="f">Which posters<select onchange="UI.pbm=this.value;UI.pbv='';paint()"><option value="all" ${(UI.pbm||"all")==="all"?"selected":""}>All winners</option><option value="cat" ${UI.pbm==="cat"?"selected":""}>One category</option><option value="prog" ${UI.pbm==="prog"?"selected":""}>One programme</option></select></label>
+      ${UI.pbm==="cat"?`<label class="f">Category<select onchange="UI.pbv=this.value;paint()"><option value="">Choose…</option>${D.cfg.cats.map(c=>`<option value="${c.id}" ${UI.pbv===c.id?"selected":""}>${esc(c.name)}</option>`).join("")}</select></label>`:""}
+      ${UI.pbm==="prog"?`<label class="f">Programme<select onchange="UI.pbv=this.value;paint()"><option value="">Choose…</option>${pubs.map(x=>`<option value="${x.id}" ${UI.pbv===x.id?"selected":""}>${esc(x.n)} · ${esc(catName(D,x.cat))}</option>`).join("")}</select></label>`:""}</div>
+      ${(()=>{const need=UI.pbm&&UI.pbm!=="all"&&!UI.pbv,n=need?0:posterList(UI.pbm||"all",UI.pbv||"").length;return `<p class="hint" style="margin:12px 0 10px">${need?"Choose one above.":`${n} winner poster${n===1?"":"s"} in the design chosen above.`}</p><div class="row"><button class="btn" ${n?"":"disabled"} onclick="bulkPosters('jpg')">${ic("export")} Download ${n||""} as JPG images (ZIP)</button><button class="btn ghost" ${n?"":"disabled"} onclick="bulkPosters('pdf')">${ic("export")} Download as one PDF</button></div>`})()}</div>
+     ${winners.length?`<div class="docs"><div><canvas id="poster" width="1080" height="${posterH(D.tpl.poster||0)}" class="postercv" aria-label="Congratulation poster"></canvas>
       <div class="row" style="margin-top:12px"><button class="btn" onclick="posterDownload()">${ic("export")} Download image</button><button class="btn ghost" onclick="posterShare()">${ic("share")} Share</button></div></div></div>`:`<div class="panel">No winners yet</div>`}`;
     UI._poster=winners[k]||null}
   return `${head(sc?"Cards and certificates":"Certificates and cards","Ready the moment a result is published. Every certificate has its own QR verification code.")}
@@ -2518,7 +2524,92 @@ function printEl(id){const el=document.getElementById(id);if(!el)return;renderQR
 let LOGO_IMG=null;let FLOGO=null;function festLogoImg(){const src=D&&D.brand&&safeLogo(D.brand.logo);if(!src)return null;if(FLOGO&&FLOGO.src===src)return FLOGO;FLOGO=new Image();FLOGO.onload=()=>{if(UI.dt==="poster")drawPoster()};FLOGO.src=src;return FLOGO}
 function logoImg(){if(LOGO_IMG)return LOGO_IMG;const m=getComputedStyle(document.documentElement).getPropertyValue("--logo-url").trim().match(/url\("?(.*?)"?\)$/);if(!m)return null;LOGO_IMG=new Image();LOGO_IMG.src=m[1];LOGO_IMG.onload=()=>{if(UI.dt==="poster")drawPoster()};return LOGO_IMG}
 function wrapText(x,text,maxW){const words=String(text).split(/\s+/);const lines=[];let cur="";words.forEach(w=>{const t=cur?cur+" "+w:w;if(x.measureText(t).width>maxW&&cur){lines.push(cur);cur=w}else cur=t});if(cur)lines.push(cur);return lines}
-function drawPoster(){const cv=document.getElementById("poster");const W=UI._poster;if(!cv||!W)return;const x=cv.getContext("2d");const col=teamOf(W.c.team).color;const tpl=D.tpl.poster;
+const POSTER_TPLS=[["Gold",3],["Ribbon",4],["Plain",0],["Circles",1],["Stripes",2]];
+const posterH=t=>t>=3?1350:1080;
+const IMGC={};function loadImg(src){if(!src)return Promise.resolve(null);if(IMGC[src])return IMGC[src];IMGC[src]=new Promise(r=>{const im=new Image();im.onload=()=>r(im);im.onerror=()=>r(null);im.src=src});return IMGC[src]}
+async function posterFonts(){try{await Promise.all(['700 60px "Libre Baskerville"','60px "Great Vibes"','800 60px Sora','600 30px Manrope'].map(f=>document.fonts.load(f)))}catch(e){}}
+function pRand(seed){let s=seed>>>0||1;return()=>(s=(s*1664525+1013904223)>>>0)/4294967296}
+function fitFont(x,txt,font,size,maxW,min){let s=size;x.font=font.replace("$",s);while(s>min&&x.measureText(txt).width>maxW){s-=2;x.font=font.replace("$",s)}return s}
+function drawCover(x,im,cx,cy,r,shape){x.save();x.beginPath();x.arc(cx,cy,r,0,7);x.clip();const k=Math.max(2*r/im.width,2*r/im.height),w=im.width*k,h=im.height*k;x.imageSmoothingQuality="high";x.drawImage(im,cx-w/2,cy-r*1.0-(h-2*r)*.25,w,h);x.restore()}
+function drawPerson(x,cx,cy,r,bg,fg){x.save();x.beginPath();x.arc(cx,cy,r,0,7);x.clip();x.fillStyle=bg;x.fillRect(cx-r,cy-r,2*r,2*r);x.fillStyle=fg;x.beginPath();x.arc(cx,cy-r*.22,r*.36,0,7);x.fill();x.beginPath();x.ellipse(cx,cy+r*.78,r*.72,r*.6,0,0,7);x.fill();x.restore()}
+function goldGrad(x,x0,y0,x1,y1){const g=x.createLinearGradient(x0,y0,x1,y1);[[0,"#8C6A1C"],[.28,"#F6DC86"],[.52,"#B98A2C"],[.76,"#FBE7A6"],[1,"#9A7322"]].forEach(([o,c])=>g.addColorStop(o,c));return g}
+function pLogo(x,lg,cx,cy,r,ring){x.save();x.fillStyle="#fff";x.beginPath();x.arc(cx,cy,r,0,7);x.fill();if(ring){x.lineWidth=ring[1];x.strokeStyle=ring[0];x.stroke()}
+  if(lg){x.beginPath();x.arc(cx,cy,r*.94,0,7);x.clip();const s=r*1.38,k=Math.min(s/lg.width,s/lg.height);x.imageSmoothingQuality="high";x.drawImage(lg,cx-lg.width*k/2,cy-lg.height*k/2,lg.width*k,lg.height*k)}x.restore()}
+function ribbonPath(x,cx,y,w,h,notch){x.beginPath();x.moveTo(cx-w/2,y);x.lineTo(cx+w/2,y);x.lineTo(cx+w/2-notch,y+h/2);x.lineTo(cx+w/2,y+h);x.lineTo(cx-w/2,y+h);x.lineTo(cx-w/2+notch,y+h/2);x.closePath()}
+function posterLines(W){const g=W.r.grade&&W.r.grade!=="—"?W.r.grade:"";return {place:`${ordn(W.r.rank)} Place`,prog:W.p.n,cat:catName(D,W.c.cat),team:teamOf(W.c.team).name,g}}
+function drawGold(x,W,ph,lg){const H=1350,L=posterLines(W),rnd=pRand(W.c.chest*7+W.r.rank);
+  const bg=x.createRadialGradient(540,620,80,540,620,900);bg.addColorStop(0,"#1C1A14");bg.addColorStop(1,"#070707");x.fillStyle=bg;x.fillRect(0,0,1080,H);
+  x.save();x.globalAlpha=.35;x.strokeStyle="#C9952B";x.lineWidth=1.2;for(let i=0;i<26;i++){x.beginPath();x.moveTo(-20,560+i*9);x.bezierCurveTo(160,520+i*12,120,760+i*4,330,820+i*3);x.stroke();x.beginPath();x.moveTo(1100,560+i*9);x.bezierCurveTo(920,520+i*12,960,760+i*4,750,820+i*3);x.stroke()}x.restore();
+  x.fillStyle=goldGrad(x,0,0,1080,180);x.beginPath();x.moveTo(0,0);x.lineTo(1080,0);x.lineTo(1080,120);x.bezierCurveTo(800,200,560,60,300,130);x.bezierCurveTo(160,168,60,150,0,120);x.closePath();x.fill();
+  x.fillStyle="rgba(0,0,0,.35)";x.beginPath();x.moveTo(0,120);x.bezierCurveTo(60,150,160,168,300,130);x.bezierCurveTo(560,60,800,200,1080,120);x.lineTo(1080,134);x.bezierCurveTo(800,214,560,74,300,144);x.bezierCurveTo(160,182,60,164,0,134);x.closePath();x.fill();
+  for(let i=0;i<46;i++){const cx=rnd()*1080,cy=40+rnd()*420;if(Math.abs(cx-540)<250&&cy>300)continue;x.save();x.translate(cx,cy);x.rotate(rnd()*6.3);x.fillStyle=goldGrad(x,-8,-3,8,3);if(rnd()>.5)x.fillRect(-9,-3,18,6);else{x.strokeStyle="#E8C36A";x.lineWidth=3;x.beginPath();x.arc(0,0,9,0,3.4);x.stroke()}x.restore()}
+  const sp=x.createRadialGradient(540,600,40,540,600,330);sp.addColorStop(0,"rgba(236,190,60,.95)");sp.addColorStop(.55,"rgba(190,140,20,.6)");sp.addColorStop(1,"rgba(190,140,20,0)");x.fillStyle=sp;x.beginPath();x.arc(540,600,330,0,7);x.fill();
+  for(let i=0;i<30;i++){const a=rnd()*6.3,d=200+rnd()*150;x.fillStyle=`rgba(230,180,50,${(.3+rnd()*.5).toFixed(2)})`;x.beginPath();x.arc(540+Math.cos(a)*d,600+Math.sin(a)*d,3+rnd()*12,0,7);x.fill()}
+  x.strokeStyle=goldGrad(x,250,300,830,900);x.lineWidth=4;x.beginPath();x.arc(540,600,282,0,7);x.stroke();
+  const leaf=(cx,cy,ang,len)=>{x.save();x.translate(cx,cy);x.rotate(ang);x.fillStyle=goldGrad(x,-len,-len/3,len,len/3);x.beginPath();x.ellipse(0,0,len,len*.32,0,0,7);x.fill();x.restore()};
+  [[-1],[1]].forEach(([s])=>{for(let i=0;i<13;i++){const a=Math.PI/2+s*(0.35+i*0.15),cx=540+Math.cos(a)*(-s)*0+Math.cos(Math.PI-a*s)*0;const t=Math.PI/2+s*(0.45+i*0.155),px=540+Math.cos(t)*335,py=630+Math.sin(t)*335;
+    x.strokeStyle="#C9952B";x.lineWidth=4;leaf(px+Math.cos(t+s*0.9)*28,py+Math.sin(t+s*0.9)*28,t+s*1.15,30);leaf(px+Math.cos(t-s*0.9)*28,py+Math.sin(t-s*0.9)*28,t-s*0.2+Math.PI,30)}
+    x.strokeStyle=goldGrad(x,200,300,880,950);x.lineWidth=5;x.beginPath();x.arc(540,630,335,Math.PI/2+s*0.4,Math.PI/2+s*2.4,s<0);x.stroke()});
+  if(ph)drawCover(x,ph,540,600,260);else drawPerson(x,540,600,260,"#2A2416","#C9A54A");
+  if(lg)pLogo(x,lg,540,72,52,["#E8C36A",4]);
+  x.save();x.font='700 92px "Libre Baskerville", Georgia, serif';x.fillStyle=goldGrad(x,100,150,980,330);const txt="CONGRATULATIONS",R=520,cy=760;let tot=0;const ws=[...txt].map(ch=>{const w=x.measureText(ch).width;tot+=w;return w});let a=-Math.PI/2-tot/R/2;
+  [...txt].forEach((ch,i)=>{const w=ws[i];a+=w/2/R;x.save();x.translate(540+Math.cos(a)*R,cy+Math.sin(a)*R);x.rotate(a+Math.PI/2);x.textAlign="center";x.fillText(ch,0,0);x.restore();a+=w/2/R});x.restore();
+  x.fillStyle="rgba(0,0,0,.4)";ribbonPath(x,548,888,800,112,40);x.fill();x.fillStyle=goldGrad(x,140,870,940,990);ribbonPath(x,540,878,800,112,40);x.fill();
+  x.fillStyle="#17130A";x.textAlign="center";fitFont(x,W.c.name,'400 $px "Libre Baskerville", Georgia, serif',74,680,40);x.fillText(W.c.name,540,955);
+  x.fillStyle=goldGrad(x,200,1010,880,1060);fitFont(x,`${L.place.toUpperCase()} · ${L.prog.toUpperCase()}`,'700 $px "Libre Baskerville", Georgia, serif',46,900,26);x.fillText(`${L.place.toUpperCase()} · ${L.prog.toUpperCase()}`,540,1060);
+  x.fillStyle="#D8CDB0";const sub=[L.cat,"Team "+L.team,L.g?"Grade "+L.g:""].filter(Boolean).join("  ·  ").toUpperCase();fitFont(x,sub,'500 $px Manrope, sans-serif',30,900,18);x.fillText(sub,540,1112);
+  x.fillStyle=goldGrad(x,0,1180,1080,1350);x.beginPath();x.moveTo(0,1350);x.lineTo(0,1230);x.bezierCurveTo(240,1170,420,1270,620,1225);x.bezierCurveTo(820,1180,960,1215,1080,1190);x.lineTo(1080,1350);x.closePath();x.fill();
+  x.fillStyle="#1A1408";fitFont(x,D.site.title.toUpperCase(),'800 $px Sora, sans-serif',38,900,22);x.fillText(D.site.title.toUpperCase(),540,1300);x.textAlign="left"}
+function drawRibbon(x,W,ph,lg){const H=1350,L=posterLines(W),t=(D.brand&&/^#[0-9A-Fa-f]{6}$/.test(D.brand.color||""))?brandSolid(D.brand.color):"#1E3A8A",dk=mixC(t,"#000000",.35),lt=mixC(t,"#ffffff",.45),pale=mixC(t,"#ffffff",.8);
+  x.fillStyle="#fff";x.fillRect(0,0,1080,H);
+  x.fillStyle=lt;x.beginPath();x.moveTo(0,0);x.lineTo(1080,0);x.lineTo(1080,250);x.bezierCurveTo(900,180,780,90,560,70);x.bezierCurveTo(360,52,240,40,0,0);x.fill();
+  x.fillStyle=dk;x.beginPath();x.moveTo(300,0);x.lineTo(1080,0);x.lineTo(1080,200);x.bezierCurveTo(900,140,800,60,600,40);x.bezierCurveTo(470,28,380,20,300,0);x.fill();
+  x.fillStyle=dk;x.beginPath();x.moveTo(0,0);x.lineTo(240,0);x.bezierCurveTo(160,40,80,30,0,60);x.fill();
+  x.fillStyle=lt;x.beginPath();x.moveTo(0,H);x.lineTo(0,1180);x.bezierCurveTo(200,1220,320,1300,560,1290);x.bezierCurveTo(780,1282,900,1330,1080,1310);x.lineTo(1080,H);x.fill();
+  x.fillStyle=dk;x.beginPath();x.moveTo(0,H);x.lineTo(0,1230);x.bezierCurveTo(200,1270,320,1330,560,1320);x.bezierCurveTo(760,1312,880,1345,1080,1340);x.lineTo(1080,H);x.fill();
+  x.save();x.strokeStyle=lt;x.globalAlpha=.45;x.lineWidth=1;for(let i=0;i<30;i++){x.beginPath();x.moveTo(0,70+i*7);x.bezierCurveTo(90,40+i*5,150,170+i*4,250,i*2);x.stroke();
+    x.beginPath();x.moveTo(1080,1280-i*7);x.bezierCurveTo(990,1310-i*5,930,1180-i*4,830,1350-i*2);x.stroke()}x.restore();
+  if(lg)pLogo(x,lg,540,190,74,[pale,8]);else{x.fillStyle=dk;x.beginPath();x.arc(540,190,70,0,7);x.fill();x.fillStyle="#fff";x.font="800 64px Sora, sans-serif";x.textAlign="center";x.fillText((D.site.title||"M").trim()[0].toUpperCase(),540,212)}
+  x.textAlign="center";x.fillStyle=dk;fitFont(x,"Congratulations",'400 $px "Great Vibes", cursive',150,900,90);x.fillText("Congratulations",540,410);
+  x.fillStyle=mixC(t,"#ffffff",.25);x.beginPath();x.arc(540,690,246,0,7);x.fill();if(ph)drawCover(x,ph,540,690,234);else drawPerson(x,540,690,234,pale,lt);
+  x.fillStyle=t;[[1,1],[-1,1]].forEach(([s])=>{x.beginPath();x.moveTo(540+s*270,905);x.lineTo(540+s*340,905);x.lineTo(540+s*305,945);x.lineTo(540+s*345,990);x.lineTo(540+s*270,990);x.closePath();x.fill()});
+  x.fillStyle=dk;x.beginPath();x.moveTo(540-270,970);x.lineTo(540-300,990);x.lineTo(540-270,990);x.fill();x.beginPath();x.moveTo(540+270,970);x.lineTo(540+300,990);x.lineTo(540+270,990);x.fill();
+  x.fillStyle=pale;x.beginPath();x.moveTo(250,890);x.quadraticCurveTo(540,860,830,890);x.lineTo(830,975);x.quadraticCurveTo(540,945,250,975);x.closePath();x.fill();
+  x.fillStyle=dk;fitFont(x,W.c.name,'800 $px Sora, sans-serif',66,540,34);x.fillText(W.c.name,540,955);
+  x.fillStyle="#1F2A44";x.font="500 36px Manrope, sans-serif";const msg=`For securing ${L.place} in ${L.prog} · ${L.cat}${L.g?` with ${L.g} Grade`:""}, representing team ${L.team}. Wishing you even more success ahead!`;
+  wrapText(x,msg,760).slice(0,3).forEach((l,i)=>x.fillText(l,540,1050+i*48));
+  x.fillStyle=t;const ft=D.site.title.toUpperCase();fitFont(x,ft,'800 $px Sora, sans-serif',34,820,20);x.fillText(ft,540,1218);x.textAlign="left"}
+async function renderPoster(cv,W){if(!cv||!W)return;const tpl=D.tpl.poster||0,H=posterH(tpl);if(cv.height!==H)cv.height=H;cv.width=1080;const x=cv.getContext("2d");
+  if(tpl>=3){await posterFonts();const [ph,lg]=await Promise.all([loadImg(W.c.photo||""),loadImg(safeLogo(D.brand&&D.brand.logo))]);x.clearRect(0,0,1080,H);if(tpl===3)drawGold(x,W,ph,lg);else drawRibbon(x,W,ph,lg);return}
+  drawSquarePoster(cv,W,tpl)}
+function posterList(mode,val){const pubs=D.progs.filter(p=>p.status==="published"&&(mode!=="prog"||p.id===val)&&(mode!=="cat"||p.cat===val));const L=[];pubs.forEach(p=>calc(p).filter(r=>r.rank<=3).forEach(r=>{const c=C(r.cid);if(c&&(!scope()||c.team===scope()))L.push({p,r,c})}));return L}
+const crcT=(()=>{const t=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;t[n]=c>>>0}return t})();
+function crc32(b){let c=0xFFFFFFFF;for(let i=0;i<b.length;i++)c=crcT[(c^b[i])&255]^(c>>>8);return (c^0xFFFFFFFF)>>>0}
+function makeZip(files){const enc=new TextEncoder(),parts=[],cen=[];let off=0;const u16=v=>[v&255,(v>>>8)&255],u32=v=>[v&255,(v>>>8)&255,(v>>>16)&255,(v>>>24)&255];
+  files.forEach(f=>{const nm=enc.encode(f.name),crc=crc32(f.data),sz=f.data.length;const lh=new Uint8Array([...u32(0x04034b50),...u16(20),...u16(0),...u16(0),...u16(0),...u16(0x21),...u32(crc),...u32(sz),...u32(sz),...u16(nm.length),...u16(0)]);
+    parts.push(lh,nm,f.data);cen.push(new Uint8Array([...u32(0x02014b50),...u16(20),...u16(20),...u16(0),...u16(0),...u16(0),...u16(0x21),...u32(crc),...u32(sz),...u32(sz),...u16(nm.length),...u16(0),...u16(0),...u16(0),...u16(0),...u32(0),...u32(off)]),nm);off+=lh.length+nm.length+sz});
+  const cs=cen.reduce((a,b)=>a+b.length,0);return new Blob([...parts,...cen,new Uint8Array([...u32(0x06054b50),...u16(0),...u16(0),...u16(files.length),...u16(files.length),...u32(cs),...u32(off),...u16(0)])],{type:"application/zip"})}
+function makePdf(pages){const enc=new TextEncoder(),out=[],offs=[];let pos=0;const push=b=>{const u=typeof b==="string"?enc.encode(b):b;out.push(u);pos+=u.length};
+  push("%PDF-1.4\n%\xE2\xE3\xCF\xD3\n");const n=pages.length,kids=[];let id=3;pages.forEach(()=>{kids.push(id);id+=3});
+  const obj=(i,s)=>{offs[i]=pos;push(`${i} 0 obj\n`);if(typeof s==="string")push(s);else s.forEach(push);push("\nendobj\n")};
+  obj(1,"<< /Type /Catalog /Pages 2 0 R >>");obj(2,`<< /Type /Pages /Kids [${kids.map(k=>k+" 0 R").join(" ")}] /Count ${n} >>`);
+  pages.forEach((pg,i)=>{const p=3+i*3,w=pg.w*.5,h=pg.h*.5,cs=`q ${w} 0 0 ${h} 0 0 cm /Im0 Do Q`;
+    obj(p,`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${w} ${h}] /Resources << /XObject << /Im0 ${p+2} 0 R >> >> /Contents ${p+1} 0 R >>`);
+    obj(p+1,`<< /Length ${cs.length} >>\nstream\n${cs}\nendstream`);
+    obj(p+2,[`<< /Type /XObject /Subtype /Image /Width ${pg.w} /Height ${pg.h} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${pg.data.length} >>\nstream\n`,pg.data,"\nendstream"])});
+  const xr=pos,tot=3+n*3;push(`xref\n0 ${tot}\n0000000000 65535 f \n`);for(let i=1;i<tot;i++)push(String(offs[i]).padStart(10,"0")+" 00000 n \n");push(`trailer\n<< /Size ${tot} /Root 1 0 R >>\nstartxref\n${xr}\n%%EOF`);
+  return new Blob(out,{type:"application/pdf"})}
+async function bulkPosters(fmt){const mode=UI.pbm||"all",val=UI.pbv||"",L=posterList(mode,val);if(!L.length)return toast("No winners here yet");if(UI.pbusy)return;UI.pbusy=true;
+  const cv=document.createElement("canvas"),files=[],pages=[],used={};try{for(let i=0;i<L.length;i++){toast(`Making poster ${i+1} of ${L.length}…`);await renderPoster(cv,L[i]);
+    const b=await new Promise(r=>cv.toBlob(r,"image/jpeg",.92));const data=new Uint8Array(await b.arrayBuffer());
+    let nm=`${String(L[i].c.chest)}-${L[i].c.name}-${L[i].p.n}`.replace(/[^a-z0-9]+/gi,"-").replace(/^-|-$/g,"").slice(0,70)||"poster";while(used[nm])nm+="-x";used[nm]=1;
+    files.push({name:nm+".jpg",data});pages.push({w:cv.width,h:cv.height,data})}
+   const tag=(mode==="cat"?catName(D,val):mode==="prog"?(D.progs.find(p=>p.id===val)||{}).n:"all-winners")||"posters";
+   const blob=fmt==="pdf"?makePdf(pages):makeZip(files);const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`mehfil-posters-${String(tag).replace(/[^a-z0-9]+/gi,"-")}.${fmt==="pdf"?"pdf":"zip"}`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),8000);
+   toast(`${L.length} poster${L.length>1?"s":""} ready`)}finally{UI.pbusy=false}}
+
+function drawPoster(){renderPoster(document.getElementById("poster"),UI._poster)}
+function drawSquarePoster(cv,W,tpl){if(!cv||!W)return;const x=cv.getContext("2d");const col=teamOf(W.c.team).color;
   x.clearRect(0,0,1080,1080);x.fillStyle=col;x.fillRect(0,0,1080,1080);
   const g=x.createLinearGradient(0,0,1080,1080);g.addColorStop(0,"rgba(255,255,255,.14)");g.addColorStop(1,"rgba(0,0,0,.18)");x.fillStyle=g;x.fillRect(0,0,1080,1080);
   if(tpl===1){x.fillStyle="rgba(255,255,255,.16)";[[900,170,230],[140,980,300],[980,860,120]].forEach(([cx,cy,r])=>{x.beginPath();x.arc(cx,cy,r,0,7);x.fill()})}
